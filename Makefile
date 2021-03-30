@@ -1,6 +1,3 @@
-DOCKER_TAG ?= latest
-DOCKER_IMAGE = docker.pkg.github.com/percona-platform/saas-ui/saas-ui:$(DOCKER_TAG)
-
 default: help
 
 help:                   ## Display this help message
@@ -8,26 +5,14 @@ help:                   ## Display this help message
 	@grep '^[a-zA-Z]' $(MAKEFILE_LIST) | \
 		awk -F ':.*?## ' 'NF==2 {printf "  %-26s%s\n", $$1, $$2}'
 
-init:                   ## Install development tools
-	npm install -g lerna
+init:                   ## Install dependencies
+	npm install
 
-dev:                   ## Run the ui dev locally
+dev:              		## Develop locally in watch mode
 	npm start
 
-e2e:
-	lerna run cy:run
-
 test:                   ## Run unit tests
-	lerna run test:ci
+	npm run test:ci
 
-build-core:             ## Build platform-core
-	lerna run build --scope='@percona/platform-core'
-
-build-ui:               ## Build platform-ui
-	lerna run build --scope='@percona/platform-ui'
-
-docker-build:           ## Build Docker image
-	docker build --squash --tag $(DOCKER_IMAGE) .
-
-docker-push:            ## Push Docker image
-	docker push $(DOCKER_IMAGE)
+build:             		## Build platform-core
+	npm run build
