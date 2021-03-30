@@ -61,12 +61,8 @@
     ],
     "import/prefer-default-export": ["off"],
     "import/no-unresolved": ["off"],
-    // no-unused-vars doesn't work with typescript
-    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
-    // We use a lot of snake case variables in code interacting with API
-    "camelcase": ["off"],
-    // It's more convinient to declare big helpers functions below the main method
+    // It's more convinient to declare helper functions below the main method
     "no-use-before-define": ["off"],
     // Don't need these
     "jsx-a11y": ["off"],
@@ -89,7 +85,7 @@
       { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
       { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] }
     ],
-    // "no-inline-styles/no-inline-styles": [2],
+    // "no-inline-styles/no-inline-styles": ["error"],
     "no-shadow": ["error"],
     "react/no-array-index-key": ["error"],
     "no-unused-expressions": ["error"]

@@ -26,11 +26,11 @@
     "start": "npm run clean && npm run dev",
     "lint": "eslint --ext js,ts,tsx src",
     "lint:fix": "npm run lint --fix",
-    "dev": "tsc -p tsconfig.json --outDir dist --watch",
+    "dev": "tsc -p tsconfig.json --watch",
     "test": "react-scripts test --verbose",
     "test:ci": "CI=true react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "build": "NODE_ENV=production npm run lint && npm run clean && tsc -p tsconfig.json --outDir dist",
+    "build": "NODE_ENV=production npm run lint && npm run clean && tsc -p tsconfig.json",
     "release": "np"
   },
   "dependencies": {
