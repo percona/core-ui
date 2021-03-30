@@ -28,130 +28,23 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Enable node_modules cache
-        uses: percona-platform/cache@v2
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
         with:
-          path: |
-            node_modules
-            */*/node_modules
-            ~/.npm
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
       - name: Install
         run: make init
 
-      - name: Build platform-core
-        run: make build-core
-
       - name: Run tests
         run: make test
 
-  docker:
-    name: Build Docker image
-    timeout-minutes: 10
-    needs: test
-
-    outputs:
-      docker_tag: ${{ env.DOCKER_TAG }}
-
-    runs-on: ubuntu-18.04
-
-    strategy:
-      matrix:
-        node-version: [14.x]
-
-    steps:
-      - name: Checkout code
-        uses: percona-platform/checkout@v2
-
-      # use full version while v2 is in beta
-      - name: Install Node.js ${{ matrix.node-version }}
-        uses: percona-platform/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Enable node_modules cache
-        uses: percona-platform/cache@v2
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-            ~/.npm
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
-
-      - name: Install tools
-        run: make init
-
-      - name: Enable experimental Docker features for --squash flag
-        run: sudo .github/workflows/enable-docker-experimental.sh
-
-      - name: Login in Docker registry
-        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login -u $GITHUB_ACTOR docker.pkg.github.com --password-stdin
-
-      - name: Extract Docker image tag
-        uses: percona-platform/extract-docker-tag-action@v1
-
-      - name: Bootstrap projects
-        run: make bootstrap
-
-      - name: Build platform-core artifacts
-        run: make build-core
-
-      - name: Build platform-ui artifacts
-        run: make build-ui
-
-      - name: Build Docker image with tag "${{ env.DOCKER_TAG }}"
-        run: make docker-build
-
-      - name: Push Docker image
-        run: make docker-push
-
-  e2e:
-    name: Dispatch E2E tests
-    timeout-minutes: 10
-    needs: docker
-
-    runs-on: ubuntu-18.04
-
-    steps:
-      - name: Set REPO env variable
-        run: echo "REPO=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
-
-      - name: Trigger dispatch in ${{ github.head_ref }} branch
-        uses: percona-platform/workflow-dispatch@v1
-        continue-on-error: true
-        id: branch_dispatch
-        with:
-          workflow: E2E
-          token: ${{ secrets.ROBOT_TOKEN }}
-          repo: percona-platform/cicd
-          ref: ${{ github.head_ref }}
-          inputs: |
-            {
-                "branch": "${{ github.head_ref }}",
-                "repo": "${{ github.repository }}",
-                "${{ env.REPO }}": "${{ needs.docker.outputs.docker_tag }}",
-                "ui_tests_branch": "${{ github.head_ref }}",
-                "sha": "${{ github.event.pull_request.head.sha }}"
-            }
-
-      - name: Trigger dispatch in main branch
-        uses: percona-platform/workflow-dispatch@v1
-        if: ${{ steps.branch_dispatch.outcome != 'success' }}
-        with:
-          workflow: E2E
-          token: ${{ secrets.ROBOT_TOKEN }}
-          repo: percona-platform/cicd
-          ref: main
-          inputs: |
-            {
-                "branch": "${{ github.head_ref }}",
-                "repo": "${{ github.repository }}",
-                "${{ env.REPO }}": "${{ needs.docker.outputs.docker_tag }}",
-                "ui_tests_branch": "${{ github.head_ref }}",
-                "sha": "${{ github.event.pull_request.head.sha }}"
-            }
+      - name: Build platform-core
+        run: make build
