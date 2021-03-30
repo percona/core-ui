@@ -46,15 +46,13 @@ export function RadioButtonGroupField({
   ...fieldConfig
 }: RadioButtonGroupFieldProps) {
   const handleOnChange = useCallback(
-    (option: SelectableValue<string>, input) => {
-      return () => {
+    (option: SelectableValue<string>, input) => () => {
         if (option.disabled) {
           return;
         }
 
         input.onChange(option.value);
-      };
-    },
+      },
     [],
   );
   const styles = useStyles(getStyles);

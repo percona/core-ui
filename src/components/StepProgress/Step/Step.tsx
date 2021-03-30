@@ -8,21 +8,22 @@ import { cx } from 'emotion';
 import { useStyles, Icon } from '@grafana/ui';
 import { getStyles } from './Step.styles';
 
-export interface StepProps {
-  title?: string;
-  number?: number;
-  status?: StepStatus;
-  disabled?: boolean;
-  isLast?: boolean;
-  dataQa?: string;
-  onClick: () => void;
-}
-
+// eslint-disable-next-line no-shadow
 export enum StepStatus {
   current = 'current',
   done = 'done',
   invalid = 'invalid',
   todo = 'todo',
+}
+
+export interface StepProps {
+  dataQa?: string;
+  disabled?: boolean;
+  isLast?: boolean;
+  number?: number;
+  onClick: () => void;
+  status?: StepStatus;
+  title?: string;
 }
 
 export const Step: FC<StepProps> = ({

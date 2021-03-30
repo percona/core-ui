@@ -11,15 +11,8 @@ help:                   ## Display this help message
 init:                   ## Install development tools
 	npm install -g lerna
 
-bootstrap:              ## Bootstrap projects
-	lerna bootstrap
-	lerna link
-
 dev:                   ## Run the ui dev locally
-	lerna bootstrap
-	lerna run build --scope='@percona/platform-core'
-	lerna link
-	lerna run start --scope='@percona/platform-ui'
+	npm start
 
 e2e:
 	lerna run cy:run

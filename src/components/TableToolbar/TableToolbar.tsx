@@ -10,20 +10,19 @@ export const TableToolbar: FC<TableToolbarProps> = ({ actions, selectedItems }) 
   return (
     <div className={styles.wrapper}>
       {actions.map(({
-          callback,
-          icon,
-          isBulkAction = false,
-          label,
-        }) => {
-
-        return <TableToolbarButton
+        callback,
+        icon,
+        isBulkAction = false,
+        label,
+      }) => (
+        <TableToolbarButton
           key={`${icon}-${label}`}
           icon={icon}
           label={label}
           disabled={isBulkAction && selectedItems.length <= 1}
           onClick={callback}
-        />;
-      })}
+        />
+      ))}
     </div>
   );
 };

@@ -1,23 +1,9 @@
-import React, {
-  FC, ReactNode, useCallback, useState,
-} from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Form, FormRenderProps } from 'react-final-form';
 import { FormApi } from 'final-form';
-import { Step, StepStatus } from './Step/Step';
+import { Step, StepStatus } from './Step';
+import { StepProgressProps } from './StepProgress.types';
 import { styles } from './StepProgress.styles';
-
-export interface StepProgressProps {
-  steps: Step[];
-  initialValues?: Record<string, any>;
-  onSubmit: (values: Record<string, any>) => void;
-}
-
-export interface Step {
-  render: (props: FormRenderProps) => ReactNode;
-  title?: string;
-  fields: string[];
-  dataQa?: string;
-}
 
 const getStepStatus = (
   form: FormApi,
@@ -56,7 +42,7 @@ export const StepProgress: FC<StepProgressProps> = ({
     <Form
       initialValues={initialValues}
       onSubmit={onSubmit}
-      render={({ form, handleSubmit, ...props }) => (
+      render={({ form, handleSubmit, ...props }: FormRenderProps) => (
         <form
           onSubmit={handleSubmit}
           className={styles.stepProgressWrapper}

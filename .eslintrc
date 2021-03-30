@@ -1,14 +1,13 @@
 {
-  "extends": ["react-app", "plugin:react/recommended", "airbnb", "prettier", "prettier/react"],
+  "extends": ["react-app", "airbnb", "prettier"],
   "env": {
     "jest/globals": true,
     "browser": true
   },
   "root": true,
-  "ignorePatterns": "src/core/gen/**/*",
   "settings": {
     "react": {
-      "version": "detect"
+      "version": "16.12.0"
     },
     "import/resolver": {
       "node": {
@@ -42,6 +41,7 @@
     "react/jsx-props-no-spreading": ["off"],
     "react/prop-types": ["off"],
     "react/display-name": ["off"],
+    "react/require-default-props": ["off"],
     "max-len": [
       "error", 
       { 
@@ -90,11 +90,8 @@
       { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] }
     ],
     // "no-inline-styles/no-inline-styles": [2],
-    // ENABLE LATER
-    "max-classes-per-file": ["off"],
     "no-shadow": ["error"],
     "react/no-array-index-key": ["error"],
-    "@typescript-eslint/ban-ts-ignore": ["error"],
     "no-unused-expressions": ["error"]
   }
 }

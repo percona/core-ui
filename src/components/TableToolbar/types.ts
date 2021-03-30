@@ -1,3 +1,4 @@
+import React from 'react';
 import { AvailableIcons } from 'components/Icon';
 
 export interface Action {

@@ -52,16 +52,15 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
   // TODO: find a way to improve this
   const childrenArray = size > 1 ? children : React.Children.toArray(children) as Array<React.ReactElement>;
 
-  const menuItems = React.Children.map(childrenArray, (child, index) => {
-    return React.cloneElement(child, {
+  const menuItems = React.Children.map(childrenArray, (child, index) => React.cloneElement(child, {
       ...child.props,
       onClick: () => {
         setActiveIndex(index);
         child.props.onClick();
       },
       className: cx(child.props.className, { active: index === activeIndex }),
-    });
-  });
+    }),
+  );
 
   const { styles: popperStyles, attributes: popperAttributes } = usePopper(
     toggleRef.current,
