@@ -11,9 +11,11 @@ In order to setup the local development environment please run the following com
 
 ## Publishing
 
-- Install a package `np` globally: `npm i -g np`
-- Publish a minor version from the main branch (best): `np minor --yolo` or
-- Publish a patch version from a branch other than main (not encouraged): `np patch --any-branch --yolo`
+- Update the version: `npm version <patch|minor|major`
+- Push the tags: `git push --tags`
+- Publish the new version: `npm publish --tag latest --access public`
+- To publish a dist-tag: `npm publish --tag next --access public`
+- To remove a dist-tag: `npm dist-tag rm @percona/platform-core next`
 
 The published package name is `@percona/platform-core`.
 
