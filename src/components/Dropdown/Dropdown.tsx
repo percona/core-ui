@@ -50,7 +50,7 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   // TODO: find a way to improve this
-  const childrenArray = size > 1 ? children : React.Children.toArray(children) as Array<React.ReactElement>;
+  const childrenArray = size > 1 ? children : React.Children.toArray(children) as any;
 
   const menuItems = React.Children.map(childrenArray, (child, index) => React.cloneElement(child, {
       ...child.props,
