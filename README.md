@@ -1,6 +1,4 @@
-# @percona/platform-core
-
-Percona Enterprise Platform Core UI.
+# Percona Enterprise Platform Core UI
 
 ## Local development
 
@@ -16,6 +14,8 @@ In order to setup the local development environment please run the following com
 - Install a package `np` globally: `npm i -g np`
 - Publish a minor version from the main branch (best): `np minor --yolo` or
 - Publish a patch version from a branch other than main (not encouraged): `np patch --any-branch --yolo`
+
+The published package name is `@percona/platform-core`.
 
 ## Important
 
