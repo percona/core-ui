@@ -14,6 +14,5 @@ describe('Validator maxLength::', () => {
     const errorMessage = `Must contain at least ${length} characters`;
 
     expect(validator('123456789')).toEqual(errorMessage);
-    expect(validator(null)).toEqual(errorMessage);
   });
 });
