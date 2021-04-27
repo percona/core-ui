@@ -5,5 +5,5 @@ export const maxLength = (length: number): Validator => (value: string) => {
     return undefined;
   }
 
-  return `Must contain at least ${length} characters`;
+  return `Must contain at most ${length} characters`;
 };
