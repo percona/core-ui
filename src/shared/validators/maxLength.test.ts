@@ -8,7 +8,7 @@ describe('Validator maxLength::', () => {
     expect(validator('0Yz56W')).toBeUndefined();
   });
 
-  it('should return an error if the string length is less than maxLength parameter value', () => {
+  it('should return an error if the string length is greater than maxLength parameter value', () => {
     const length = 8;
     const validator = maxLength(length);
     const errorMessage = `Must contain at most ${length} characters`;
