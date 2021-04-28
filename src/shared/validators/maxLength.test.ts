@@ -1,7 +1,7 @@
 import { maxLength } from './maxLength';
 
 describe('Validator maxLength::', () => {
-  it('should return undefined if the string length is equal to or less than required', () => {
+  it('should return undefined if the string length is equal to or less than maxLength parameter value', () => {
     const validator = maxLength(8);
 
     expect(validator('12345678')).toBeUndefined();
