@@ -11,6 +11,7 @@ In order to setup the local development environment please run the following com
 
 ## Publishing
 
+- Log in to the registry: `npm login`
 - You need to have valid npm credetials set up (`npm whoami` should return your npm username)
 - Checkout the `main` branch
 - Run: `npm run lint && npm run build`
