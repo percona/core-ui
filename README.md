@@ -11,8 +11,13 @@ In order to setup the local development environment please run the following com
 
 ## Publishing
 
-- Update the version: `npm version <patch|minor|major`
-- Push the tags: `git push --tags`
+- Log in to the registry: `npm login`
+- You need to have valid npm credetials set up (`npm whoami` should return your npm username)
+- Checkout the `main` branch
+- Run: `npm run lint && npm run build`
+- Double check that the `dist` directory was created and contains a build
+- Update the version: `npm version patch|minor|major` (this will create a new tag and update `package.json` accordingly)
+- Push the tags: `git push --follow-tags` (this will push the updated `package.json` to `main` with the new tag)
 - Publish the new version: `npm publish --tag latest --access public`
 - To publish a dist-tag: `npm publish --tag next --access public`
 - To remove a dist-tag: `npm dist-tag rm @percona/platform-core next`
