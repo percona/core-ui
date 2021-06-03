@@ -62,7 +62,7 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
     }),
   );
 
-  const { styles: popperStyles, attributes: popperAttributes } = usePopper(
+  const { styles: popperStyles, attributes: popperAttributes, update: updatePopper } = usePopper(
     toggleRef.current,
     popperRef.current,
     popperConfig,
@@ -80,8 +80,9 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
     setVisible(false);
   };
 
-  const handleDropdownClick = () => {
+  const handleDropdownClick = async () => {
     setVisible((oldValue) => !oldValue);
+    await updatePopper!();
   };
 
   useEffect(() => {
