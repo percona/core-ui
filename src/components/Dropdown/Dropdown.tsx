@@ -82,7 +82,10 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
 
   const handleDropdownClick = async () => {
     setVisible((oldValue) => !oldValue);
-    await updatePopper!();
+
+    if (updatePopper != null) {
+      await updatePopper();
+    }
   };
 
   useEffect(() => {
