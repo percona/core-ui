@@ -13,8 +13,8 @@ describe('TableToolbar::', () => {
     );
 
     expect(wrapper.find(TableToolbarButton)).toHaveLength(2);
-    expect(wrapper.find(TableToolbarButton).at(0)).toHaveProp('disabled', false);
-    expect(wrapper.find(TableToolbarButton).at(1)).toHaveProp('disabled', true);
+    expect(wrapper.find(TableToolbarButton).at(0).props()).toHaveProperty('disabled', false);
+    expect(wrapper.find(TableToolbarButton).at(1).props()).toHaveProperty('disabled', true);
 
     wrapper = mount(
       <TableToolbar actions={[
@@ -24,8 +24,8 @@ describe('TableToolbar::', () => {
     );
 
     expect(wrapper.find(TableToolbarButton)).toHaveLength(2);
-    expect(wrapper.find(TableToolbarButton).at(0)).toHaveProp('disabled', false);
-    expect(wrapper.find(TableToolbarButton).at(1)).toHaveProp('disabled', true);
+    expect(wrapper.find(TableToolbarButton).at(0).props()).toHaveProperty('disabled', false);
+    expect(wrapper.find(TableToolbarButton).at(1).props()).toHaveProperty('disabled', true);
 
     wrapper = mount(
       <TableToolbar actions={[
@@ -35,8 +35,8 @@ describe('TableToolbar::', () => {
     );
 
     expect(wrapper.find(TableToolbarButton)).toHaveLength(2);
-    expect(wrapper.find(TableToolbarButton).at(0)).toHaveProp('disabled', false);
-    expect(wrapper.find(TableToolbarButton).at(1)).toHaveProp('disabled', false);
+    expect(wrapper.find(TableToolbarButton).at(0).props()).toHaveProperty('disabled', false);
+    expect(wrapper.find(TableToolbarButton).at(1).props()).toHaveProperty('disabled', false);
 
     wrapper.unmount();
   });

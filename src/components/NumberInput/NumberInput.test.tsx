@@ -12,7 +12,7 @@ describe('NumberInputField::', () => {
 
     expect(field).toHaveLength(1);
     expect(wrapper.find('input')).toHaveLength(1);
-    expect(wrapper.find('input')).toHaveProp('type', 'number');
+    expect(wrapper.find('input').props()).toHaveProperty('type', 'number');
     expect(wrapper.find('button')).toHaveLength(2);
 
     wrapper.unmount();

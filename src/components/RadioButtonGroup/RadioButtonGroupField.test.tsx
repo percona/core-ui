@@ -25,7 +25,7 @@ describe('RadioButtonGroupField::', () => {
 
     expect(field).toHaveLength(1);
     expect(wrapper.find('input')).toHaveLength(5);
-    expect(wrapper.find(dataQa('test-radio-state'))).toHaveProp('type', 'text');
+    expect(wrapper.find(dataQa('test-radio-state')).props()).toHaveProperty('type', 'text');
     expect(wrapper.find('label')).toHaveLength(4);
 
     wrapper.unmount();
@@ -137,14 +137,14 @@ describe('RadioButtonGroupField::', () => {
       </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-radio-state'))).toHaveProp('value', 'lowest');
-    expect(wrapper.find(dataQa('test-radio-button')).at(0)).toHaveProp('checked', true);
+    expect(wrapper.find(dataQa('test-radio-state')).props()).toHaveProperty('value', 'lowest');
+    expect(wrapper.find(dataQa('test-radio-button')).at(0).props()).toHaveProperty('checked', true);
     wrapper.find(dataQa('test-radio-button')).at(1).simulate('change', { target: { checked: true } });
     wrapper.update();
 
     // The value shouldn't have changed since the component disallows clicks when disabled
-    expect(wrapper.find(dataQa('test-radio-state'))).toHaveProp('value', 'medium');
-    expect(wrapper.find(dataQa('test-radio-button')).at(1)).toHaveProp('checked', true);
+    expect(wrapper.find(dataQa('test-radio-state')).props()).toHaveProperty('value', 'medium');
+    expect(wrapper.find(dataQa('test-radio-button')).at(1).props()).toHaveProperty('checked', true);
 
     wrapper.unmount();
   });
@@ -156,13 +156,13 @@ describe('RadioButtonGroupField::', () => {
       </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-radio-state'))).toHaveProp('value', 'lowest');
-    expect(wrapper.find(dataQa('test-radio-button')).at(0)).toHaveProp('checked', true);
+    expect(wrapper.find(dataQa('test-radio-state')).props()).toHaveProperty('value', 'lowest');
+    expect(wrapper.find(dataQa('test-radio-button')).at(0).props()).toHaveProperty('checked', true);
     wrapper.find(dataQa('test-radio-button')).at(2).simulate('click');
     wrapper.update();
     // The value shouldn't have changed since the component disallows clicks when disabled
-    expect(wrapper.find(dataQa('test-radio-state'))).toHaveProp('value', 'lowest');
-    expect(wrapper.find(dataQa('test-radio-button')).at(0)).toHaveProp('checked', true);
+    expect(wrapper.find(dataQa('test-radio-state')).props()).toHaveProperty('value', 'lowest');
+    expect(wrapper.find(dataQa('test-radio-button')).at(0).props()).toHaveProperty('checked', true);
 
     wrapper.unmount();
   });

@@ -3,7 +3,7 @@ import { cx } from 'emotion';
 import {
   Field, FieldMetaState, FieldInputProps, UseFieldConfig,
 } from 'react-final-form';
-import { Icon, useStyles } from '@grafana/ui';
+import { Icon, IconName, useStyles } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
 import { Validator, compose } from '../../shared/validators';
 import { FieldInputAttrs } from '../../shared/types';
@@ -90,7 +90,7 @@ export function RadioButtonGroupField({
                   onChange={handleOnChange(o, input)}
                   size={size}
                 >
-                  {o.icon && <Icon name={o.icon} className={styles.icon} />}
+                  {o.icon && <Icon name={o.icon as IconName} className={styles.icon} />}
                   {o.label}
                 </RadioButton>
               ))}
