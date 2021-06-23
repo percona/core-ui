@@ -44,7 +44,7 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
   const [visible, setVisible] = useState(false);
   const size = React.Children.count(children);
 
-  const toggleRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLDivElement>(null);
   const popperRef = useRef<HTMLDivElement>(null);
   // NOTE: -1 is used to indicate that there are no active menu items
   const [activeIndex, setActiveIndex] = useState<number>(-1);
@@ -150,7 +150,9 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
 
   return (
     <>
-      <Toggle ref={toggleRef} onClick={handleDropdownClick} data-qa="dropdown-menu-toggle" />
+      <div className="ref" ref={toggleRef}>
+        <Toggle onClick={handleDropdownClick} data-qa="dropdown-menu-toggle" />
+      </div>
 
       <div
         ref={popperRef}
