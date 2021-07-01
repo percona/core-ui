@@ -1,0 +1,43 @@
+---
+name: Node.js Package
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Parameter to pass to `npm version` (e.g: 'patch', 'minor', 'major', 'prerelease', etc. - default: 'patch')"
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm run test:ci
+      - name: Build package
+        run: npm run build
+      - name: Bump version
+        run: npm version ${{ github.event.inputs.version || 'patch' }}
+      - name: Push new version
+        run: git push --follow-tags
+      - name: Publish latest version
+        if: ${{ !startsWith(github.event.inputs.version, 'pre') }}
+        run: npm publish --tag latest --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish next version
+        if: ${{ startsWith(github.event.inputs.version, 'pre') }}
+        run: npm publish --tag next --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
