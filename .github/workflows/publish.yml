@@ -8,7 +8,7 @@ on:
         required: true
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: percona-platform/checkout@v2
@@ -24,6 +24,8 @@ jobs:
         run: npm install
       - name: Run tests
         run: npm run test:ci
+      - name: Clean up after tests
+        run: git checkout -- tsconfig.json
       - name: Build package
         run: npm run build
       - name: Bump version
