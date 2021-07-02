@@ -1,5 +1,6 @@
 ---
 name: Publish Package
+
 on:
   workflow_dispatch:
     inputs:
@@ -18,12 +19,7 @@ jobs:
           node-version: "14.x"
           registry-url: "https://registry.npmjs.org"
 
-      # - name: Configure Git
-      #   run: |
-      #     git config --global user.name "GitHub Action"
-      #     git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
-      - name: Configure git for pushing to a protected branch
+      - name: Configure git
         env:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: |
