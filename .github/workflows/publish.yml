@@ -1,5 +1,5 @@
 ---
-name: Publish Package
+name: Publish to npm
 on:
   push:
 
