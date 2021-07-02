@@ -1,8 +1,6 @@
 ---
-name: Publish to npm
+name: Publish Package
 on:
-  push:
-
   workflow_dispatch:
     inputs:
       version:
@@ -18,9 +16,6 @@ jobs:
         with:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
-      # TODO: remove this step once workflow_dispatch not showing gets fixed
-      - if: ${{ github.event_name != 'workflow_dispatch'}}
-        run: exit 1
       - name: Configure Git
         run: |
           git config --global user.name "GitHub Action"
