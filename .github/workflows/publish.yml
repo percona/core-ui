@@ -1,6 +1,8 @@
 ---
 name: Node.js Package
 on:
+  release:
+    types: [created]
   workflow_dispatch:
     inputs:
       version:
@@ -11,6 +13,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # TODO: remove this step once workflow_dispatch not showing gets fixed
+      - if: ${{ github.event_name != 'workflow_dispatch'}}
+        run: exit 1
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
