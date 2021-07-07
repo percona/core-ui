@@ -58,8 +58,9 @@ jobs:
         run: git push --follow-tags
 
       - name: Merge this branch to main
-        if: ${{ !startsWith(github.event.inputs.version, 'pre') && success() }}
-        uses: ridedott/merge-me-action@v2
+        if: ${{ !startsWith(github.event.inputs.version, 'pre') }}
+        uses: devmasx/merge-branch@v1.3.1
         with:
-          GITHUB_LOGIN: percona-robot
-          GITHUB_TOKEN: ${{ secrets.ROBOT_TOKEN }}
+          type: now
+          target_branch: main
+          github_token: ${{ secrets.ROBOT_TOKEN }}
