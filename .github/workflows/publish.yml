@@ -42,9 +42,6 @@ jobs:
       - name: Bump version
         run: npm version ${{ github.event.inputs.version || 'patch' }}
 
-      - name: Push new version
-        run: git push --follow-tags
-
       - name: Publish latest version
         if: ${{ !startsWith(github.event.inputs.version, 'pre') }}
         run: npm publish --tag latest --access public
@@ -56,3 +53,13 @@ jobs:
         run: npm publish --tag next --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push new version
+        run: git push --follow-tags
+
+      - name: Merge this branch to main
+        if: ${{ !startsWith(github.event.inputs.version, 'pre') && success() }}
+        uses: ridedott/merge-me-action@v2
+        with:
+          GITHUB_LOGIN: percona-robot
+          GITHUB_TOKEN: ${{ secrets.ROBOT_TOKEN }}
