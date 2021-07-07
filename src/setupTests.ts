@@ -7,7 +7,7 @@ import 'jest-canvas-mock';
 import 'jest-enzyme';
 import { configure } from 'enzyme';
 import { configure as configureTestingLibrary } from '@testing-library/react';
-import * as Adapter from 'enzyme-adapter-react-16';
+import * as Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 const adapter = Adapter as any;
 

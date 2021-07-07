@@ -15,7 +15,7 @@ describe('CheckboxField::', () => {
 
     expect(field).toHaveLength(1);
     expect(wrapper.find('input')).toHaveLength(1);
-    expect(wrapper.find('input')).toHaveProp('type', 'checkbox');
+    expect(wrapper.find('input').props()).toHaveProperty('type', 'checkbox');
 
     wrapper.unmount();
   });

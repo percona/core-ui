@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Button, ButtonProps, Spinner } from '@grafana/ui';
+import { Button, Spinner } from '@grafana/ui';
+import { ButtonProps } from '@grafana/ui/components/Button';
 
 interface LoaderButtonProps extends ButtonProps {
   loading?: boolean;

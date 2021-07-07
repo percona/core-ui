@@ -12,7 +12,7 @@ describe('TextInputField::', () => {
 
     expect(field).toHaveLength(1);
     expect(wrapper.find('input')).toHaveLength(1);
-    expect(wrapper.find('input')).toHaveProp('type', 'text');
+    expect(wrapper.find('input').props()).toHaveProperty('type', 'text');
 
     wrapper.unmount();
   });
