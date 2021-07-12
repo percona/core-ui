@@ -150,7 +150,7 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
 
   return (
     <>
-      <div className="ref" ref={toggleRef}>
+      <div ref={toggleRef}>
         <Toggle onClick={handleDropdownClick} data-qa="dropdown-menu-toggle" />
       </div>
 
