@@ -1,5 +1,18 @@
-import React, { FC } from 'react';
-import { Button, ButtonProps, Spinner } from '@grafana/ui';
+import React, { ButtonHTMLAttributes, FC } from 'react';
+import { Button, ButtonVariant, IconName, Spinner } from '@grafana/ui';
+
+type ComponentSize = 'xs' | 'sm' | 'md' | 'lg';
+
+type CommonProps = {
+  size?: ComponentSize;
+  variant?: ButtonVariant;
+  icon?: IconName;
+  className?: string;
+  children?: React.ReactNode;
+  fullWidth?: boolean;
+};
+
+type ButtonProps = CommonProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 interface LoaderButtonProps extends ButtonProps {
   loading?: boolean;

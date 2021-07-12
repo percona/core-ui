@@ -8,7 +8,7 @@ describe('TableToolbarButton::', () => {
     const wrapper = mount(<TableToolbarButton icon="plusSquare" label="test" />);
 
     expect(wrapper.find('button').text()).toEqual('test');
-    expect(wrapper.find(Icon)).toHaveProp('name', 'plusSquare');
+    expect(wrapper.find(Icon).props()).toHaveProperty('name', 'plusSquare');
 
     wrapper.unmount();
   });

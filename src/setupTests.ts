@@ -6,9 +6,11 @@ import '@testing-library/jest-dom/extend-expect';
 import 'jest-canvas-mock';
 import 'jest-enzyme';
 import { configure } from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
+import { configure as configureTestingLibrary } from '@testing-library/react';
+import * as Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 const adapter = Adapter as any;
 
 // eslint-disable-next-line new-cap
 configure({ adapter: new adapter.default() });
+configureTestingLibrary({ testIdAttribute: 'data-qa' });

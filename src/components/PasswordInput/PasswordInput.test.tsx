@@ -12,7 +12,7 @@ describe('PasswordInputField::', () => {
 
     expect(field).toHaveLength(1);
     expect(wrapper.find('input')).toHaveLength(1);
-    expect(wrapper.find('input')).toHaveProp('type', 'password');
+    expect(wrapper.find('input').props()).toHaveProperty('type', 'password');
 
     wrapper.unmount();
   });
