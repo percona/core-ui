@@ -21,11 +21,11 @@ jobs:
 
       - name: Configure git
         env:
-          WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git config --global url."https://percona-platform-robot:${WORKFLOW_TOKEN}@github.com".insteadOf "https://github.com"
+          git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
 
       - name: Install dependencies
         run: npm install
@@ -39,12 +39,9 @@ jobs:
       - name: Build package
         run: npm run build
 
-      - name: Print the current branch
-        run: git branch && echo "$GITHUB_REF"
-
       - name: Bump version
         env:
-          VERSION: ${{ github.event.inputs.version || 'prerelease' }}
+          VERSION: ${{ github.event.inputs.version || 'patch' }}
         run: npm version $VERSION
 
       - name: Publish latest version
