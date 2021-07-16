@@ -50,13 +50,13 @@ jobs:
         run: npm version $VERSION
 
       - name: Publish latest version
-        if: ${{ env.VERSION != 'prerelease') }}
+        if: ${{ env.VERSION != 'prerelease' }}
         run: npm publish --tag latest --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish next version
-        if: ${{ env.VERSION == 'prerelease') }}
+        if: ${{ env.VERSION == 'prerelease' }}
         run: npm publish --tag next --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
