@@ -41,32 +41,28 @@ jobs:
       - name: Build package
         run: npm run build
 
-      - name: Bump version
-        run: npm version ${{ github.event.inputs.version || 'prerelease' }}
+      - name: Print the current branch
+        run: git branch && echo "$GITHUB_REF"
 
-      - name: Dry-run publish latest version
-        if: ${{ !startsWith(github.event.inputs.version, 'pre') }}
-        run: npm publish --tag latest --access public --dry-run
+      - name: Bump version
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          VERSION: ${{ github.event.inputs.version || 'prerelease' }}
+        run: npm version $VERSION
 
       - name: Publish latest version
-        if: ${{ !startsWith(github.event.inputs.version, 'pre') }}
+        if: ${{ env.VERSION != 'prerelease') }}
         run: npm publish --tag latest --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Dry-run publish next version
-        if: ${{ startsWith(github.event.inputs.version, 'pre') }}
-        run: npm publish --tag next --access public --dry-run
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Publish next version
-        if: ${{ startsWith(github.event.inputs.version, 'pre') }}
+        if: ${{ env.VERSION == 'prerelease') }}
         run: npm publish --tag next --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Print the current branch
+        run: git branch && echo "$GITHUB_REF"
+
       - name: Push new version
-        run: git push --follow-tags
+        run: git push origin --follow-tags
