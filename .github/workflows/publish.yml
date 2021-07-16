@@ -64,5 +64,5 @@ jobs:
       - name: Print the current branch
         run: git branch && echo "$GITHUB_REF"
 
-      - name: Push new version
+      - name: Push the new version
         run: git push origin --follow-tags
