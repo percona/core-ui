@@ -50,4 +50,4 @@ jobs:
         run: git branch && echo "$GITHUB_REF"
 
       - name: Push the new version
-        run: git push origin --follow-tags
+        run: git push origin HEAD:"${github.ref}" --follow-tags
