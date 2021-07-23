@@ -15,7 +15,7 @@ jobs:
 
       - uses: percona-platform/setup-node@v2
         with:
-          node-version: "14.x"
+          node-version: "14"
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
 
@@ -47,11 +47,10 @@ jobs:
       #   env:
       #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Print the current branch
-        run: git branch --show-current
-
       - name: Push the new version
         env:
           # github.head_ref is only available in pull requests
           BRANCH_NAME: ${{ github.head_ref || github.ref }}
-        run: git push origin "$GITHUB_REF" --follow-tags
+        run: |
+          echo branch: "$BRANCH_NAME"
+          git push origin HEAD:"$BRANCH_NAME" --follow-tags
