@@ -1,0 +1,56 @@
+---
+name: Publish Next Version to NPM
+
+on:
+  pull_request:
+
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+    steps:
+      - uses: percona-platform/checkout@v2
+
+      - uses: percona-platform/setup-node@v2
+        with:
+          node-version: "14"
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+
+      - name: Configure git
+        env:
+          ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test:ci
+
+      - name: Clean up after tests
+        run: git checkout -- tsconfig.json
+
+      - name: Build the assets
+        run: npm run build
+
+      - name: Bump version
+        run: npm version prerelease
+
+      # - name: Publish next version
+      #   run: npm publish --tag next --access public
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push the new version
+        env:
+          # github.head_ref is only available in pull requests
+          BRANCH_NAME: ${{ github.head_ref || github.ref }}
+        run: |
+          echo branch: "$BRANCH_NAME"
+          git push origin HEAD:"$BRANCH_NAME" --follow-tags

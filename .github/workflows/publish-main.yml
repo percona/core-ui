@@ -1,16 +1,18 @@
 ---
-name: Publish Package
+name: Publish Latest Version to NPM
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Parameter to pass to `npm version` (e.g: 'patch', 'minor', 'major', 'prerelease', etc. - default: 'patch')"
+        description: "Parameter to pass to `npm version` (e.g: 'patch', 'minor', 'major', default: 'patch')"
+        default: "patch"
         required: true
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: percona-platform/checkout@v2
 
@@ -36,28 +38,18 @@ jobs:
       - name: Clean up after tests
         run: git checkout -- tsconfig.json
 
-      - name: Build package
+      - name: Build the assets
         run: npm run build
 
       - name: Bump version
         env:
-          VERSION: ${{ github.event.inputs.version || 'patch' }}
+          VERSION: ${{ github.event.inputs.version }}
         run: npm version $VERSION
 
       - name: Publish latest version
-        if: ${{ env.VERSION != 'prerelease' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --tag latest --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish next version
-        if: ${{ env.VERSION == 'prerelease' }}
-        run: npm publish --tag next --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Print the current branch
         run: git branch && echo "$GITHUB_REF"
-
-      - name: Push the new version
-        run: git push origin --follow-tags
