@@ -53,5 +53,5 @@ jobs:
       - name: Push the new version
         env:
           # github.head_ref is only available in pull requests
-          BRANCH_NAME: ${{ gihub.head_ref || github.ref }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref }}
         run: git push origin "$GITHUB_REF" --follow-tags
