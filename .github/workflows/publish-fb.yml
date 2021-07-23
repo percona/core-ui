@@ -12,6 +12,8 @@ jobs:
     if: github.ref != 'refs/heads/main'
     steps:
       - uses: percona-platform/checkout@v2
+        with:
+          ref: ${{ github.head_ref || github.ref }}
 
       - uses: percona-platform/setup-node@v2
         with:
