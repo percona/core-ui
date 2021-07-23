@@ -8,10 +8,13 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
+    env:
+      # github.head_ref is only available in pull requests, not workflows
+      BRANCH_NAME: ${{ github.head_ref || github.ref }}
     steps:
       - uses: percona-platform/checkout@v2
         with:
-          ref: ${{ github.head_ref || github.ref }}
+          ref: "$BRANCH_NAME"
 
       - uses: percona-platform/setup-node@v2
         with:
@@ -43,14 +46,9 @@ jobs:
         run: npm version prerelease
 
       - name: Publish next version
-        run: npm publish --tag next --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --tag next --access public
 
       - name: Push the new version
-        env:
-          # github.head_ref is only available in pull requests
-          BRANCH_NAME: ${{ github.head_ref || github.ref }}
-        run: |
-          echo branch: "$BRANCH_NAME"
-          git push origin HEAD:"$BRANCH_NAME" --follow-tags
+        run: git push origin HEAD:"$BRANCH_NAME" --follow-tags
