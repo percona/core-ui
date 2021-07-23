@@ -47,7 +47,10 @@ jobs:
       #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Print the current branch
-        run: git branch && echo "$GITHUB_REF"
+        run: git branch --show-current
 
       - name: Push the new version
+        env:
+          # github.head_ref is only available in pull requests
+          BRANCH_NAME: ${{ gihub.head_ref || github.ref }}
         run: git push origin "$GITHUB_REF" --follow-tags

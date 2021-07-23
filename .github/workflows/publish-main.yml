@@ -47,9 +47,9 @@ jobs:
         run: npm version $VERSION
 
       - name: Publish latest version
-        run: npm publish --tag latest --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --tag latest --access public
 
       - name: Print the current branch
         run: git branch && echo "$GITHUB_REF"
