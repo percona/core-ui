@@ -1,23 +1,26 @@
 ---
-name: Publish Package
+name: Publish Next Version to NPM
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Parameter to pass to `npm version` (e.g: 'patch', 'minor', 'major', 'prerelease', etc. - default: 'patch')"
-        required: true
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+    env:
+      # github.head_ref is only available in pull requests, not workflows
+      BRANCH_NAME: ${{ github.head_ref || github.ref }}
     steps:
       - uses: percona-platform/checkout@v2
+        with:
+          ref: "$BRANCH_NAME"
 
       - uses: percona-platform/setup-node@v2
         with:
-          node-version: "14.x"
+          node-version: "14"
           registry-url: "https://registry.npmjs.org"
+          cache: "npm"
 
       - name: Configure git
         env:
@@ -36,28 +39,16 @@ jobs:
       - name: Clean up after tests
         run: git checkout -- tsconfig.json
 
-      - name: Build package
+      - name: Build the assets
         run: npm run build
 
       - name: Bump version
-        env:
-          VERSION: ${{ github.event.inputs.version || 'patch' }}
-        run: npm version $VERSION
-
-      - name: Publish latest version
-        if: ${{ env.VERSION != 'prerelease' }}
-        run: npm publish --tag latest --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm version prerelease
 
       - name: Publish next version
-        if: ${{ env.VERSION == 'prerelease' }}
-        run: npm publish --tag next --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Print the current branch
-        run: git branch && echo "$GITHUB_REF"
+        run: npm publish --tag next --access public
 
       - name: Push the new version
-        run: git push origin --follow-tags
+        run: git push origin HEAD:"$BRANCH_NAME" --follow-tags
