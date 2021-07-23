@@ -41,13 +41,13 @@ jobs:
       - name: Bump version
         run: npm version prerelease
 
-      - name: Publish next version
-        run: npm publish --tag next --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: Publish next version
+      #   run: npm publish --tag next --access public
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Print the current branch
         run: git branch && echo "$GITHUB_REF"
 
       - name: Push the new version
-        run: git push origin HEAD:"$GITHUB_REF" --follow-tags
+        run: git push origin "$GITHUB_REF" --follow-tags
