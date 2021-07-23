@@ -18,8 +18,9 @@ jobs:
 
       - uses: percona-platform/setup-node@v2
         with:
-          node-version: "14.x"
+          node-version: "14"
           registry-url: "https://registry.npmjs.org"
+          cache: "npm"
 
       - name: Configure git
         env:
@@ -50,6 +51,3 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --tag latest --access public
-
-      - name: Print the current branch
-        run: git branch && echo "$GITHUB_REF"
