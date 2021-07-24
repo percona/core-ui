@@ -16,12 +16,12 @@ const icons: Icons  = {
   unselectedSquare: DisabledSquare,
 };
 
-interface IconProps {
+interface IconProps extends React.SVGProps<SVGSVGElement>{
   name: AvailableIcons;
 }
 
-export const Icon: FC<IconProps> = ({ name }) => {
+export const Icon: FC<IconProps> = ({ name, ...rest }) => {
   const IconComponent = icons[name];
 
-  return <IconComponent />;
+  return <IconComponent {...rest} />;
 };
