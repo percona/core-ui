@@ -1,52 +1,60 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { dataQa } from 'shared';
+import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Modal } from './Modal';
 
 describe('Modal window::', () => {
-  it('should render modal successfully', () => {
+  it('should render modal successfully', async () => {
     const onClose = jest.fn();
-    const root = shallow(<Modal onClose={onClose} isVisible title="test" />);
 
-    expect(root.find(dataQa('modal-background')).length).toEqual(1);
-    expect(root.find(dataQa('modal-body')).length).toEqual(1);
-    expect(root.find(dataQa('modal-close-button')).length).toEqual(1);
-    expect(root.find(dataQa('modal-content')).length).toEqual(1);
+    render(<Modal onClose={onClose} isVisible title="test" />);
+
+    expect(await screen.findByTestId('modal-background')).toBeInTheDocument();
+    expect(await screen.findByTestId('modal-body')).toBeInTheDocument();
+    expect(await screen.findByTestId('modal-close-button')).toBeInTheDocument();
+    expect(await screen.findByTestId('modal-content')).toBeInTheDocument();
   });
 
-  it('should call onClose callback on close button click', () => {
+  it('should call onClose callback on close button click', async() => {
     const onClose = jest.fn();
-    const root = shallow(<Modal onClose={onClose} isVisible title="test" />);
 
-    expect(onClose.mock.calls.length).toBe(0);
-    root.find(dataQa('modal-close-button')).simulate('click');
-    expect(onClose.mock.calls.length).toBe(1);
+    render(<Modal onClose={onClose} isVisible title="test" />);
+
+    expect(onClose).toBeCalledTimes(0);
+    userEvent.click(await screen.findByTestId('modal-close-button'));
+    expect(onClose).toBeCalledTimes(1);
   });
 
   it('should NOT call onClose callback on escape when closeOnEscape is NOT set', () => {
     const onClose = jest.fn();
-    const root = shallow(<Modal onClose={onClose} isVisible closeOnEscape={false} title="test" />);
 
-    expect(onClose.mock.calls.length).toBe(0);
-    root.simulate('keydown', { key: 'Escape' });
-    expect(onClose.mock.calls.length).toBe(0);
+    render(<Modal onClose={onClose} isVisible closeOnEscape={false} title="test" />);
+
+    expect(onClose).toBeCalledTimes(0);
+    const modal = screen.queryByTestId('modal-wrapper');
+
+    expect(modal).toBeInTheDocument();
+    fireEvent.keyDown(modal, { key: 'Escape', code: 'Escape' });
+    expect(onClose).toBeCalledTimes(0);
   });
 
-  it('should call onClose callback on background click when closeOnClickaway is set by default', () => {
+  it('should call onClose callback on background click when closeOnClickaway is set by default', async () => {
     const onClose = jest.fn();
-    const root = shallow(<Modal onClose={onClose} isVisible title="test" />);
 
-    expect(onClose.mock.calls.length).toBe(0);
-    root.find(dataQa('modal-background')).simulate('click');
-    expect(onClose.mock.calls.length).toBe(1);
+    render(<Modal onClose={onClose} isVisible title="test" />);
+
+    expect(onClose).toBeCalledTimes(0);
+    userEvent.click(await screen.findByTestId('modal-background'));
+    expect(onClose).toBeCalledTimes(1);
   });
 
-  it('should NOT call onClose callback on background click when closeOnClickaway is NOT set', () => {
+  it('should NOT call onClose callback on background click when closeOnClickaway is NOT set', async () => {
     const onClose = jest.fn();
-    const root = shallow(<Modal onClose={onClose} isVisible closeOnClickaway={false} title="test" />);
 
-    expect(onClose.mock.calls.length).toBe(0);
-    root.find(dataQa('modal-background')).simulate('click');
-    expect(onClose.mock.calls.length).toBe(0);
+    render(<Modal onClose={onClose} isVisible closeOnClickaway={false} title="test" />);
+
+    expect(onClose).toBeCalledTimes(0);
+    userEvent.click(await screen.findByTestId('modal-background'));
+    expect(onClose).toBeCalledTimes(0);
   });
 });
