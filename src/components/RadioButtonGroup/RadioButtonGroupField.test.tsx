@@ -1,7 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { dataQa, FormWrapper } from '../../shared';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { FormWrapper } from '../../shared';
 import { RadioButtonGroupField } from './RadioButtonGroupField';
 
 const options = [
