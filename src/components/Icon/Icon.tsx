@@ -20,8 +20,9 @@ interface IconProps extends React.SVGProps<SVGSVGElement>{
   name: AvailableIcons;
 }
 
-export const Icon: FC<IconProps> = ({ name, ...rest }) => {
-  const IconComponent = icons[name];
+export const Icon: FC<IconProps> = (props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const IconComponent = icons[props.name];
 
-  return <IconComponent {...rest} />;
+  return <IconComponent {...props} />;
 };

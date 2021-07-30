@@ -34,6 +34,7 @@
     ],
     "no-restricted-imports": 0,
     "no-param-reassign": ["error", { "ignorePropertyModificationsForRegex": ["^acc$"] }],
+    "react/react-in-jsx-scope": ["off"],
     "react/jsx-curly-brace-presence": ["error"],
     "react/jsx-boolean-value": ["error"],
     "react/jsx-filename-extension": ["off"],
