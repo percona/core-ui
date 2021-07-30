@@ -5,6 +5,6 @@
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-canvas-mock';
-import { configure as configureTestingLibrary } from '@testing-library/react';
+import { configure } from '@testing-library/react';
 
-configureTestingLibrary({ testIdAttribute: 'data-qa' });
+configure({ testIdAttribute: 'data-qa' });
