@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { dataQa, FormWrapper } from 'shared';
+import { FormWrapper } from 'shared';
 import { TextareaInputField } from './TextareaInputField';
 
 describe('TextareaInputField::', () => {
