@@ -3,7 +3,7 @@ import { Validator } from './validator.types';
 export const greaterThan = (min: number): Validator<string> => (value: string) => {
   const num = parseInt(value, 10);
 
-  if (!Number.isNaN(num) && Number.isFinite(num) && num > min) {
+  if (Number.isFinite(num) && num > min) {
     return undefined;
   }
 
