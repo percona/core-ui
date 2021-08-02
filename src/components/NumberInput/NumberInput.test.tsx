@@ -131,13 +131,13 @@ describe('NumberInputField::', () => {
   });
 
   it('should apply the passed class name to the inner input element', () => {
-    const { container } = render(
+    render(
       <FormWrapper>
         <NumberInputField name="test" className="testClass" />
       </FormWrapper>,
     );
 
-    expect(container.querySelector('[data-qa="test-number-input"].testClass'));
+    expect(screen.getByTestId('test-number-input').classList.contains('testClass')).toBe(true);
   });
 
   it('should change the value when clicking on the arrow buttons', async () => {
