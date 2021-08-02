@@ -8,7 +8,7 @@ import { CheckboxField } from './CheckboxField';
 const checkboxLabel = 'Checkbox label';
 
 describe('CheckboxField::', () => {
-  it('should render an input element of type checkbox', async () => {
+  it('should render an input element of type checkbox', () => {
     render(
       <FormWrapper>
         <CheckboxField name="test" label="checkbox" />
@@ -60,7 +60,7 @@ describe('CheckboxField::', () => {
     expect(screen.getByText('some error')).toBeInTheDocument();
   });
 
-  it('should show no labels if one is not specified', async () => {
+  it('should show no labels if one is not specified', () => {
     render(
       <FormWrapper>
         <CheckboxField name="test" />
@@ -70,7 +70,7 @@ describe('CheckboxField::', () => {
     expect(screen.queryByTestId(dataQa('test-field-label'))).not.toBeInTheDocument();
   });
 
-  it('should show a label if one is specified', async () => {
+  it('should show a label if one is specified', () => {
     render(
       <FormWrapper>
         <CheckboxField label="test label" name="test" />
@@ -104,9 +104,7 @@ describe('CheckboxField::', () => {
 
     expect(checkbox.getAttribute('autocomplete')).toEqual('off');
 
-    // NOTE: we trigger a change event using two functions below :(
-    userEvent.click(checkbox);
-    fireEvent.blur(checkbox);
+    fireEvent.click(checkbox);
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(checkbox.getAttribute('title')).toEqual(title);
