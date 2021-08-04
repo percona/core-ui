@@ -1,10 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Step, StepStatus } from './Step';
 
 describe('Step::', () => {
-  it('renders step header correctly with title and number', () => {
-    const wrapper = shallow(
+  it('renders the step header correctly with title and number', async () => {
+    render(
       <Step
         title="Test title"
         number={2}
@@ -13,60 +13,69 @@ describe('Step::', () => {
         Test content
       </Step>,
     );
-    const header = wrapper.find('[data-qa="step-header"]');
-    const number = header.find('div').at(1);
-    const title = wrapper.find('div').at(3);
 
-    expect(number.text()).toEqual('2');
-    expect(title.text()).toEqual('Test title');
+    const header = await screen.getByTestId('step-header');
+    const inner = header.querySelectorAll('div');
+
+    expect(inner[0]).toHaveTextContent('2');
+    expect(inner[1]).toHaveTextContent('Test title');
   });
-  it('renders step header correctly without title and number', () => {
-    const wrapper = shallow(
+
+  it('renders the step header correctly without title and number', async () => {
+
+    render(
       <Step onClick={() => {}}>
         Test content
       </Step>,
     );
-    const header = wrapper.find('[data-qa="step-header"]');
-    const number = header.find('div').at(1);
-    const title = wrapper.find('div').at(3);
 
-    expect(number.text()).toEqual('');
-    expect(title.text()).toEqual('');
+    const header = await screen.getByTestId('step-header');
+    const inner = header.querySelectorAll('div');
+
+    expect(inner[0]).toBeEmptyDOMElement();
+    expect(inner[1]).toBeEmptyDOMElement();
   });
-  it('renders checkmark when step is done', () => {
-    const wrapper = shallow(
+
+  it('renders a checkmark when the step is done', async () => {
+
+    render(
       <Step
         status={StepStatus.done}
-        onClick={() => {}}
+        onClick={jest.fn()}
       >
         Test content
       </Step>,
     );
-    const header = wrapper.find('[data-qa="step-header"]');
 
-    expect(header.find('svg')).toBeTruthy();
+    const header = await screen.getByTestId('step-header');
+
+    expect(header.querySelector('svg')).toBeInTheDocument();
   });
-  it('renders step content correctly', () => {
-    const wrapper = shallow(
-      <Step onClick={() => {}}>
+
+  it('renders step content correctly', async () => {
+
+    render(
+      <Step onClick={jest.fn()}>
         Test content
       </Step>,
     );
-    const contentWrapper = wrapper.find('div').at(6);
 
-    expect(contentWrapper.text()).toContain('Test content');
+    expect(await screen.getByText('Test content')).toBeInTheDocument();
   });
-  it('calls step action', () => {
+
+  it('calls the step action', async () => {
     const action = jest.fn();
-    const wrapper = shallow(
+
+    render(
       <Step onClick={action}>
         Test content
       </Step>,
     );
-    const header = wrapper.find('[data-qa="step-header"]');
 
-    header.simulate('click');
+    const header = await screen.getByTestId('step-header');
 
-    expect(action).toHaveBeenCalled();
+    fireEvent.click(header);
+
+    expect(action).toHaveBeenCalledTimes(1);
   });
 });

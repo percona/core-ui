@@ -137,9 +137,6 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
       document.removeEventListener('mousedown', handleDocumentClick);
       document.removeEventListener('keyup', handleKeyupClick);
       document.removeEventListener('keydown', handleKeydownClick);
-      // UX: don't reset the index when tearing down the children
-      // TODO: evaluate pros and cons
-      // setActiveIndex(-1);
 
       // on close reset index
       if (!visible) {

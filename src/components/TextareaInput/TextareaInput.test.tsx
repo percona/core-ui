@@ -1,129 +1,142 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Field } from 'react-final-form';
-import { dataQa, FormWrapper } from 'shared';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { FormWrapper } from 'shared';
 import { TextareaInputField } from './TextareaInputField';
 
 describe('TextareaInputField::', () => {
   it('should render a textarea element', () => {
-    const wrapper = mount(<FormWrapper><TextareaInputField name="test" /></FormWrapper>);
 
-    const field = wrapper.find(Field);
+    render(
+      <FormWrapper>
+        <TextareaInputField name="test" />
+      </FormWrapper>,
+    );
 
-    expect(field).toHaveLength(1);
-    expect(wrapper.find('textarea')).toHaveLength(1);
-
-    wrapper.unmount();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
   it('should call passed validators', () => {
     const validatorOne = jest.fn();
     const validatorTwo = jest.fn();
-    const wrapper = mount(
-      <FormWrapper><TextareaInputField name="test" validators={[validatorOne, validatorTwo]} /></FormWrapper>,
+
+    render(
+      <FormWrapper>
+        <TextareaInputField name="test" validators={[validatorOne, validatorTwo]} />
+      </FormWrapper>,
     );
 
     expect(validatorOne).toBeCalledTimes(1);
     expect(validatorTwo).toBeCalledTimes(1);
-
-    wrapper.unmount();
   });
 
   it('should show an error on invalid input', () => {
     const validatorOne = jest.fn().mockReturnValue('some error');
     const validatorTwo = jest.fn();
-    const wrapper = mount(
-      <FormWrapper><TextareaInputField name="test" validators={[validatorOne, validatorTwo]} /></FormWrapper>,
+
+    render(
+      <FormWrapper>
+        <TextareaInputField name="test" validators={[validatorOne, validatorTwo]} />
+      </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('');
+    expect(screen.getByTestId('test-field-error-message')).toBeEmptyDOMElement();
 
     expect(validatorOne).toBeCalledTimes(1);
 
-    wrapper.find('textarea').at(0).simulate('change', { target: { value: 'Test' } });
+    const input = screen.getByRole('textbox');
+
+    fireEvent.change(input, { target: { value: 'Test' } });
 
     expect(validatorOne).toBeCalledTimes(2);
     expect(validatorTwo).toBeCalledTimes(0);
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('some error');
-
-    wrapper.unmount();
+    expect(screen.getByTestId('test-field-error-message')).toHaveTextContent('some error');
   });
 
   it('should show validation errors on blur if specified', () => {
     const validatorOne = jest.fn();
     const validatorTwo = jest.fn().mockReturnValue('some error');
-    const wrapper = mount(
+
+    render(
       <FormWrapper>
         <TextareaInputField showErrorOnBlur name="test" validators={[validatorOne, validatorTwo]} />
       </FormWrapper>,
     );
 
-    wrapper.find('textarea').at(0).simulate('change', { target: { value: 'Test' } });
+    const input = screen.getByRole('textbox');
+
+    fireEvent.change(input, { target: { value: 'Test' } });
 
     expect(validatorOne).toBeCalledTimes(2);
     expect(validatorTwo).toBeCalledTimes(2);
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('');
+    expect(screen.getByTestId('test-field-error-message')).toBeEmptyDOMElement();
 
-    wrapper.find('textarea').at(0).simulate('blur');
+    fireEvent.blur(input);
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('some error');
-
-    wrapper.unmount();
+    expect(screen.getByTestId('test-field-error-message')).toHaveTextContent('some error');
   });
 
-  it('should show no labels if one is not specified', () => {
-    const wrapper = mount(<FormWrapper><TextareaInputField name="test" /></FormWrapper>);
+  it('should show no labels if none are passed to props', () => {
 
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(0);
+    render(
+      <FormWrapper>
+        <TextareaInputField name="test" />
+      </FormWrapper>,
+    );
 
-    wrapper.unmount();
+    expect(screen.queryByTestId('test-field-label')).not.toBeInTheDocument();
   });
 
   it('should show a label if one is specified', () => {
-    const wrapper = mount(<FormWrapper><TextareaInputField label="test label" name="test" /></FormWrapper>);
 
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(1);
-    expect(wrapper.find(dataQa('test-field-label')).text()).toBe('test label');
+    render(
+      <FormWrapper>
+        <TextareaInputField label="test label" name="test" />
+      </FormWrapper>,
+    );
 
-    wrapper.unmount();
+    expect(screen.queryByTestId('test-field-label')).toHaveTextContent('test label');
   });
 
   it('should show an asterisk on the label if the field is required', () => {
-    const wrapper = mount(
-      <FormWrapper><TextareaInputField label="test label" name="test" required /></FormWrapper>,
+
+    render(
+      <FormWrapper>
+        <TextareaInputField label="test label" name="test" required />
+      </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(1);
-    expect(wrapper.find(dataQa('test-field-label')).text()).toBe('test label *');
-
-    wrapper.unmount();
+    expect(screen.queryByTestId('test-field-label')).toHaveTextContent('test label *');
   });
 
   it('should not pass the required prop to the input if the field is required', () => {
-    const wrapper = mount(<FormWrapper><TextareaInputField name="test" required /></FormWrapper>);
 
-    expect(wrapper.find('textarea')).toHaveLength(1);
-    expect(wrapper.find('textarea').prop('required')).toBeUndefined();
+    render(
+      <FormWrapper>
+        <TextareaInputField name="test" required />
+      </FormWrapper>,
+    );
 
-    wrapper.unmount();
+    expect(screen.getByRole('textbox')).not.toHaveAttribute('required', true);
   });
 
   it('should apply the passed class name to the inner textarea element', () => {
-    const wrapper = mount(
-      <FormWrapper><TextareaInputField name="test" className="testClass" /></FormWrapper>,
+
+    render(
+      <FormWrapper>
+        <TextareaInputField name="test" className="testClass" />
+      </FormWrapper>,
     );
 
-    expect(wrapper.find('textarea').hasClass('testClass')).toBe(true);
-
-    wrapper.unmount();
+    expect(screen.getByRole('textbox').classList.contains('testClass'));
   });
 
-    it('should accept any valid input html attributes and pass them over to the textarea tag', () => {
+  it('should accept any valid input html attributes and pass them over to the textarea tag', () => {
     const title = 'Titolo di studio';
     const onChange = jest.fn();
-    const wrapper = mount(
+
+    render(
       <FormWrapper>
         <TextareaInputField
           name="test"
@@ -136,12 +149,12 @@ describe('TextareaInputField::', () => {
       </FormWrapper>,
     );
 
-    const input = wrapper.find(dataQa('test-textarea-input'));
+    const input = screen.getByTestId('test-textarea-input');
 
-    expect(input.prop('autoComplete')).toEqual('off');
-    expect(input.prop('onChange')).toEqual(onChange);
-    expect(input.prop('title')).toEqual(title);
+    fireEvent.change(input, { target: { value: 'foo' } });
 
-    wrapper.unmount();
+    expect(input).toHaveAttribute('autocomplete', 'off');
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(input).toHaveAttribute('title', title);
   });
 });

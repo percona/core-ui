@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { TextInputField } from 'components/TextInput';
 import { TextareaInputField } from 'components/TextareaInput';
 import { LoaderButton } from 'components/LoaderButton';
@@ -35,32 +35,38 @@ describe('StepProgress::', () => {
     },
   ];
 
-  const isCurrentStep = (wrapper: ReactWrapper, dataQa: string) => wrapper
-    .find(`[data-qa="${dataQa}"]`)
-    .find('[data-qa="step-content"]')
-    .find('div').at(1)
-    .prop('className')
-      ?.includes('current');
+  const isCurrentStep = (wrapper: HTMLElement, dataQa: string) => {
+    const className = wrapper
+      .querySelector(`[data-qa="${dataQa}"]`)
+      .querySelectorAll('[data-qa="step-content"] > div')[0]
+      .getAttribute('class');
 
-  it('renders steps correctly', () => {
-    const wrapper = mount(
+    return /current$/i.test(className);
+  };
+
+  it('renders steps correctly', async () => {
+
+    const { container } = render(
       <StepProgress
         steps={steps}
-        onSubmit={() => {}}
+        onSubmit={jest.fn()}
       />,
     );
 
-    expect(wrapper.find('input').length).toBe(2);
-    expect(wrapper.find('textarea').length).toBe(1);
-    expect(wrapper.find('button').length).toBe(1);
-    expect(wrapper.find('[data-qa="step-header"]').length).toBe(2);
-    expect(isCurrentStep(wrapper, 'step-1')).toBeTruthy();
+    // the component renders two inputs and one textarea, all of which have the role `textbox`
+    expect(await screen.getAllByRole('textbox')).toHaveLength(3);
+    expect(await screen.getAllByRole('button')).toHaveLength(1);
+    expect(await screen.getAllByTestId('step-header')).toHaveLength(2);
+
+    expect(isCurrentStep(container, 'step-1')).toBeTruthy();
   });
+
   it('renders steps correctly with initial values', () => {
-    const wrapper = mount(
+
+    render(
       <StepProgress
         steps={steps}
-        onSubmit={() => {}}
+        onSubmit={jest.fn()}
         initialValues={{
           name: 'Test name',
           description: 'Test description',
@@ -68,29 +74,33 @@ describe('StepProgress::', () => {
       />,
     );
 
-    expect(wrapper.find('input').at(0).prop('value')).toEqual('Test name');
-    expect(wrapper.find('textarea').at(0).prop('value')).toEqual('Test description');
+    expect(screen.getByDisplayValue('Test name')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Test description')).toBeInTheDocument();
   });
-  it('changes current step correctly', () => {
-    const wrapper = mount(
+
+  it('changes the current step on header click', async () => {
+
+    const { container } = render(
       <StepProgress
         steps={steps}
-        onSubmit={() => {}}
+        onSubmit={jest.fn()}
       />,
     );
 
-    expect(isCurrentStep(wrapper, 'step-1')).toBeTruthy();
+    expect(isCurrentStep(container, 'step-1')).toBeTruthy();
 
-    wrapper.find('[data-qa="step-2"]')
-      .find('[data-qa="step-header"]')
-      .simulate('click');
+    const stepHeader = await screen.getByTestId('step-2').querySelector('[data-qa="step-header"]');
 
-    expect(isCurrentStep(wrapper, 'step-1')).toBeFalsy();
-    expect(isCurrentStep(wrapper, 'step-2')).toBeTruthy();
+    fireEvent.click(stepHeader);
+
+    expect(isCurrentStep(container, 'step-1')).toBeFalsy();
+    expect(isCurrentStep(container, 'step-2')).toBeTruthy();
   });
-  it('calls submit correctly', () => {
+
+  it('submits the form on submit', async () => {
     const onSubmit = jest.fn();
-    const wrapper = mount(
+
+    render(
       <StepProgress
         steps={steps}
         onSubmit={onSubmit}
@@ -101,9 +111,12 @@ describe('StepProgress::', () => {
       />,
     );
 
-    wrapper.find('input').at(1).simulate('change', { target: { value: 'test@test.com' } });
-    wrapper.find('form').simulate('submit');
+    const input = await screen.getAllByRole('textbox')[1];
+    const form = await screen.getByTestId('step-progress');
 
-    expect(onSubmit).toHaveBeenCalled();
+    fireEvent.change(input, { target: { value: 'test@test.com' } });
+    fireEvent.submit(form);
+
+    expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 });
