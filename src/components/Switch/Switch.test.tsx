@@ -5,13 +5,13 @@ import { SwitchField } from './Switch';
 
 describe('SwitchField::', () => {
   it('should render an input element of type checkbox', () => {
-    const { container } = render(
+    render(
       <FormWrapper>
         <SwitchField name="test" />
       </FormWrapper>,
     );
 
-    expect(container.querySelector('input')).toHaveProperty('type', 'checkbox');
+    expect(screen.getByRole('checkbox')).toBeInTheDocument();
   });
 
   it('should call passed validators', () => {
@@ -64,12 +64,12 @@ describe('SwitchField::', () => {
   });
 
   it('should disable switch when `disabled` is passed via props', () => {
-    const { container } = render(
+    render(
       <FormWrapper>
         <SwitchField name="test" disabled />
       </FormWrapper>,
     );
 
-    expect(container.querySelector('input')).toHaveProperty('disabled', true);
+    expect(screen.getByRole('checkbox')).toHaveProperty('disabled', true);
   });
 });

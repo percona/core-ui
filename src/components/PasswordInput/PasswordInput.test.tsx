@@ -1,131 +1,147 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Field } from 'react-final-form';
-import { dataQa, FormWrapper } from 'shared';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { FormWrapper } from '../../shared';
 import { PasswordInputField } from './PasswordInputField';
 
 describe('PasswordInputField::', () => {
-  it('should render an input element of type password', () => {
-    const wrapper = mount(<FormWrapper><PasswordInputField name="test" /></FormWrapper>);
+  it('should render an input element of type password', async () => {
 
-    const field = wrapper.find(Field);
+    render(
+      <FormWrapper>
+        <PasswordInputField name="test" />
+      </FormWrapper>,
+    );
 
-    expect(field).toHaveLength(1);
-    expect(wrapper.find('input')).toHaveLength(1);
-    expect(wrapper.find('input').props()).toHaveProperty('type', 'password');
+    const input = await screen.getByTestId('test-password-input');
 
-    wrapper.unmount();
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveProperty('type', 'password');
   });
 
   it('should call passed validators', () => {
     const validatorOne = jest.fn();
     const validatorTwo = jest.fn();
-    const wrapper = mount(
-      <FormWrapper><PasswordInputField name="test" validators={[validatorOne, validatorTwo]} /></FormWrapper>,
+
+    render(
+      <FormWrapper>
+        <PasswordInputField name="test" validators={[validatorOne, validatorTwo]} />
+      </FormWrapper>,
     );
 
     expect(validatorOne).toBeCalledTimes(1);
     expect(validatorTwo).toBeCalledTimes(1);
-
-    wrapper.unmount();
   });
 
-  it('should show an error on invalid input', () => {
+  it('should show an error on invalid input', async () => {
     const validatorOne = jest.fn().mockReturnValue('some error');
     const validatorTwo = jest.fn();
-    const wrapper = mount(
-      <FormWrapper><PasswordInputField name="test" validators={[validatorOne, validatorTwo]} /></FormWrapper>,
+
+    render(
+      <FormWrapper>
+        <PasswordInputField name="test" validators={[validatorOne, validatorTwo]} />
+      </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('');
+    const input = await screen.getByTestId('test-password-input');
+
+    expect(await screen.findByTestId('test-field-error-message')).toBeEmptyDOMElement();
 
     expect(validatorOne).toBeCalledTimes(1);
 
-    wrapper.find('input').at(0).simulate('change', { target: { value: 'Test' } });
+    fireEvent.change(input, { target: { value: 'Test' } });
 
     expect(validatorOne).toBeCalledTimes(2);
     expect(validatorTwo).toBeCalledTimes(0);
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('some error');
-
-    wrapper.unmount();
+    expect(await screen.getByTestId('test-field-error-message')).toHaveTextContent('some error');
   });
 
-  it('should show validation errors on blur if specified', () => {
+  it('should show validation errors on blur if specified', async () => {
     const validatorOne = jest.fn();
     const validatorTwo = jest.fn().mockReturnValue('some error');
-    const wrapper = mount(
+
+    render(
       <FormWrapper>
         <PasswordInputField showErrorOnBlur name="test" validators={[validatorOne, validatorTwo]} />
       </FormWrapper>,
     );
 
-    wrapper.find('input').at(0).simulate('change', { target: { value: 'Test' } });
+    const input = await screen.getByTestId('test-password-input');
+
+    fireEvent.change(input, { target: { value: 'Test' } });
 
     expect(validatorOne).toBeCalledTimes(2);
     expect(validatorTwo).toBeCalledTimes(2);
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('');
+    expect(await screen.findByTestId('test-field-error-message')).toBeEmptyDOMElement();
 
-    wrapper.find('input').at(0).simulate('blur');
+    fireEvent.blur(input);
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('some error');
-
-    wrapper.unmount();
+    expect(await screen.findByTestId('test-field-error-message')).toHaveTextContent('some error');
   });
 
-  it('should show no labels if one is not specified', () => {
-    const wrapper = mount(<FormWrapper><PasswordInputField name="test" /></FormWrapper>);
+  it('should show no labels if none are specified', async () => {
 
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(0);
-
-    wrapper.unmount();
-  });
-
-  it('should show a label if one is specified', () => {
-    const wrapper = mount(<FormWrapper><PasswordInputField label="test label" name="test" /></FormWrapper>);
-
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(1);
-    expect(wrapper.find(dataQa('test-field-label')).text()).toBe('test label');
-
-    wrapper.unmount();
-  });
-
-  it('should show an asterisk on the label if the field is required', () => {
-    const wrapper = mount(
-      <FormWrapper><PasswordInputField label="test label" name="test" required /></FormWrapper>,
+    render(
+      <FormWrapper>
+        <PasswordInputField name="test" />
+      </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(1);
-    expect(wrapper.find(dataQa('test-field-label')).text()).toBe('test label *');
-
-    wrapper.unmount();
+    expect(screen.queryByTestId('test-field-label')).not.toBeInTheDocument();
   });
 
-  it('should not pass the required prop to the input if the field is required', () => {
-    const wrapper = mount(
-      <FormWrapper><PasswordInputField name="test" required /></FormWrapper>,
+  it('should show a label if one is specified', async () => {
+
+    render(
+      <FormWrapper>
+        <PasswordInputField label="test label" name="test" />
+      </FormWrapper>,
     );
 
-    expect(wrapper.find('input').prop('required')).toBeUndefined();
+    expect(await screen.findByTestId('test-field-label')).toBeInTheDocument();
+    expect(await screen.findByTestId('test-field-label')).toHaveTextContent('test label');
+  });
 
-    wrapper.unmount();
+  it('should show an asterisk on the label if the field is required', async () => {
+
+    render(
+      <FormWrapper>
+        <PasswordInputField label="test label" name="test" required />
+      </FormWrapper>,
+    );
+
+    expect(await screen.findByTestId('test-field-label')).toBeInTheDocument();
+    expect(await screen.findByTestId('test-field-label')).toHaveTextContent('test label *');
+  });
+
+  it('should not pass the required prop to the input if the field is required', async () => {
+
+    render(
+      <FormWrapper>
+        <PasswordInputField name="test" required />
+      </FormWrapper>,
+    );
+
+    expect(await screen.getByTestId('test-password-input')).toHaveProperty('required', false);
   });
 
   it('should apply the passed class name to the inner input element', () => {
-    const wrapper = mount(
-      <FormWrapper><PasswordInputField name="test" className="testClass" /></FormWrapper>,
+
+    const { container } = render(
+      <FormWrapper>
+        <PasswordInputField name="test" className="testClass" />
+      </FormWrapper>,
     );
 
-    expect(wrapper.find('input').hasClass('testClass')).toBe(true);
-
-    wrapper.unmount();
+    expect(container.querySelector('[data-qa="test-password-input"].testClass'));
   });
 
-  it('should accept any valid input html attributes and pass them over to the input tag', () => {
+  it('should accept any valid input html attributes and pass them over to the input tag', async () => {
     const title = 'Titolo di stato';
     const onChange = jest.fn();
-    const wrapper = mount(
+
+    render(
       <FormWrapper>
         <PasswordInputField
           name="test"
@@ -134,16 +150,20 @@ describe('PasswordInputField::', () => {
             onChange,
             title,
           }}
+          initialValue="password"
         />
       </FormWrapper>,
     );
 
-    const input = wrapper.find(dataQa('test-password-input'));
+    const input = await screen.getByTestId('test-password-input');
 
-    expect(input.prop('autoComplete')).toEqual('off');
-    expect(input.prop('onChange')).toEqual(onChange);
-    expect(input.prop('title')).toEqual(title);
+    expect(input).toHaveAttribute('value', 'password');
 
-    wrapper.unmount();
+    fireEvent.change(input, { target : { value: '1' }});
+    fireEvent.blur(input);
+
+    expect(input).toHaveAttribute('autocomplete', 'off');
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(input).toHaveAttribute('title', title);
   });
 });

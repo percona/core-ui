@@ -1,11 +1,7 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
-import { fireEvent } from '@testing-library/react';
-import { dataQa } from 'shared';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Dropdown } from './Dropdown';
-
-let container: HTMLElement;
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -13,152 +9,128 @@ const Toggle = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
   <button type="button" ref={ref} {...props}>Toggle</button>
 ));
 
+const asyncClick = async (ref) => {
+  await act(async () => {
+    userEvent.click(ref);
+  });
+};
+
 const DATA_QA_MENU='dropdown-menu-menu';
 const DATA_QA_TOGGLE='dropdown-menu-toggle';
 
-const openMenu = async () => {
-  const toggle = container.querySelector(dataQa(DATA_QA_TOGGLE));
-
-  await act(async () => {
-    fireEvent.click(toggle!);
-  });
-};
-
-const clickMenuItem = async (item: string) => {
-  await act(async () => {
-    const menuItem = container.querySelector(dataQa(item));
-
-    fireEvent.click(menuItem!);
-  });
-};
-
 describe('Dropdown ::', () => {
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-  });
-
-  afterEach(() => {
-    unmountComponentAtNode(container);
-    container.remove();
-  });
-
   test('should render the toggle', () => {
-    act(() => {
-      render(<Dropdown toggle={Toggle}><a href="/">root</a><a href="/test">test</a></Dropdown>, container);
-    });
+    render(
+      <Dropdown toggle={Toggle}>
+        <a href="/">root</a>
+        <a href="/test">test</a>
+      </Dropdown>,
+    );
 
-    expect(container.querySelector(dataQa(DATA_QA_TOGGLE))).not.toBe(null);
+    expect(screen.getByTestId(DATA_QA_TOGGLE)).toBeInTheDocument();
   });
 
   test('clicking on the toggle toggles the menu visibility', async () => {
-    act(() => {
-      render(<Dropdown toggle={Toggle}><a href="/">root</a><a href="/test">test</a></Dropdown>, container);
-    });
+    render(
+      <Dropdown toggle={Toggle}>
+        <a href="/">root</a>
+        <a href="/test">test</a>
+      </Dropdown>,
+    );
 
-    const toggle = container.querySelector(dataQa(DATA_QA_TOGGLE));
+    const toggle = await screen.getByTestId(DATA_QA_TOGGLE);
 
-    expect(container.querySelector(dataQa(DATA_QA_MENU))).toBe(null);
+    expect(screen.queryByTestId(DATA_QA_MENU)).not.toBeInTheDocument();
+    await asyncClick(toggle);
 
-    await act(async () => {
-      fireEvent.click(toggle!);
-    });
+    expect(screen.getByTestId(DATA_QA_MENU)).toBeInTheDocument();
+    await asyncClick(toggle);
 
-    expect(container.querySelector(dataQa(DATA_QA_MENU))).not.toBe(null);
-
-    await act(async () => {
-      fireEvent.click(toggle!);
-    });
-
-    expect(container.querySelector(dataQa(DATA_QA_MENU))).toBe(null);
+    expect(screen.queryByTestId(DATA_QA_MENU)).not.toBeInTheDocument();
   });
 
   test('clicking outside the dropdown closes the menu', async () => {
-    act(() => {
-      render(<Dropdown toggle={Toggle}><a href="/">root</a><a href="/test">test</a></Dropdown>, container);
-    });
+    render(
+      <main role="main">
+        <Dropdown toggle={Toggle}>
+          <a href="/">root</a>
+          <a href="/test">test</a>
+        </Dropdown>
+      </main>,
+    );
 
-    const toggle = container.querySelector(dataQa(DATA_QA_TOGGLE));
+    const toggle = screen.getByTestId(DATA_QA_TOGGLE);
 
-    await act(async () => {
-      fireEvent.click(toggle!);
-    });
+    await asyncClick(toggle);
 
-    expect(container.querySelector(dataQa(DATA_QA_MENU))).not.toBe(null);
+    expect(screen.getByTestId(DATA_QA_MENU)).toBeInTheDocument();
 
-    await act(async () => {
-      fireEvent.mouseDown(container);
-    });
+    fireEvent.mouseDown(screen.getByRole('main'));
 
-    expect(container.querySelector(dataQa(DATA_QA_MENU))).toBe(null);
+    expect(screen.queryByTestId(DATA_QA_MENU)).not.toBeInTheDocument();
   });
 
   test('mousedown on the dropdown does not close the menu', async () => {
     const menuAction = jest.fn();
 
-    act(() => {
-      render(<Dropdown toggle={Toggle}>
-        <div data-qa="menu-item" onClick={menuAction}>root</div>
+    render(
+      <Dropdown toggle={Toggle}>
+        <a data-qa="menu-item" onClick={menuAction}>root</a>
         <a href="/test">test</a>
-      </Dropdown>, container);
-    });
+      </Dropdown>,
+    );
 
-    const toggle = container.querySelector(dataQa(DATA_QA_TOGGLE));
+    const toggle = screen.getByTestId(DATA_QA_TOGGLE);
 
-    await act(async () => {
-      fireEvent.click(toggle!);
-    });
+    await asyncClick(toggle);
+    fireEvent.mouseDown(toggle);
 
-    // NOTE: this needs to be in a separate 'act'
-    await act(async () => {
-      fireEvent.mouseDown(toggle!);
-      fireEvent.mouseDown(container.querySelector(dataQa(DATA_QA_MENU))!);
-    });
+    const menu = screen.getByTestId(DATA_QA_MENU);
 
-    expect(container.querySelector(dataQa(DATA_QA_MENU))).not.toBe(null);
+    fireEvent.mouseDown(menu);
+
+    expect(menu).toBeInTheDocument();
   });
 
   test('clicking on a menu item propagates the event and closes the menu', async () => {
     const menuAction = jest.fn();
 
-    act(() => {
-      render(<Dropdown toggle={Toggle}>
+    render(
+      <Dropdown toggle={Toggle}>
         <div data-qa="menu-item" onClick={menuAction}>root</div>
         <a href="/test">test</a>
-      </Dropdown>, container);
-    });
+      </Dropdown>,
+    );
 
-    const toggle = container.querySelector(dataQa(DATA_QA_TOGGLE));
+    const toggle = screen.getByTestId(DATA_QA_TOGGLE);
 
     expect(menuAction).toBeCalledTimes(0);
 
-    await act(async () => {
-      fireEvent.click(toggle!);
-    });
+    await asyncClick(toggle);
 
-    // NOTE: this needs to be in a separate 'act'
-    await act(async () => {
-      const menuItem = container.querySelector(dataQa('menu-item'));
+    const menuItem = screen.getByTestId('menu-item');
 
-      fireEvent.click(menuItem!);
-    });
+    await asyncClick(menuItem);
 
     expect(menuAction).toBeCalledTimes(1);
   });
 
-  test('doesnt keep menu item active on close', async () => {
-    act(() => {
-      render(<Dropdown toggle={Toggle}>
+  test('doesn\'t keep menu item active on close', async () => {
+    render(
+      <Dropdown toggle={Toggle}>
         <div data-qa="menu-item" onClick={jest.fn()}>root</div>
         <a href="/test">test</a>
-      </Dropdown>, container);
-    });
+      </Dropdown>,
+    );
 
-    await openMenu();
-    await clickMenuItem('menu-item');
-    await openMenu();
+    const toggle = await screen.getByTestId(DATA_QA_TOGGLE);
 
-    const menuItem = container.querySelector(dataQa('menu-item'));
+    await asyncClick(toggle);
+
+    const menuItem = await screen.getByTestId('menu-item');
+
+    await asyncClick(menuItem);
+    await asyncClick(toggle);
 
     expect(menuItem?.className.includes('active')).toBeFalsy();
   });

@@ -1,81 +1,91 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Field } from 'react-final-form';
-import { dataQa, FormWrapper } from 'shared';
-import { requiredTrue } from 'shared/validators';
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { dataQa, FormWrapper } from '../../shared';
+import { requiredTrue } from '../../shared/validators';
 import { CheckboxField } from './CheckboxField';
 
 const checkboxLabel = 'Checkbox label';
 
 describe('CheckboxField::', () => {
   it('should render an input element of type checkbox', () => {
-    const wrapper = mount(<FormWrapper><CheckboxField name="test" /></FormWrapper>);
+    render(
+      <FormWrapper>
+        <CheckboxField name="test" label="checkbox" />
+      </FormWrapper>,
+    );
 
-    const field = wrapper.find(Field);
-
-    expect(field).toHaveLength(1);
-    expect(wrapper.find('input')).toHaveLength(1);
-    expect(wrapper.find('input').props()).toHaveProperty('type', 'checkbox');
-
-    wrapper.unmount();
+    // We can use either method: `toBeInTheDocument` or `toBeTruthy`
+    expect(screen.getByRole('checkbox', { name: /checkbox/i })).toBeInTheDocument();
+    expect(screen.getByTestId('test-checkbox-input')).toBeTruthy();
   });
 
   it('should call passed validators', () => {
     const validatorOne = jest.fn();
     const validatorTwo = jest.fn();
-    const wrapper = mount(
-      <FormWrapper><CheckboxField name="test" validators={[validatorOne, validatorTwo]} /></FormWrapper>,
+
+    render(
+      <FormWrapper>
+        <CheckboxField name="test" validators={[validatorOne, validatorTwo]} />
+      </FormWrapper>,
     );
 
     expect(validatorOne).toBeCalledTimes(1);
     expect(validatorTwo).toBeCalledTimes(1);
-
-    wrapper.unmount();
   });
 
-  it('should show an error on invalid status', () => {
+  it('should show an error on invalid status', async () => {
     const validatorOne = jest.fn().mockReturnValue('some error');
     const validatorTwo = jest.fn();
-    const wrapper = mount(
-      <FormWrapper><CheckboxField name="test" validators={[validatorOne, validatorTwo]} /></FormWrapper>,
+
+    render(
+      <FormWrapper>
+        <CheckboxField name="test" label="checkbox" validators={[validatorOne, validatorTwo]} />
+      </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('');
+    const checkbox = await screen.getByRole('checkbox', { name: /checkbox/i });
+
+    expect(screen.queryByText('some error')).not.toBeInTheDocument();
 
     expect(validatorOne).toBeCalledTimes(1);
 
-    wrapper.find('input').at(0).simulate('change', { target: { value: true } });
-    wrapper.find('input').at(0).simulate('blur');
+    userEvent.click(checkbox);
+    // In this case we need to fire `blur`, otherwise the error will not show up
+    fireEvent.blur(checkbox);
 
     expect(validatorOne).toBeCalledTimes(2);
     expect(validatorTwo).toBeCalledTimes(0);
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('some error');
-
-    wrapper.unmount();
+    expect(screen.getByText('some error')).toBeInTheDocument();
   });
 
   it('should show no labels if one is not specified', () => {
-    const wrapper = mount(<FormWrapper><CheckboxField name="test" /></FormWrapper>);
+    render(
+      <FormWrapper>
+        <CheckboxField name="test" />
+      </FormWrapper>,
+    );
 
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(0);
-
-    wrapper.unmount();
+    expect(screen.queryByTestId(dataQa('test-field-label'))).not.toBeInTheDocument();
   });
 
   it('should show a label if one is specified', () => {
-    const wrapper = mount(<FormWrapper><CheckboxField label="test label" name="test" /></FormWrapper>);
+    render(
+      <FormWrapper>
+        <CheckboxField label="test label" name="test" />
+      </FormWrapper>,
+    );
 
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(1);
-    expect(wrapper.find(dataQa('test-field-label')).text()).toBe('test label');
-
-    wrapper.unmount();
+    expect(screen.getByTestId('test-field-label')).toBeInTheDocument();
+    expect(screen.getByText('test label')).toBeInTheDocument();
   });
 
-  it('should accept any valid input html attributes and pass them over to the input tag', () => {
+  it('should accept any valid input html attributes and pass them over to the input tag', async () => {
     const title = 'Titolo di soggiorno';
     const onChange = jest.fn();
-    const wrapper = mount(
+
+    render(
       <FormWrapper>
         <CheckboxField
           name="test"
@@ -90,12 +100,13 @@ describe('CheckboxField::', () => {
       </FormWrapper>,
     );
 
-    const input = wrapper.find(dataQa('test-checkbox-input'));
+    const checkbox = await screen.findByTestId('test-checkbox-input');
 
-    expect(input.prop('autoComplete')).toEqual('off');
-    expect(input.prop('onChange')).toEqual(onChange);
-    expect(input.prop('title')).toEqual(title);
+    expect(checkbox.getAttribute('autocomplete')).toEqual('off');
 
-    wrapper.unmount();
+    fireEvent.click(checkbox);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(checkbox.getAttribute('title')).toEqual(title);
   });
 });

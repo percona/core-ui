@@ -47,13 +47,13 @@ export function RadioButtonGroupField({
 }: RadioButtonGroupFieldProps) {
   const handleOnChange = useCallback(
     (option: SelectableValue<string>, input) => () => {
-        if (option.disabled) {
+        if (option.disabled || disabled) {
           return;
         }
 
         input.onChange(option.value);
       },
-    [],
+    [disabled],
   );
   const styles = useStyles(getStyles);
   const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [

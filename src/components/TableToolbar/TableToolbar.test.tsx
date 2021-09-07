@@ -1,43 +1,58 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import { TableToolbar } from './TableToolbar';
-import { TableToolbarButton } from './TableToolbarButton';
 
 describe('TableToolbar::', () => {
-  it('should render an input element of type number and two buttons', () => {
-    let wrapper = mount(
-      <TableToolbar actions={[
-        { callback: jest.fn(), label: 'test1', icon: 'plusSquare' },
-        { callback: jest.fn(), label: 'test2', icon: 'plusSquare', isBulkAction: true },
-      ]} selectedItems={[]} />,
+  it('should render an input element of type number and two buttons - v1', async () => {
+
+    render(
+      <TableToolbar
+        actions={[
+          { callback: jest.fn(), label: 'test1', icon: 'plusSquare' },
+          { callback: jest.fn(), label: 'test2', icon: 'plusSquare', isBulkAction: true },
+        ]}
+        selectedItems={[]}
+      />,
     );
 
-    expect(wrapper.find(TableToolbarButton)).toHaveLength(2);
-    expect(wrapper.find(TableToolbarButton).at(0).props()).toHaveProperty('disabled', false);
-    expect(wrapper.find(TableToolbarButton).at(1).props()).toHaveProperty('disabled', true);
+    const buttons = await screen.getAllByRole('button');
 
-    wrapper = mount(
-      <TableToolbar actions={[
-        { callback: jest.fn(), label: 'test1', icon: 'plusSquare' },
-        { callback: jest.fn(), label: 'test2', icon: 'plusSquare', isBulkAction: true },
-      ]} selectedItems={['a']} />,
+    expect(buttons).toHaveLength(2);
+    expect(buttons[0]).toHaveProperty('disabled', false);
+    expect(buttons[1]).toHaveProperty('disabled', true);
+  });
+
+  it('should render an input element of type number and two buttons - v2', async () => {
+
+    render(
+      <TableToolbar
+        actions={[
+          { callback: jest.fn(), label: 'test1', icon: 'plusSquare' },
+          { callback: jest.fn(), label: 'test2', icon: 'plusSquare', isBulkAction: true },
+        ]}
+        selectedItems={['a']}
+      />,
     );
 
-    expect(wrapper.find(TableToolbarButton)).toHaveLength(2);
-    expect(wrapper.find(TableToolbarButton).at(0).props()).toHaveProperty('disabled', false);
-    expect(wrapper.find(TableToolbarButton).at(1).props()).toHaveProperty('disabled', true);
+    const buttons = await screen.getAllByRole('button');
 
-    wrapper = mount(
+    expect(buttons).toHaveLength(2);
+    expect(buttons[0]).toHaveProperty('disabled', false);
+    expect(buttons[1]).toHaveProperty('disabled', true);
+  });
+
+  it('should render an input element of type number and two buttons - v3', async () => {
+
+    render(
       <TableToolbar actions={[
         { callback: jest.fn(), label: 'test1', icon: 'plusSquare' },
         { callback: jest.fn(), label: 'test2', icon: 'plusSquare', isBulkAction: true },
       ]} selectedItems={['a', 'b']} />,
     );
 
-    expect(wrapper.find(TableToolbarButton)).toHaveLength(2);
-    expect(wrapper.find(TableToolbarButton).at(0).props()).toHaveProperty('disabled', false);
-    expect(wrapper.find(TableToolbarButton).at(1).props()).toHaveProperty('disabled', false);
+    const buttons = await screen.getAllByRole('button');
 
-    wrapper.unmount();
+    expect(buttons[0]).toHaveProperty('disabled', false);
+    expect(buttons[1]).toHaveProperty('disabled', false);
   });
 });

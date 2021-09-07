@@ -32,8 +32,11 @@
         "functions": "always-multiline"
       }
     ],
-    "no-restricted-imports": 0,
+    // this is a dup of @typescript-eslint/no-unused-vars
+    "no-unused-vars": ["off"],
+    "no-restricted-imports": ["off"],
     "no-param-reassign": ["error", { "ignorePropertyModificationsForRegex": ["^acc$"] }],
+    "react/react-in-jsx-scope": ["off"],
     "react/jsx-curly-brace-presence": ["error"],
     "react/jsx-boolean-value": ["error"],
     "react/jsx-filename-extension": ["off"],

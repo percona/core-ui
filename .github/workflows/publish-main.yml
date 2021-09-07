@@ -1,23 +1,26 @@
 ---
-name: Publish Package
+name: Publish Latest Version to NPM
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Parameter to pass to `npm version` (e.g: 'patch', 'minor', 'major', 'prerelease', etc. - default: 'patch')"
+        description: "Parameter to pass to `npm version` (e.g: 'patch', 'minor', 'major', default: 'patch')"
+        default: "patch"
         required: true
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: percona-platform/checkout@v2
 
       - uses: percona-platform/setup-node@v2
         with:
-          node-version: "14.x"
+          node-version: "14"
           registry-url: "https://registry.npmjs.org"
+          cache: "npm"
 
       - name: Configure git
         env:
@@ -36,31 +39,15 @@ jobs:
       - name: Clean up after tests
         run: git checkout -- tsconfig.json
 
-      - name: Build package
+      - name: Build the assets
         run: npm run build
 
       - name: Bump version
-        run: npm version ${{ github.event.inputs.version || 'patch' }}
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: npm version $VERSION
 
       - name: Publish latest version
-        if: ${{ !startsWith(github.event.inputs.version, 'pre') }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --tag latest --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish next version
-        if: ${{ startsWith(github.event.inputs.version, 'pre') }}
-        run: npm publish --tag next --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Push new version
-        run: git push --follow-tags
-
-      - name: Merge this branch to main
-        if: ${{ !startsWith(github.event.inputs.version, 'pre') }}
-        uses: devmasx/merge-branch@v1.3.1
-        with:
-          type: now
-          target_branch: main
-          github_token: ${{ secrets.ROBOT_TOKEN }}

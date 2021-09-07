@@ -1,15 +1,14 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Icon } from 'components/Icon';
+import { render, screen } from '@testing-library/react';
 import { TableToolbarButton } from './TableToolbarButton';
 
 describe('TableToolbarButton::', () => {
   it('should render a button with an icon and text', () => {
-    const wrapper = mount(<TableToolbarButton icon="plusSquare" label="test" />);
+    const { container } = render(
+      <TableToolbarButton icon="plusSquare" label="test" />,
+    );
 
-    expect(wrapper.find('button').text()).toEqual('test');
-    expect(wrapper.find(Icon).props()).toHaveProperty('name', 'plusSquare');
-
-    wrapper.unmount();
+    expect(screen.getByRole('button')).toHaveTextContent('test');
+    expect(container.querySelector('svg')).toHaveAttribute('name', 'plusSquare');
   });
 });

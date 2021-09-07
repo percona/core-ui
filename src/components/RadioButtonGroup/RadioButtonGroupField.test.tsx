@@ -1,7 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Field } from 'react-final-form';
-import { dataQa, FormWrapper } from 'shared';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { FormWrapper } from '../../shared';
 import { RadioButtonGroupField } from './RadioButtonGroupField';
 
 const options = [
@@ -14,27 +13,29 @@ const options = [
 const initialValues = { test: 'lowest' };
 
 describe('RadioButtonGroupField::', () => {
-  it('should render as many inputs as there are options + 1', () => {
-    const wrapper = mount(
+  it('should render as many RadioButtons as there are options', async () => {
+
+    render(
       <FormWrapper>
         <RadioButtonGroupField name="test" options={options} />
       </FormWrapper>,
     );
 
-    const field = wrapper.find(Field);
+    const buttons = await screen.getAllByTestId('test-radio-button');
 
-    expect(field).toHaveLength(1);
-    expect(wrapper.find('input')).toHaveLength(5);
-    expect(wrapper.find(dataQa('test-radio-state')).props()).toHaveProperty('type', 'text');
-    expect(wrapper.find('label')).toHaveLength(4);
-
-    wrapper.unmount();
+    expect(buttons).toHaveLength(4);
+    expect(buttons[0]).toHaveProperty('type', 'radio');
+    expect(await screen.getByLabelText('Lowest')).toBeInTheDocument();
+    expect(await screen.getByLabelText('Medium')).toBeInTheDocument();
+    expect(await screen.getByLabelText('High')).toBeInTheDocument();
+    expect(await screen.getByLabelText('Highest')).toBeInTheDocument();
   });
 
   it('should call the validators passed in props', () => {
     const validatorOne = jest.fn();
     const validatorTwo = jest.fn();
-    const wrapper = mount(
+
+    render(
       <FormWrapper>
         <RadioButtonGroupField name="test" options={options} validators={[validatorOne, validatorTwo]} />
       </FormWrapper>,
@@ -42,158 +43,173 @@ describe('RadioButtonGroupField::', () => {
 
     expect(validatorOne).toBeCalledTimes(1);
     expect(validatorTwo).toBeCalledTimes(1);
-
-    wrapper.unmount();
   });
 
-  it('should show an error on invalid input', () => {
+  it('should show an error on invalid input', async () => {
     const validatorOne = jest.fn().mockReturnValue('some error');
     const validatorTwo = jest.fn();
-    const wrapper = mount(
+
+    render(
       <FormWrapper>
         <RadioButtonGroupField name="test" options={options} validators={[validatorOne, validatorTwo]} />
       </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('');
+    const state = await screen.getByTestId('test-radio-state');
+
+    expect(screen.getByTestId('test-field-error-message')).toBeEmptyDOMElement();
 
     expect(validatorOne).toBeCalledTimes(1);
 
-    wrapper.find('input').at(0).simulate('change', { target: { value: 'Test' } });
+    fireEvent.change(state, { target: { value: 'Test' } });
 
     expect(validatorOne).toBeCalledTimes(2);
     expect(validatorTwo).toBeCalledTimes(0);
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('some error');
-
-    wrapper.unmount();
+    expect(await screen.getByTestId('test-field-error-message')).toHaveTextContent('some error');
   });
 
-  it('should show validation errors on blur if specified', () => {
+  it('should show validation errors on blur if specified', async () => {
     const validatorOne = jest.fn();
     const validatorTwo = jest.fn().mockReturnValue('some error');
-    const wrapper = mount(
+
+    render(
       <FormWrapper>
         <RadioButtonGroupField showErrorOnBlur name="test" options={options} validators={[validatorOne, validatorTwo]} />
       </FormWrapper>,
     );
 
-    wrapper.find(dataQa('test-radio-state')).simulate('change', { target: { value: 'Test' } });
+    const state = await screen.getByTestId('test-radio-state');
+
+    fireEvent.change(state, { target: { value: 'Test' } });
 
     expect(validatorOne).toBeCalledTimes(2);
     expect(validatorTwo).toBeCalledTimes(2);
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('');
+    expect(await screen.getByTestId('test-field-error-message')).toBeEmptyDOMElement();
 
-    wrapper.find(dataQa('test-radio-state')).simulate('blur');
+    fireEvent.blur(state);
 
-    expect(wrapper.find(dataQa('test-field-error-message')).text()).toBe('some error');
-
-    wrapper.unmount();
+    expect(await screen.getByTestId('test-field-error-message')).toHaveTextContent('some error');
   });
 
-  it('should show no labels if none is passed via props', () => {
-    const wrapper = mount(
+  it('should show no labels if none are passed via props', async () => {
+
+    render(
       <FormWrapper>
         <RadioButtonGroupField name="test" options={options} />
       </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(0);
-
-    wrapper.unmount();
+    expect(await screen.queryByTestId('test-field-label')).not.toBeInTheDocument();
   });
 
-  it('should show a label if one is passed via props', () => {
-    const wrapper = mount(
+  it('should show a label if one is passed via props', async () => {
+
+    render(
       <FormWrapper>
         <RadioButtonGroupField label="test label" name="test" options={options} />
       </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(1);
-    expect(wrapper.find(dataQa('test-field-label')).text()).toBe('test label');
-
-    wrapper.unmount();
+    expect(await screen.getByTestId('test-field-label')).toBeInTheDocument();
+    expect(await screen.getByTestId('test-field-label')).toHaveTextContent('test label');
   });
 
-  it('should show an asterisk on the label if the field is required', () => {
-    const wrapper = mount(
+  it('should show an asterisk on the label if the field is required', async () => {
+
+    render(
       <FormWrapper>
         <RadioButtonGroupField label="test label" name="test" options={options} required />
       </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-field-label')).length).toBe(1);
-    expect(wrapper.find(dataQa('test-field-label')).text()).toBe('test label *');
-
-    wrapper.unmount();
+    expect(await screen.getByTestId('test-field-label')).toBeInTheDocument();
+    expect(await screen.getByTestId('test-field-label')).toHaveTextContent('test label *');
   });
 
-  it('should change the state value when clicked on a different radio button', () => {
-    const wrapper = mount(
+  it('should change the state value when clicked on a different radio button', async () => {
+
+    render(
       <FormWrapper initialValues={initialValues}>
         <RadioButtonGroupField name="test" options={options} />
       </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-radio-state')).props()).toHaveProperty('value', 'lowest');
-    expect(wrapper.find(dataQa('test-radio-button')).at(0).props()).toHaveProperty('checked', true);
-    wrapper.find(dataQa('test-radio-button')).at(1).simulate('change', { target: { checked: true } });
-    wrapper.update();
+    const state = await screen.getByTestId('test-radio-state');
+    const buttons = await screen.getAllByTestId('test-radio-button');
 
-    // The value shouldn't have changed since the component disallows clicks when disabled
-    expect(wrapper.find(dataQa('test-radio-state')).props()).toHaveProperty('value', 'medium');
-    expect(wrapper.find(dataQa('test-radio-button')).at(1).props()).toHaveProperty('checked', true);
+    expect(state).toHaveProperty('value', 'lowest');
+    expect(buttons[0]).toHaveProperty('checked', true);
 
-    wrapper.unmount();
+    fireEvent.click(buttons[1]);
+    expect(state).toHaveProperty('value', 'medium');
+    expect(buttons[1]).toHaveProperty('checked', true);
   });
 
-  it('should disable all radio buttons when `disabled` is passed via props', () => {
-    const wrapper = mount(
+  it('should disable all radio buttons when `disabled` is passed via props', async () => {
+
+    render(
       <FormWrapper initialValues={initialValues}>
         <RadioButtonGroupField name="test" options={options} disabled />
       </FormWrapper>,
     );
 
-    expect(wrapper.find(dataQa('test-radio-state')).props()).toHaveProperty('value', 'lowest');
-    expect(wrapper.find(dataQa('test-radio-button')).at(0).props()).toHaveProperty('checked', true);
-    wrapper.find(dataQa('test-radio-button')).at(2).simulate('click');
-    wrapper.update();
-    // The value shouldn't have changed since the component disallows clicks when disabled
-    expect(wrapper.find(dataQa('test-radio-state')).props()).toHaveProperty('value', 'lowest');
-    expect(wrapper.find(dataQa('test-radio-button')).at(0).props()).toHaveProperty('checked', true);
+    const state = await screen.getByTestId('test-radio-state');
+    const buttons = await screen.getAllByTestId('test-radio-button');
 
-    wrapper.unmount();
+    expect(state).toHaveProperty('value', 'lowest');
+    expect(state).toHaveProperty('disabled', false);
+    expect(buttons[0]).toHaveProperty('checked', true);
+    expect(buttons[2]).toHaveProperty('disabled', true);
+    fireEvent.click(buttons[2]);
+
+    // The value shouldn't have changed since the component disallows clicks when disabled
+    expect(state).toHaveProperty('value', 'lowest');
+    expect(buttons[0]).toHaveProperty('checked', true);
   });
 
-  it('should apply the passed class name to the wrapper', () => {
-    const wrapper = mount(
+  it('should apply the passed class name to the wrapper', async () => {
+    const { container } = render(
       <FormWrapper>
         <RadioButtonGroupField name="test" options={options} className="testClass" />
       </FormWrapper>,
     );
 
-    expect(wrapper.find('div').at(0).hasClass('testClass')).toBe(true);
-
-    wrapper.unmount();
+    expect(container.querySelector('div.testClass')).toBeInTheDocument();
   });
 
-  xit('should trigger a change event when clicking on arrow buttons', () => {
-    const wrapper = mount(
+  xit('should trigger a change event when clicking on arrow buttons', async () => {
+    render(
       <FormWrapper initialValues={initialValues}>
         <RadioButtonGroupField name="test" options={options} />
       </FormWrapper>,
     );
 
-    // TODO: figure out how to test arrow clicks
-    wrapper.unmount();
+    const state = await screen.getByTestId('test-radio-state');
+    const buttons = await screen.getAllByTestId('test-radio-button');
+
+    expect(state).toHaveProperty('value', 'lowest');
+    expect(buttons[0]).toHaveProperty('checked', true);
+
+    const lowestLabel = await screen.getByLabelText('Lowest');
+    const highLabel = await screen.getByLabelText('High');
+
+    fireEvent.focus(lowestLabel);
+    fireEvent.keyDown(lowestLabel, { key: 'ArrowRight', code: 'ArrowRight' });
+    fireEvent.focus(highLabel);
+    fireEvent.keyDown(highLabel, { key: 'ArrowRight' });
+
+    // The value should change since the component supports triggering changes on arrow keystrokes
+    expect(state).toHaveProperty('value', 'high');
+    expect(buttons[0]).toHaveProperty('checked', false);
   });
 
-  it('should accept any valid input html attributes and pass them over to all inputs except state', () => {
+  it('should accept any valid input html attributes and pass them over to all inputs except state', async () => {
     const title = 'Arbitrary test title';
     const onBlur = jest.fn();
-    const wrapper = mount(
+
+    render(
       <FormWrapper>
         <RadioButtonGroupField
           name="test"
@@ -206,11 +222,12 @@ describe('RadioButtonGroupField::', () => {
       </FormWrapper>,
     );
 
-    const buttons = wrapper.find(dataQa('test-radio-button'));
+    const buttons = await screen.getAllByTestId('test-radio-button');
 
-    expect(buttons.at(0).prop('onBlur')).toEqual(onBlur);
-    expect(buttons.at(0).prop('title')).toEqual(title);
+    fireEvent.focus(buttons[1]);
+    fireEvent.blur(buttons[1]);
 
-    wrapper.unmount();
+    expect(buttons[0]).toHaveAttribute('title', title);
+    expect(onBlur).toHaveBeenCalledTimes(1);
   });
 });

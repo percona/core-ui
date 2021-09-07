@@ -16,12 +16,13 @@ const icons: Icons  = {
   unselectedSquare: DisabledSquare,
 };
 
-interface IconProps {
+interface IconProps extends React.SVGProps<SVGSVGElement>{
   name: AvailableIcons;
 }
 
-export const Icon: FC<IconProps> = ({ name }) => {
-  const IconComponent = icons[name];
+export const Icon: FC<IconProps> = (props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  const IconComponent = icons[props.name];
 
-  return <IconComponent />;
+  return <IconComponent {...props} />;
 };
