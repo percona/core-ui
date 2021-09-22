@@ -58,9 +58,9 @@ export const TextareaInputField: FC<TextareaInputFieldProps> = React.memo(
           const validationError = ((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error;
 
           return (
-            <div className={cx(styles.field, fieldClassName)} data-qa={`${name}-field-container`}>
+            <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
               {label && (
-                <label className={styles.label} htmlFor={inputId} data-qa={`${name}-field-label`}>
+                <label className={styles.label} htmlFor={inputId} data-testid={`${name}-field-label`}>
                   {`${label}${required ? ' *' : ''}`}
                 </label>
               )}
@@ -71,14 +71,14 @@ export const TextareaInputField: FC<TextareaInputFieldProps> = React.memo(
                 rows={rows}
                 disabled={disabled}
                 placeholder={placeholder}
-                data-qa={`${name}-textarea-input`}
+                data-testid={`${name}-textarea-input`}
                 className={cx(
                   styles.input,
                   { invalid: !!validationError, [resize]: resize !== 'both' },
                   className,
                 )}
               />
-              <div data-qa={`${name}-field-error-message`} className={styles.errorMessage}>
+              <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
                 {validationError}
               </div>
             </div>

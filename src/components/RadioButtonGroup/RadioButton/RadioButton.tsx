@@ -25,7 +25,7 @@ export const RadioButton: FC<RadioButtonProps> = ({
         id={inputId.current}
         {...inputProps}
         type="radio"
-        data-qa={`${name}-radio-button`}
+        data-testid={`${name}-radio-button`}
         className={styles.radio}
         onChange={onChange}
         disabled={disabled}

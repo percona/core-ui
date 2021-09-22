@@ -37,8 +37,8 @@ describe('StepProgress::', () => {
 
   const isCurrentStep = (wrapper: HTMLElement, dataQa: string) => {
     const className = wrapper
-      .querySelector(`[data-qa="${dataQa}"]`)
-      .querySelectorAll('[data-qa="step-content"] > div')[0]
+      .querySelector(`[data-testid="${dataQa}"]`)
+      .querySelectorAll('[data-testid="step-content"] > div')[0]
       .getAttribute('class');
 
     return /current$/i.test(className);
@@ -89,7 +89,7 @@ describe('StepProgress::', () => {
 
     expect(isCurrentStep(container, 'step-1')).toBeTruthy();
 
-    const stepHeader = await screen.getByTestId('step-2').querySelector('[data-qa="step-header"]');
+    const stepHeader = await screen.getByTestId('step-2').querySelector('[data-testid="step-header"]');
 
     fireEvent.click(stepHeader);
 

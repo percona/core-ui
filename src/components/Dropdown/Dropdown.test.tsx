@@ -75,7 +75,7 @@ describe('Dropdown ::', () => {
 
     render(
       <Dropdown toggle={Toggle}>
-        <a data-qa="menu-item" onClick={menuAction}>root</a>
+        <a data-testid="menu-item" onClick={menuAction}>root</a>
         <a href="/test">test</a>
       </Dropdown>,
     );
@@ -97,7 +97,7 @@ describe('Dropdown ::', () => {
 
     render(
       <Dropdown toggle={Toggle}>
-        <div data-qa="menu-item" onClick={menuAction}>root</div>
+        <div data-testid="menu-item" onClick={menuAction}>root</div>
         <a href="/test">test</a>
       </Dropdown>,
     );
@@ -118,7 +118,7 @@ describe('Dropdown ::', () => {
   test('doesn\'t keep menu item active on close', async () => {
     render(
       <Dropdown toggle={Toggle}>
-        <div data-qa="menu-item" onClick={jest.fn()}>root</div>
+        <div data-testid="menu-item" onClick={jest.fn()}>root</div>
         <a href="/test">test</a>
       </Dropdown>,
     );
