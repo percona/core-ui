@@ -12,7 +12,7 @@ import { getStyles } from './RadioButtonGroup.styles';
 
 type RadionButtonGroupOptions = Array<SelectableValue<string> & { disabled?: boolean }>;
 
-interface RadioButtonGroupFieldProps extends UseFieldConfig<string>{
+export interface RadioButtonGroupFieldProps extends UseFieldConfig<string>{
   className?: string;
   disabled?: boolean;
   fullWidth?: boolean;

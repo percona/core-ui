@@ -14,7 +14,7 @@ type CommonProps = {
 
 type ButtonProps = CommonProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
-interface LoaderButtonProps extends ButtonProps {
+export interface LoaderButtonProps extends ButtonProps {
   loading?: boolean;
 }
 
