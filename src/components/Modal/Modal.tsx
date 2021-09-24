@@ -3,7 +3,7 @@ import React, { FC, useEffect, ReactNode } from 'react';
 import { IconButton, useStyles } from '@grafana/ui';
 import { getStyles } from './Modal.styles';
 
-interface ModalWindow {
+export interface ModalWindow {
   onClose: () => void;
   closeOnClickaway?: boolean;
   closeOnEscape?: boolean;

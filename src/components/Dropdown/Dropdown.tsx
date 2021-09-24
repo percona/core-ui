@@ -25,7 +25,7 @@ const popperConfig: Partial<PopperOptions> = {
   ],
 };
 
-interface DropdownProps {
+export interface DropdownProps {
   // TODO: improve this
   toggle: React.ForwardRefExoticComponent<
     React.RefAttributes<any> & React.HTMLAttributes<any>
