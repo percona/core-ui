@@ -52,11 +52,11 @@ export const Step: FC<StepProps> = ({
   }, [status]);
 
   return (
-    <div className={styles.step} data-qa={dataQa}>
+    <div className={styles.step} data-testid={dataQa}>
       <div
         className={cx(styles.stepHeader, { [styles.stepDisabled]: disabled })}
         onClick={onClick}
-        data-qa="step-header"
+        data-testid="step-header"
       >
         <div className={cx(styles.stepCircle, stepCircleStatusStyles)}>
           {status === StepStatus.done ? <Icon name="check" /> : number}
@@ -67,7 +67,7 @@ export const Step: FC<StepProps> = ({
       </div>
       <div
         className={cx(styles.stepContentWrapper, { [styles.stepVerticalLine]: !isLast })}
-        data-qa="step-content"
+        data-testid="step-content"
       >
         <div className={cx(styles.stepContentTransitionWrapper, {
           [styles.stepContentTransitionCurrent(contentHeight)]: status === StepStatus.current,

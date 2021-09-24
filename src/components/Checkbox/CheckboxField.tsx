@@ -38,24 +38,24 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(({
   return (
     <Field<boolean> {...fieldConfig} type="checkbox" name={name} validate={validate}>
       {({ input, meta }: CheckboxFieldRenderProps) => (
-        <div className={cx(styles.field, fieldClassName)} data-qa={`${name}-field-container`}>
+        <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
           <label className={styles.wrapper} htmlFor={inputId}>
             <input
               id={inputId}
               {...input}
               {...inputProps}
               disabled={disabled}
-              data-qa={`${name}-checkbox-input`}
+              data-testid={`${name}-checkbox-input`}
               className={styles.input}
             />
             <span className={styles.checkmark} />
             {label && (
-            <span className={styles.label} data-qa={`${name}-field-label`}>
+            <span className={styles.label} data-testid={`${name}-field-label`}>
               {label}
             </span>
             )}
           </label>
-          <div data-qa={`${name}-field-error-message`} className={styles.errorMessage}>
+          <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
             {meta.touched && meta.error}
           </div>
         </div>

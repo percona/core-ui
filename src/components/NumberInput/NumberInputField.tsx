@@ -79,9 +79,9 @@ export const NumberInputField: FC<NumberInputFieldProps> = React.memo(({
         const validationError = ((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error;
 
         return (
-          <div className={cx(styles.field, fieldClassName)} data-qa={`${name}-field-container`}>
+          <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
             {label && (
-              <label className={styles.label} htmlFor={inputId} data-qa={`${name}-field-label`}>
+              <label className={styles.label} htmlFor={inputId} data-testid={`${name}-field-label`}>
                 {`${label}${required ? ' *' : ''}`}
               </label>
             )}
@@ -93,7 +93,7 @@ export const NumberInputField: FC<NumberInputFieldProps> = React.memo(({
                 ref={inputRef}
                 disabled={disabled}
                 placeholder={placeholder}
-                data-qa={`${name}-number-input`}
+                data-testid={`${name}-number-input`}
                 className={cx(styles.input, { invalid: !!validationError }, className)}
               />
               {!disabled && (
@@ -115,7 +115,7 @@ export const NumberInputField: FC<NumberInputFieldProps> = React.memo(({
                 </>
               )}
             </span>
-            <div data-qa={`${name}-field-error-message`} className={styles.errorMessage}>
+            <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
               {validationError}
             </div>
           </div>

@@ -68,14 +68,14 @@ export function RadioButtonGroupField({
         return (
           <div className={cx(styles.wrapper, className)}>
             {label && (
-              <div className={styles.label} data-qa={`${name}-field-label`}>
+              <div className={styles.label} data-testid={`${name}-field-label`}>
                 {`${label}${required ? ' *' : ''}`}
               </div>
             )}
             {/* this field is auxiliary, i.e. it helps address the validation, which is tricky otherwise */}
             <input
               {...input}
-              data-qa={`${name}-radio-state`}
+              data-testid={`${name}-radio-state`}
               className={styles.input}
             />
             <div className={styles.buttonContainer}>
@@ -95,7 +95,7 @@ export function RadioButtonGroupField({
                 </RadioButton>
               ))}
             </div>
-            <div data-qa={`${name}-field-error-message`} className={styles.errorMessage}>
+            <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
               {validationError}
             </div>
           </div>

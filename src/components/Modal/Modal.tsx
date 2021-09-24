@@ -34,26 +34,26 @@ export const Modal: FC<ModalWindow> = (props) => {
   }, [closeOnEscape, onClose]);
 
   return isVisible ? (
-    <div data-qa="modal-wrapper">
+    <div data-testid="modal-wrapper">
       <div
         className={styles.background}
         onClick={closeOnClickaway ? onClose : undefined}
-        data-qa="modal-background"
+        data-testid="modal-background"
       />
-      <div className={styles.body} data-qa="modal-body">
-        <div className={styles.modalHeader} data-qa="modal-header">
+      <div className={styles.body} data-testid="modal-body">
+        <div className={styles.modalHeader} data-testid="modal-header">
           {title}
           <div className={styles.modalHeaderClose}>
             <IconButton
               surface="header"
-              data-qa="modal-close-button"
+              data-testid="modal-close-button"
               name="times"
               size="lg"
               onClick={onClose}
             />
           </div>
         </div>
-        <div className={styles.content} data-qa="modal-content">
+        <div className={styles.content} data-testid="modal-content">
           {children}
         </div>
       </div>

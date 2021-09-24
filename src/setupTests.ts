@@ -7,4 +7,4 @@ import '@testing-library/jest-dom/extend-expect';
 import 'jest-canvas-mock';
 import { configure } from '@testing-library/react';
 
-configure({ testIdAttribute: 'data-qa' });
+configure({ testIdAttribute: 'data-testid' });

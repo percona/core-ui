@@ -54,9 +54,9 @@ export const PasswordInputField: FC<PasswordInputFieldProps> = React.memo(
           const validationError = ((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error;
 
           return (
-            <div className={cx(styles.field, fieldClassName)} data-qa={`${name}-field-container`}>
+            <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
               {label && (
-                <label className={styles.label} htmlFor={inputId} data-qa={`${name}-field-label`}>
+                <label className={styles.label} htmlFor={inputId} data-testid={`${name}-field-label`}>
                   {`${label}${required ? ' *' : ''}`}
                 </label>
               )}
@@ -66,10 +66,10 @@ export const PasswordInputField: FC<PasswordInputFieldProps> = React.memo(
                 {...inputProps}
                 disabled={disabled}
                 placeholder={placeholder}
-                data-qa={`${name}-password-input`}
+                data-testid={`${name}-password-input`}
                 className={cx(styles.input, { invalid: !!validationError }, className)}
               />
-              <div data-qa={`${name}-field-error-message`} className={styles.errorMessage}>
+              <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
                 {validationError}
               </div>
             </div>

@@ -134,7 +134,7 @@ describe('PasswordInputField::', () => {
       </FormWrapper>,
     );
 
-    expect(container.querySelector('[data-qa="test-password-input"].testClass'));
+    expect(container.querySelector('[data-testid="test-password-input"].testClass'));
   });
 
   it('should accept any valid input html attributes and pass them over to the input tag', async () => {

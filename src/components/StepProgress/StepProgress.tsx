@@ -46,7 +46,7 @@ export const StepProgress: FC<StepProgressProps> = ({
         <form
           onSubmit={handleSubmit}
           className={styles.stepProgressWrapper}
-          data-qa="step-progress"
+          data-testid="step-progress"
         >
           {steps.map(({
             render, title, fields, dataQa,
