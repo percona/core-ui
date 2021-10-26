@@ -64,6 +64,7 @@ export const TextInputField: FC<TextInputFieldProps> = React.memo(
               <Label
                 name={name}
                 label={label}
+                required={required}
                 inputId={inputId}
                 link={tooltipLink}
                 linkText={tooltipLinkText}
