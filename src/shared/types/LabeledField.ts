@@ -2,7 +2,7 @@ import { IconName } from '@grafana/ui';
 import { ReactNode } from 'react';
 
 export interface LabeledFieldProps {
-  label: ReactNode;
+  label?: ReactNode;
   tooltipText?: string;
   tooltipLink?: string;
   tooltipLinkText?: string;
