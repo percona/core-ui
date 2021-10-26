@@ -20,6 +20,7 @@ export const getStyles = (theme: GrafanaTheme) => {
       padding-left: ${spacing.formSpacingBase}px;
     `,
     wrapper: css`
+      display: flex;
       position: relative;
       padding-left: ${checkboxSize};
       vertical-align: middle;

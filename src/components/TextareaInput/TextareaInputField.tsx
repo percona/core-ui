@@ -1,21 +1,21 @@
-import React, { FC, useMemo, ReactNode } from 'react';
+import React, { FC, useMemo } from 'react';
 import { Field, FieldMetaState, FieldInputProps, UseFieldConfig } from 'react-final-form';
 import { cx } from 'emotion';
 import { useStyles } from '@grafana/ui';
+import { Label } from '../Label';
 import { Validator, compose } from '../../shared/validators';
 import { getStyles } from './TextareaInput.styles';
-import { FieldTextareaAttrs } from '../../shared/types';
+import { FieldTextareaAttrs, LabeledFieldProps } from '../../shared/types';
 
 /**
  * Note: the validation error message will be displayed once the the input has been modified.
  * To show the error message on blur you have to pass `showErrorOnBlur`.
  */
-export interface TextareaInputFieldProps extends UseFieldConfig<string> {
+export interface TextareaInputFieldProps extends UseFieldConfig<string>, LabeledFieldProps {
   className?: string;
   disabled?: boolean;
   fieldClassName?: string;
   inputProps?: FieldTextareaAttrs;
-  label?: string | ReactNode;
   name: string;
   placeholder?: string;
   required?: boolean;
@@ -44,6 +44,12 @@ export const TextareaInputField: FC<TextareaInputFieldProps> = React.memo(
     rows = 5,
     showErrorOnBlur = false,
     validators,
+    tooltipText = '',
+    tooltipLink,
+    tooltipLinkText,
+    tooltipIcon,
+    tooltipDataTestId,
+    tooltipLinkTarget,
     ...fieldConfig
   }) => {
     const styles = useStyles(getStyles);
@@ -59,11 +65,17 @@ export const TextareaInputField: FC<TextareaInputFieldProps> = React.memo(
 
           return (
             <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
-              {label && (
-                <label className={styles.label} htmlFor={inputId} data-testid={`${name}-field-label`}>
-                  {`${label}${required ? ' *' : ''}`}
-                </label>
-              )}
+              <Label
+                name={name}
+                label={label}
+                inputId={inputId}
+                link={tooltipLink}
+                linkText={tooltipLinkText}
+                tooltipText={tooltipText}
+                tooltipDataTestId={tooltipDataTestId}
+                tooltipLinkTarget={tooltipLinkTarget}
+                icon={tooltipIcon}
+              />
               <textarea
                 id={inputId}
                 {...input}

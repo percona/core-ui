@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { useTheme } from '@grafana/ui';
 import { LinkTooltip, LinkTooltipProps } from '../LinkTooltip';
 import { getStyles } from './Label.styles';
 
 export interface LabelProps extends LinkTooltipProps {
   name: string;
-  label?: string;
+  label?: ReactNode;
   inputId: string;
   required?: boolean;
 }

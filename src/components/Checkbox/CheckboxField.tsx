@@ -1,16 +1,16 @@
-import React, { FC, useMemo, ReactNode } from 'react';
+import React, { FC, useMemo } from 'react';
 import { Field, UseFieldConfig, FieldMetaState, FieldInputProps } from 'react-final-form';
 import { useStyles } from '@grafana/ui';
 import { cx } from 'emotion';
+import { Label } from '../Label';
 import { getStyles } from './Checkbox.styles';
 import { Validator, compose } from '../../shared/validators';
-import { FieldInputAttrs } from '../../shared/types';
+import { FieldInputAttrs, LabeledFieldProps } from '../../shared/types';
 
-export interface CheckboxProps extends UseFieldConfig<boolean> {
+export interface CheckboxProps extends UseFieldConfig<boolean>, LabeledFieldProps {
   disabled?: boolean;
   fieldClassName?: string;
   inputProps?: FieldInputAttrs;
-  label?: string | ReactNode;
   name: string;
   validators?: Validator[];
 }
@@ -27,6 +27,12 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(({
   label,
   name,
   validators,
+  tooltipText = '',
+  tooltipLink,
+  tooltipLinkText,
+  tooltipIcon,
+  tooltipDataTestId,
+  tooltipLinkTarget,
   ...fieldConfig
 }) => {
   const styles = useStyles(getStyles);
@@ -49,11 +55,17 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(({
               className={styles.input}
             />
             <span className={styles.checkmark} />
-            {label && (
-            <span className={styles.label} data-testid={`${name}-field-label`}>
-              {label}
-            </span>
-            )}
+            <Label
+              name={name}
+              label={label}
+              inputId={inputId}
+              link={tooltipLink}
+              linkText={tooltipLinkText}
+              tooltipText={tooltipText}
+              tooltipDataTestId={tooltipDataTestId}
+              tooltipLinkTarget={tooltipLinkTarget}
+              icon={tooltipIcon}
+            />
           </label>
           <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
             {meta.touched && meta.error}

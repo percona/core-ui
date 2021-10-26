@@ -6,16 +6,16 @@ import { useStyles } from '@grafana/ui';
 import {
   Field, FieldMetaState, FieldInputProps, UseFieldConfig,
 } from 'react-final-form';
+import { Label } from '../Label';
 import { getStyles } from './NumberInput.styles';
 import { Validator, compose } from '../../shared/validators';
-import { FieldInputAttrs } from '../../shared/types';
+import { FieldInputAttrs, LabeledFieldProps } from '../../shared/types';
 
-export interface NumberInputFieldProps extends UseFieldConfig<number> {
+export interface NumberInputFieldProps extends UseFieldConfig<number>, LabeledFieldProps {
   className?: string;
   disabled?: boolean;
   fieldClassName?: string;
   inputProps?: FieldInputAttrs;
-  label?: string;
   name: string;
   placeholder?: string;
   required?: boolean;
@@ -39,6 +39,12 @@ export const NumberInputField: FC<NumberInputFieldProps> = React.memo(({
   required = false,
   showErrorOnBlur = false,
   validators,
+  tooltipText = '',
+  tooltipLink,
+  tooltipLinkText,
+  tooltipIcon,
+  tooltipDataTestId,
+  tooltipLinkTarget,
   ...fieldConfig
 }) => {
   const styles = useStyles(getStyles);
@@ -80,11 +86,18 @@ export const NumberInputField: FC<NumberInputFieldProps> = React.memo(({
 
         return (
           <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
-            {label && (
-              <label className={styles.label} htmlFor={inputId} data-testid={`${name}-field-label`}>
-                {`${label}${required ? ' *' : ''}`}
-              </label>
-            )}
+            <Label
+              name={name}
+              label={label}
+              required={required}
+              inputId={inputId}
+              link={tooltipLink}
+              linkText={tooltipLinkText}
+              tooltipText={tooltipText}
+              tooltipDataTestId={tooltipDataTestId}
+              tooltipLinkTarget={tooltipLinkTarget}
+              icon={tooltipIcon}
+            />
             <span className={styles.inputWrapper}>
               <input
                 id={inputId}

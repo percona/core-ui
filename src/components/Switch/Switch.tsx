@@ -1,10 +1,11 @@
 import React, { FC, useMemo } from 'react';
 import { Field } from 'react-final-form';
 import { cx } from 'emotion';
-import { Icon, Tooltip, Switch, useStyles } from '@grafana/ui';
+import { Switch, useStyles } from '@grafana/ui';
 import { compose } from '../../shared/validators';
 import { SwitchFieldProps, SwitchFieldRenderProps } from './Switch.types';
 import { getStyles } from './Switch.styles';
+import { Label } from '../Label';
 
 export const SwitchField: FC<SwitchFieldProps> = ({
   disabled,
@@ -13,8 +14,12 @@ export const SwitchField: FC<SwitchFieldProps> = ({
   label,
   name,
   validators,
-  tooltip,
-  tooltipIcon = 'info-circle',
+  tooltipText = '',
+  tooltipLink,
+  tooltipLinkText,
+  tooltipIcon,
+  tooltipDataTestId,
+  tooltipLinkTarget,
   ...fieldConfig
 }) => {
   const styles = useStyles(getStyles);
@@ -27,18 +32,17 @@ export const SwitchField: FC<SwitchFieldProps> = ({
     <Field<boolean> {...fieldConfig} type="checkbox" name={name} validate={validate}>
       {({ input, meta }: SwitchFieldRenderProps) => (
         <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
-          {label && (
-            <div className={styles.labelWrapper}>
-              <label className={styles.label} htmlFor={inputId} data-testid={`${name}-field-label`}>
-                {label}
-              </label>
-              {tooltip && (
-                <Tooltip content={<span>{tooltip}</span>} data-testid={`${name}-field-tooltip`}>
-                  <Icon name={tooltipIcon} />
-                </Tooltip>
-              )}
-            </div>
-          )}
+          <Label
+            name={name}
+            label={label}
+            inputId={inputId}
+            link={tooltipLink}
+            linkText={tooltipLinkText}
+            tooltipText={tooltipText}
+            tooltipDataTestId={tooltipDataTestId}
+            tooltipLinkTarget={tooltipLinkTarget}
+            icon={tooltipIcon}
+          />
           <Switch
             css={{}}
             {...input}

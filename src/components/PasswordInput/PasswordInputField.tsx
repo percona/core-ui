@@ -1,21 +1,21 @@
-import React, { FC, useMemo, ReactNode } from 'react';
+import React, { FC, useMemo } from 'react';
 import { Field, FieldMetaState, FieldInputProps, UseFieldConfig } from 'react-final-form';
 import { cx } from 'emotion';
 import { useStyles } from '@grafana/ui';
+import { Label } from '../Label';
 import { Validator, compose } from '../../shared/validators';
 import { getStyles } from './PasswordInput.styles';
-import { FieldInputAttrs } from '../../shared/types';
+import { FieldInputAttrs, LabeledFieldProps } from '../../shared/types';
 
 /**
  * Note: the validation error message will be displayed once the the input has been modified.
  * To show the error message on blur you have to pass `showErrorOnBlur`.
  */
-export interface PasswordInputFieldProps extends UseFieldConfig<string> {
+export interface PasswordInputFieldProps extends UseFieldConfig<string>, LabeledFieldProps {
   className?: string;
   disabled?: boolean;
   fieldClassName?: string;
   inputProps?: FieldInputAttrs;
-  label?: string | ReactNode;
   name: string;
   placeholder?: string;
   required?: boolean;
@@ -40,6 +40,12 @@ export const PasswordInputField: FC<PasswordInputFieldProps> = React.memo(
     required = false,
     showErrorOnBlur = false,
     validators,
+    tooltipText = '',
+    tooltipLink,
+    tooltipLinkText,
+    tooltipIcon,
+    tooltipDataTestId,
+    tooltipLinkTarget,
     ...fieldConfig
   }) => {
     const styles = useStyles(getStyles);
@@ -55,11 +61,18 @@ export const PasswordInputField: FC<PasswordInputFieldProps> = React.memo(
 
           return (
             <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
-              {label && (
-                <label className={styles.label} htmlFor={inputId} data-testid={`${name}-field-label`}>
-                  {`${label}${required ? ' *' : ''}`}
-                </label>
-              )}
+              <Label
+                name={name}
+                label={label}
+                required={required}
+                inputId={inputId}
+                link={tooltipLink}
+                linkText={tooltipLinkText}
+                tooltipText={tooltipText}
+                tooltipDataTestId={tooltipDataTestId}
+                tooltipLinkTarget={tooltipLinkTarget}
+                icon={tooltipIcon}
+              />
               <input
                 id={inputId}
                 {...input}

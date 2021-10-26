@@ -5,19 +5,19 @@ import {
 } from 'react-final-form';
 import { Icon, IconName, useStyles } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
+import { Label } from '../Label';
 import { Validator, compose } from '../../shared/validators';
-import { FieldInputAttrs } from '../../shared/types';
+import { FieldInputAttrs, LabeledFieldProps } from '../../shared/types';
 import { RadioButtonSize, RadioButton } from './RadioButton';
 import { getStyles } from './RadioButtonGroup.styles';
 
 type RadionButtonGroupOptions = Array<SelectableValue<string> & { disabled?: boolean }>;
 
-export interface RadioButtonGroupFieldProps extends UseFieldConfig<string>{
+export interface RadioButtonGroupFieldProps extends UseFieldConfig<string>, LabeledFieldProps {
   className?: string;
   disabled?: boolean;
   fullWidth?: boolean;
   inputProps?: FieldInputAttrs;
-  label?: string;
   name: string;
   options: RadionButtonGroupOptions;
   required?: boolean;
@@ -43,6 +43,12 @@ export function RadioButtonGroupField({
   showErrorOnBlur = false,
   size = 'md',
   validators,
+  tooltipText = '',
+  tooltipLink,
+  tooltipLinkText,
+  tooltipIcon,
+  tooltipDataTestId,
+  tooltipLinkTarget,
   ...fieldConfig
 }: RadioButtonGroupFieldProps) {
   const handleOnChange = useCallback(
@@ -56,6 +62,7 @@ export function RadioButtonGroupField({
     [disabled],
   );
   const styles = useStyles(getStyles);
+  const inputId = `input-${name}-id`;
   const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
     validators,
   ]);
@@ -67,13 +74,21 @@ export function RadioButtonGroupField({
 
         return (
           <div className={cx(styles.wrapper, className)}>
-            {label && (
-              <div className={styles.label} data-testid={`${name}-field-label`}>
-                {`${label}${required ? ' *' : ''}`}
-              </div>
-            )}
+            <Label
+              name={name}
+              label={label}
+              required={required}
+              inputId={inputId}
+              link={tooltipLink}
+              linkText={tooltipLinkText}
+              tooltipText={tooltipText}
+              tooltipDataTestId={tooltipDataTestId}
+              tooltipLinkTarget={tooltipLinkTarget}
+              icon={tooltipIcon}
+            />
             {/* this field is auxiliary, i.e. it helps address the validation, which is tricky otherwise */}
             <input
+              id={inputId}
               {...input}
               data-testid={`${name}-radio-state`}
               className={styles.input}
