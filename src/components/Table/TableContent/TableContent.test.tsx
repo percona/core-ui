@@ -1,34 +1,32 @@
-import { mount } from 'enzyme';
-import { dataTestId } from '@percona/platform-core';
-import { TableContent } from './TableContent';
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { TableContent } from './TableContent';
 
 describe('TableContent', () => {
   it('should display the noData section when no data is passed', async () => {
-    const wrapper = mount(<TableContent hasData={false} emptyMessage="empty" />);
-    const noData = wrapper.find(dataTestId('table-no-data'));
+    render(<TableContent hasData={false} emptyMessage="empty" />);
+    const noData = await screen.findByTestId('table-no-data');
 
-    expect(noData).toHaveLength(1);
-    expect(noData.text()).toEqual('empty');
+    expect(noData).toBeInTheDocument();
+    expect(noData).toHaveTextContent('empty');
   });
 
-  it('should not display the noData section when no data is passed and it is still loading', async () => {
-    const wrapper = mount(<TableContent loading={true} hasData={false} emptyMessage="empty" />);
-    const noData = wrapper.find(dataTestId('table-no-data'));
+  it('should not display the noData section when no data is passed and it is still loading', () => {
+    render(<TableContent loading hasData={false} emptyMessage="empty" />);
+    const noData = screen.queryByTestId('table-no-data');
 
-    expect(noData).toHaveLength(1);
-    expect(noData.text()).toHaveLength(0);
+    expect(noData).toBeInTheDocument();
+    expect(noData).toHaveTextContent('');
   });
 
-  it('should display the table when there is data', async () => {
-    const Dummy = () => <span></span>;
-    const wrapper = mount(
-      <TableContent hasData={true} emptyMessage="no data">
-        <Dummy />
-      </TableContent>
+  it('should display the table when there is data', () => {
+    render(
+      <TableContent hasData emptyMessage="no data">
+        <span data-testid="dummy" />
+      </TableContent>,
     );
 
-    expect(wrapper.find(dataTestId('table-no-data'))).toHaveLength(0);
-    expect(wrapper.find(Dummy).exists()).toBeTruthy();
+    expect(screen.queryByTestId('table-no-data')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('dummy')).toBeInTheDocument();
   });
 });

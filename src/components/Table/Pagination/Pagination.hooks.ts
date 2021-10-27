@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { logger } from '@percona/platform-core';
+import { logger } from 'shared';
 import { PAGE_SIZES } from './Pagination.constants';
 
 export const getPageSize = (pageSize: number) =>
@@ -12,7 +12,7 @@ export const useStoredTablePageSize = (tableId: string) => {
   try {
     const storedValue = parseInt(localStorage.getItem(fullId) as string, 10);
 
-    if (storedValue && !isNaN(storedValue)) {
+    if (storedValue && !Number.isNaN(storedValue)) {
       pageSize = storedValue;
     }
   } catch (e) {
@@ -24,7 +24,7 @@ export const useStoredTablePageSize = (tableId: string) => {
     if (tableId) {
       localStorage.setItem(fullId, `${value}`);
     }
-  }, [value]);
+  }, [fullId, tableId, value]);
 
   return [value, setValue] as const;
 };

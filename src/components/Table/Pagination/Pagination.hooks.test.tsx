@@ -1,5 +1,6 @@
-import { mount } from 'enzyme';
 import React, { FC } from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { PAGE_SIZES } from './Pagination.constants';
 import { useStoredTablePageSize } from './Pagination.hooks';
 
@@ -12,15 +13,13 @@ const TestComponent: FC = () => {
 
   return (
     <>
-      <span>{pageSize}</span>
-      <input type="number" value={pageSize} onChange={(e) => setPageSize(parseInt(e.target.value, 10))} />
+      <span data-testid="test-span">{`${pageSize}`}</span>
+      <input data-testid="test-input" type="number" value={`${pageSize}`} onChange={(e) => setPageSize(parseInt(e.target.value, 10))} />
     </>
   );
 };
 
-const getDataFromLocalStorage = (): number => {
-  return parseInt(localStorage.getItem(TABLE_STORAGE_ID) || '0', 10);
-};
+const getDataFromLocalStorage = (): number => parseInt(localStorage.getItem(TABLE_STORAGE_ID) || '0', 10);
 
 const setDataOnLocalStorage = (pageSize: number) => localStorage.setItem(TABLE_STORAGE_ID, `${pageSize}`);
 
@@ -33,35 +32,42 @@ describe('useStoredTablePageSize', () => {
   });
 
   it('should initially store the default pageSize', () => {
-    mount(<TestComponent />);
+    render(<TestComponent />);
     const storedSize = getDataFromLocalStorage();
+
     expect(storedSize).toBe(DEFAULT_VALUE);
     localStorage.removeItem(TABLE_STORAGE_ID);
   });
 
   it('should store the size on local storage after input changes', () => {
-    const wrapper = mount(<TestComponent />);
-    const input = wrapper.find('input').first();
-    const value = PAGE_SIZES[1].value;
-    input.simulate('change', { target: { value } });
+    render(<TestComponent />);
+    const input = screen.getByTestId('test-input');
+    const { value } = PAGE_SIZES[1];
+
+    userEvent.clear(input);
+    userEvent.type(input, `${value}`);
     const storedSize = getDataFromLocalStorage();
+
     expect(storedSize).toBe(value);
   });
 
   it('should set the size from previous saves', () => {
     const value = PAGE_SIZES[1].value || 0;
+
     setDataOnLocalStorage(value);
-    const wrapper = mount(<TestComponent />);
-    const span = wrapper.find('span').first();
-    expect(parseInt(span.text(), 10)).toBe(value);
+    render(<TestComponent />);
+    const span = screen.getByTestId('test-span');
+
+    expect(parseInt(span.innerHTML, 10)).toBe(value);
   });
 
   it('should set the default if a wrong value is saved', () => {
     localStorage.setItem(TABLE_STORAGE_ID, '1a');
-    const wrapper = mount(<TestComponent />);
-    const span = wrapper.find('span').first();
+    render(<TestComponent />);
+    const span = screen.getByTestId('test-span');
     const storedSize = getDataFromLocalStorage();
-    expect(parseInt(span.text(), 10)).toBe(DEFAULT_VALUE);
+
+    expect(parseInt(span.innerHTML, 10)).toBe(DEFAULT_VALUE);
     expect(storedSize).toBe(DEFAULT_VALUE);
   });
 });

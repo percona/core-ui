@@ -96,7 +96,7 @@ export const Table: FC<TableProps> = ({
                 <thead data-testid="table-thead">
                   {headerGroups.map((headerGroup) => (
                     /* eslint-disable-next-line react/jsx-key */
-                    <tr {...headerGroup.getHeaderGroupProps()}>
+                    <tr data-testid="table-thead-tr" {...headerGroup.getHeaderGroupProps()}>
                       {headerGroup.headers.map((column) => (
                         /* eslint-disable-next-line react/jsx-key */
                         <th
@@ -126,7 +126,7 @@ export const Table: FC<TableProps> = ({
 
                         return (
                           <React.Fragment key={row.id}>
-                            <tr {...row.getRowProps(getRowProps(row))}>
+                            <tr data-testid="table-tbody-tr" {...row.getRowProps(getRowProps(row))}>
                               {row.cells.map((cell) => (
                                   <td
                                     {...cell.getCellProps([
@@ -165,8 +165,8 @@ export const Table: FC<TableProps> = ({
           pageSizeOptions={PAGE_SIZES}
           pageSize={pageSize}
           nrRowsOnCurrentPage={page.length}
-          onPageChange={(pageIndex) => onPageChanged(pageIndex)}
-          onPageSizeChange={(pageSize) => onPageSizeChanged(pageSize)}
+          onPageChange={(pIndex) => onPageChanged(pIndex)}
+          onPageSizeChange={(pSize) => onPageSizeChanged(pSize)}
         />
       )}
     </>
