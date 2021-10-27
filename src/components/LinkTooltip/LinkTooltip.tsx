@@ -14,7 +14,7 @@ export interface LinkTooltipProps {
 export const LinkTooltip: FC<LinkTooltipProps> = ({
   tooltipText,
   link,
-  linkText,
+  linkText = 'Read more',
   icon = 'info-circle',
   tooltipDataTestId,
   tooltipLinkTarget = '_blank',
@@ -26,7 +26,7 @@ export const LinkTooltip: FC<LinkTooltipProps> = ({
       content={
         <div className={styles.contentWrapper}>
           <span>{tooltipText}</span>
-          {link && linkText && (
+          {link && (
             <a className={styles.link} href={link} target={tooltipLinkTarget}>
               {linkText}
             </a>
