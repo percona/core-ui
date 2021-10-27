@@ -11,7 +11,6 @@ export interface CheckboxProps extends UseFieldConfig<boolean>, LabeledFieldProp
   disabled?: boolean;
   fieldClassName?: string;
   inputProps?: FieldInputAttrs;
-  name: string;
   validators?: Validator[];
 }
 
@@ -26,6 +25,7 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(({
   inputProps,
   label,
   name,
+  inputId = `input-${name}-id`,
   validators,
   tooltipText = '',
   tooltipLink,
@@ -36,7 +36,6 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(({
   ...fieldConfig
 }) => {
   const styles = useStyles(getStyles);
-  const inputId = `input-${name}-id`;
   const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
     validators,
   ]);
@@ -59,12 +58,12 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(({
               name={name}
               label={label}
               inputId={inputId}
-              link={tooltipLink}
-              linkText={tooltipLinkText}
+              tooltipLink={tooltipLink}
+              tooltipLinkText={tooltipLinkText}
               tooltipText={tooltipText}
               tooltipDataTestId={tooltipDataTestId}
               tooltipLinkTarget={tooltipLinkTarget}
-              icon={tooltipIcon}
+              tooltipIcon={tooltipIcon}
             />
           </label>
           <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>

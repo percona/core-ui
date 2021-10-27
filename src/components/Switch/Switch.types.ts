@@ -12,7 +12,6 @@ export interface SwitchFieldProps extends UseFieldConfig<boolean>, LabeledFieldP
   disabled?: boolean;
   fieldClassName?: string;
   inputProps?: FieldInputAttrs;
-  name: string;
   validators?: Validator[];
   tooltip?: string;
   tooltipIcon?: IconName;

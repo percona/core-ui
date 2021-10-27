@@ -1,12 +1,18 @@
 import { IconName } from '@grafana/ui';
 import { ReactNode } from 'react';
 
-export interface LabeledFieldProps {
-  label?: ReactNode;
+export interface LabelTooltipProps {
   tooltipText?: string;
   tooltipLink?: string;
   tooltipLinkText?: string;
   tooltipIcon?: IconName;
   tooltipDataTestId?: string;
   tooltipLinkTarget?: string;
+}
+
+export interface LabeledFieldProps extends LabelTooltipProps {
+  label?: ReactNode;
+  name: string;
+  inputId?: string;
+  required?: boolean;
 }

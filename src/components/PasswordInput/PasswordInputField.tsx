@@ -16,9 +16,7 @@ export interface PasswordInputFieldProps extends UseFieldConfig<string>, Labeled
   disabled?: boolean;
   fieldClassName?: string;
   inputProps?: FieldInputAttrs;
-  name: string;
   placeholder?: string;
-  required?: boolean;
   showErrorOnBlur?: boolean;
   validators?: Validator[];
 }
@@ -36,6 +34,7 @@ export const PasswordInputField: FC<PasswordInputFieldProps> = React.memo(
     inputProps,
     label,
     name,
+    inputId = `input-${name}-id`,
     placeholder,
     required = false,
     showErrorOnBlur = false,
@@ -49,7 +48,6 @@ export const PasswordInputField: FC<PasswordInputFieldProps> = React.memo(
     ...fieldConfig
   }) => {
     const styles = useStyles(getStyles);
-    const inputId = `input-${name}-id`;
     const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
       validators,
     ]);
@@ -66,12 +64,12 @@ export const PasswordInputField: FC<PasswordInputFieldProps> = React.memo(
                 label={label}
                 required={required}
                 inputId={inputId}
-                link={tooltipLink}
-                linkText={tooltipLinkText}
+                tooltipLink={tooltipLink}
+                tooltipLinkText={tooltipLinkText}
                 tooltipText={tooltipText}
                 tooltipDataTestId={tooltipDataTestId}
                 tooltipLinkTarget={tooltipLinkTarget}
-                icon={tooltipIcon}
+                tooltipIcon={tooltipIcon}
               />
               <input
                 id={inputId}

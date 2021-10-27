@@ -18,9 +18,7 @@ export interface RadioButtonGroupFieldProps extends UseFieldConfig<string>, Labe
   disabled?: boolean;
   fullWidth?: boolean;
   inputProps?: FieldInputAttrs;
-  name: string;
   options: RadionButtonGroupOptions;
-  required?: boolean;
   showErrorOnBlur?: boolean;
   size?: RadioButtonSize;
   validators?: Validator[];
@@ -38,6 +36,7 @@ export function RadioButtonGroupField({
   inputProps,
   label,
   name,
+  inputId = `input-${name}-id`,
   options,
   required = false,
   showErrorOnBlur = false,
@@ -62,7 +61,6 @@ export function RadioButtonGroupField({
     [disabled],
   );
   const styles = useStyles(getStyles);
-  const inputId = `input-${name}-id`;
   const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
     validators,
   ]);
@@ -79,12 +77,12 @@ export function RadioButtonGroupField({
               label={label}
               required={required}
               inputId={inputId}
-              link={tooltipLink}
-              linkText={tooltipLinkText}
+              tooltipLink={tooltipLink}
+              tooltipLinkText={tooltipLinkText}
               tooltipText={tooltipText}
               tooltipDataTestId={tooltipDataTestId}
               tooltipLinkTarget={tooltipLinkTarget}
-              icon={tooltipIcon}
+              tooltipIcon={tooltipIcon}
             />
             {/* this field is auxiliary, i.e. it helps address the validation, which is tricky otherwise */}
             <input

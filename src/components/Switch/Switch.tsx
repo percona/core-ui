@@ -13,6 +13,7 @@ export const SwitchField: FC<SwitchFieldProps> = ({
   inputProps,
   label,
   name,
+  inputId = `input-${name}-id`,
   validators,
   tooltipText = '',
   tooltipLink,
@@ -23,7 +24,6 @@ export const SwitchField: FC<SwitchFieldProps> = ({
   ...fieldConfig
 }) => {
   const styles = useStyles(getStyles);
-  const inputId = `input-${name}-id`;
   const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
     validators,
   ]);
@@ -36,12 +36,12 @@ export const SwitchField: FC<SwitchFieldProps> = ({
             name={name}
             label={label}
             inputId={inputId}
-            link={tooltipLink}
-            linkText={tooltipLinkText}
+            tooltipLink={tooltipLink}
+            tooltipLinkText={tooltipLinkText}
             tooltipText={tooltipText}
             tooltipDataTestId={tooltipDataTestId}
             tooltipLinkTarget={tooltipLinkTarget}
-            icon={tooltipIcon}
+            tooltipIcon={tooltipIcon}
           />
           <Switch
             css={{}}

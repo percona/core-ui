@@ -1,21 +1,13 @@
 import React, { FC } from 'react';
-import { Icon, IconName, Tooltip, useStyles } from '@grafana/ui';
+import { Icon, Tooltip, useStyles } from '@grafana/ui';
 import { getStyles } from './LinkTooltip.styles';
+import { LabelTooltipProps } from '../../shared/types';
 
-export interface LinkTooltipProps {
-  tooltipText: string;
-  link?: string;
-  linkText?: string;
-  icon?: IconName;
-  tooltipDataTestId?: string;
-  tooltipLinkTarget?: string;
-}
-
-export const LinkTooltip: FC<LinkTooltipProps> = ({
+export const LinkTooltip: FC<LabelTooltipProps> = ({
   tooltipText,
-  link,
-  linkText = 'Read more',
-  icon = 'info-circle',
+  tooltipLink,
+  tooltipLinkText = 'Read more',
+  tooltipIcon = 'info-circle',
   tooltipDataTestId,
   tooltipLinkTarget = '_blank',
 }) => {
@@ -26,9 +18,9 @@ export const LinkTooltip: FC<LinkTooltipProps> = ({
       content={
         <div className={styles.contentWrapper}>
           <span>{tooltipText}</span>
-          {link && (
-            <a className={styles.link} href={link} target={tooltipLinkTarget}>
-              {linkText}
+          {tooltipLink && (
+            <a className={styles.link} href={tooltipLink} target={tooltipLinkTarget}>
+              {tooltipLinkText}
             </a>
           )}
         </div>
@@ -36,7 +28,7 @@ export const LinkTooltip: FC<LinkTooltipProps> = ({
       data-testid={tooltipDataTestId}
     >
       <div>
-        <Icon name={icon} />
+        <Icon name={tooltipIcon} />
       </div>
     </Tooltip>
   );
