@@ -17,7 +17,7 @@ export const getStyles = ({ typography, spacing, colors }: GrafanaTheme) => ({
       text-align: left;
       font-size: ${typography.size.md};
       font-weight: ${typography.weight.semibold};
-      line-height: 1.25;
+      line-height: ${typography.lineHeight.sm};
       margin: ${spacing.formLabelMargin};
       padding: ${spacing.formLabelPadding};
       color: ${colors.formLabel};
