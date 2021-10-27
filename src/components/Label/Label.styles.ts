@@ -9,6 +9,7 @@ export const getStyles = ({ typography, spacing, colors }: GrafanaTheme) => ({
     div[class$='-Icon'] {
       display: flex;
       margin-left: ${spacing.xs};
+      margin-bottom: ${spacing.xxs};
     }
   `,
   label: css`
