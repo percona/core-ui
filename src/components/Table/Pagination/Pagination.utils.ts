@@ -10,15 +10,18 @@ export const getShownPages = (pageArray: number[], activePageIndex: number, page
     lastPageIndex = pageCount;
     firstPageIndex = lastPageIndex - maxVisiblePages;
   }
+
   return pageArray.slice(firstPageIndex, lastPageIndex);
 };
 
 export const getLeftItemNumber = (pageCount: number, activePageIndex: number, pageSize: number) => {
+  let pageIndex = activePageIndex;
+
   if (activePageIndex >= pageCount) {
-    activePageIndex = pageCount - 1;
+    pageIndex = pageCount - 1;
   }
 
-  return pageCount > 0 ? activePageIndex * pageSize + 1 : 0;
+  return pageCount > 0 ? pageIndex * pageSize + 1 : 0;
 };
 
 export const getRightItemNumber = (activePageIndex: number, pageSize: number, nrRowsOnCurrentPage: number) =>
