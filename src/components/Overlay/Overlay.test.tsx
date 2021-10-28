@@ -1,39 +1,38 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import { Overlay } from './Overlay';
 
 describe('Overlay::', () => {
   it('Renders children correctly', () => {
-    const root = mount(
+    render(
       <Overlay isPending={false}>
         <p>Child 1</p>
         <p>Child 2</p>
-      </Overlay>
+      </Overlay>,
     );
-    const wrapper = root.find('[data-testid="pmm-overlay-wrapper"]');
+    const wrapper = screen.getByTestId('overlay-wrapper');
 
-    expect(wrapper.children().length).toEqual(2);
+    expect(wrapper.children).toHaveLength(2);
   });
 
   it('Renders overlay and spinner while pending', () => {
-    const root = mount(
+    render(
       <Overlay isPending>
         <p>Test</p>
-      </Overlay>
+      </Overlay>,
     );
-    const wrapper = root.find('[data-testid="pmm-overlay-wrapper"]');
 
-    expect(wrapper.children().length).toBe(2);
-    expect(wrapper.childAt(0).find('i')).toBeTruthy();
+    expect(screen.getByTestId('overlay-wrapper').children).toHaveLength(2);
+    expect(screen.queryByTestId('overlay-spinner')).toBeInTheDocument();
   });
 
   it('Doesnt render overlay if not pending', () => {
-    const root = mount(
+    render(
       <Overlay isPending={false}>
         <p>Test</p>
-      </Overlay>
+      </Overlay>,
     );
 
-    expect(root.find('i').exists()).toBeFalsy();
+    expect(screen.queryByTestId('overlay-spinner')).not.toBeInTheDocument();
   });
 });
