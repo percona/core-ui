@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Table } from './Table';
 
-
 const columns = [
   {
     Header: 'test col 1',
