@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { logger } from 'shared';
+import { logger } from '../../../shared';
 import { PAGE_SIZES } from './Pagination.constants';
 
 export const getPageSize = (pageSize: number) =>
