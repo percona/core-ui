@@ -12,3 +12,4 @@ export * from './TextareaInput';
 export * from './Table';
 export * from './TableToolbar';
 export * from './NumberInput';
+export * from './Label';
