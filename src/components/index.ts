@@ -10,3 +10,4 @@ export * from './TextInput';
 export * from './TextareaInput';
 export * from './TableToolbar';
 export * from './NumberInput';
+export * from './Label';
