@@ -9,6 +9,7 @@ const DATA_QA_BUTTON='clipboard-button';
 describe('CopyToClipboard ::', () => {
   test('should render the component', () => {
     const ref = React.createRef<HTMLDivElement>();
+
     render(
       <>
         <CopyToClipboard textContainer={ref}/>
@@ -66,6 +67,7 @@ describe('CopyToClipboard ::', () => {
 
   test('tooltip is automatically hidden after 2000 ms', async () => {
     const ref = React.createRef<HTMLDivElement>();
+
     render(
       <>
         <CopyToClipboard textContainer={ref}/>
