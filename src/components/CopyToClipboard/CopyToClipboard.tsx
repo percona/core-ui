@@ -65,6 +65,7 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = (props) => {
           onClipboardCopy={onClipboardCopy}
           onClipboardError={onClipboardError}
           getText={copyToClipboard}
+          data-testid="clipboard-button"
           icon="copy"/>
       </div>
       <div
