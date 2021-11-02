@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useTable, usePagination, useExpanded } from 'react-table';
 import { css } from 'emotion';
 import { useStyles } from '@grafana/ui';
-import { Overlay } from 'components';
+import { Overlay } from '..';
 import { getStyles } from './Table.styles';
 import { TableProps, PaginatedTableInstance, PaginatedTableOptions, PaginatedTableState } from './Table.types';
 import { Pagination } from './Pagination';
