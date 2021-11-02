@@ -1,9 +1,9 @@
 import React, {FC, useCallback, useRef, useState} from 'react';
-import {ClipboardButton, useStyles} from "@grafana/ui";
-import { ButtonProps } from "@grafana/ui/components/Button";
-import { usePopper } from "react-popper";
-import {Options as PopperOptions} from "@popperjs/core/lib/types";
-import { getStyles} from "./CopyToClipboard.styles";
+import { ClipboardButton, useStyles } from '@grafana/ui';
+import { ButtonProps } from '@grafana/ui/components/Button';
+import { usePopper } from 'react-popper';
+import { Options as PopperOptions } from '@popperjs/core/lib/types';
+import { getStyles } from './CopyToClipboard.styles';
 
 export interface ClipboardIconButtonProps extends ButtonProps {
   textContainer: React.MutableRefObject<any>;
@@ -30,7 +30,7 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = (props) => {
   const [tooltipText, setTooltipText] = useState('');
   const [visible, setVisible] = useState(false);
 
-  const copyToClipboard = useCallback(() => props.textContainer.current?.textContent? props.textContainer.current?.textContent : '', [props.textContainer]);
+  const copyToClipboard = useCallback(() => textContainer.current?.textContent? textContainer.current?.textContent : '', [textContainer]);
 
   const popperRef = useRef(null);
   const toggleRef = useRef(null);
@@ -44,17 +44,17 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = (props) => {
   const showTooltip = () => {
     setVisible(true);
     setTimeout(() => setVisible(false), 2000);
-  }
+  };
 
   const onClipboardCopy = () => {
     setTooltipText('Text copied to clipboard');
     showTooltip();
-  }
+  };
 
   const onClipboardError = () => {
     setTooltipText('Text not copied to clipboard');
     showTooltip();
-  }
+  };
 
   return (
     <>
@@ -86,5 +86,5 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = (props) => {
         ) : null}
       </div>
     </>
-  )
+  );
 };
