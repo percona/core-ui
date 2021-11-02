@@ -92,5 +92,9 @@
     "no-shadow": ["error"],
     "react/no-array-index-key": ["error"],
     "no-unused-expressions": ["error"]
+  },
+  "globals": {
+    "React": true,
+    "JSX": true
   }
 }
