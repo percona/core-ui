@@ -57,6 +57,7 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(({
             <Label
               name={name}
               label={label}
+              labelWrapperClassName={styles.checkmarkLabel}
               inputId={inputId}
               tooltipLink={tooltipLink}
               tooltipLinkText={tooltipLinkText}

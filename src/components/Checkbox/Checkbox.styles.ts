@@ -65,12 +65,15 @@ export const getStyles = (theme: GrafanaTheme) => {
       background: ${colors.formInputBg};
       border: 1px solid ${colors.formInputBorder};
       position: absolute;
-      top: 1px;
+      top: 2px;
       left: 0;
       &:hover {
         cursor: pointer;
         border-color: ${colors.formInputBorderHover};
       }
+    `,
+    checkmarkLabel: css`
+      margin-left: ${spacing.sm};
     `,
     errorMessage: css`
       color: ${theme.palette.red};
