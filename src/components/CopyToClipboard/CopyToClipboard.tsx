@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useRef, useState} from 'react';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import { ClipboardButton, useStyles } from '@grafana/ui';
 import { ButtonProps } from '@grafana/ui/components/Button';
 import { usePopper } from 'react-popper';
@@ -30,7 +30,8 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = (props) => {
   const [tooltipText, setTooltipText] = useState('');
   const [visible, setVisible] = useState(false);
 
-  const copyToClipboard = useCallback(() => textContainer.current?.textContent? textContainer.current?.textContent : '', [textContainer]);
+  const copyToClipboard = useCallback(() => textContainer.current?.textContent ?
+    textContainer.current?.textContent : '', [textContainer]);
 
   const popperRef = useRef(null);
   const toggleRef = useRef(null);
@@ -41,20 +42,23 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = (props) => {
     popperConfig,
   );
 
-  const showTooltip = () => {
-    setVisible(true);
-    setTimeout(() => setVisible(false), 2000);
-  };
-
   const onClipboardCopy = () => {
     setTooltipText('Text copied to clipboard');
-    showTooltip();
+    setVisible(true);
   };
 
   const onClipboardError = () => {
-    setTooltipText('Text not copied to clipboard');
-    showTooltip();
+    setTooltipText('Couldn\'t copy text to clipboard');
+    setVisible(true);
   };
+
+  useEffect(()=> {
+    const timer = setTimeout(() => visible && setVisible(false), 2000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [visible]);
 
   return (
     <>

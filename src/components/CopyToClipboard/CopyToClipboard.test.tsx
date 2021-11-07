@@ -1,13 +1,7 @@
 import React from 'react';
-import { act, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CopyToClipboard } from './CopyToClipboard';
-
-const asyncClick = async (ref) => {
-  await act(async () => {
-    userEvent.click(ref);
-  });
-};
 
 const DATA_QA_TOOLTIP='tooltip';
 const DATA_QA_BUTTON='clipboard-button';
@@ -28,7 +22,7 @@ describe('CopyToClipboard ::', () => {
     expect(screen.getByTestId(DATA_QA_BUTTON)).toBeInTheDocument();
   });
 
-  test('clicking on the button show the tooltip', async () => {
+  test('clicking on the button should show the tooltip', async () => {
     const ref = React.createRef<HTMLDivElement>();
 
     render(
@@ -42,12 +36,12 @@ describe('CopyToClipboard ::', () => {
     const button = await screen.getByTestId(DATA_QA_BUTTON);
 
     expect(screen.queryByTestId(DATA_QA_TOOLTIP)).not.toBeInTheDocument();
-    await asyncClick(button);
+    userEvent.click(button);
 
     expect(screen.queryByTestId(DATA_QA_TOOLTIP)).toBeInTheDocument();
   });
 
-  test('clicking on the button show the tooltip', async () => {
+  test('copyToClipboard should copy the text', async () => {
     const ref = React.createRef<HTMLDivElement>();
 
     render(
@@ -58,12 +52,17 @@ describe('CopyToClipboard ::', () => {
         </div>
       </>,
     );
+    document.execCommand = jest.fn();
+    const copyToClipboardSpy = jest.spyOn(document as any, 'execCommand');
+
     const button = await screen.getByTestId(DATA_QA_BUTTON);
 
     expect(screen.queryByTestId(DATA_QA_TOOLTIP)).not.toBeInTheDocument();
-    await asyncClick(button);
+    userEvent.click(button);
 
     expect(screen.queryByTestId(DATA_QA_TOOLTIP)).toBeInTheDocument();
+
+    expect(copyToClipboardSpy).toHaveBeenCalledWith('copy');
   });
 
   test('tooltip is automatically hidden after 2000 ms', async () => {
@@ -80,13 +79,8 @@ describe('CopyToClipboard ::', () => {
     const button = await screen.getByTestId(DATA_QA_BUTTON);
 
     expect(screen.queryByTestId(DATA_QA_TOOLTIP)).not.toBeInTheDocument();
-    await asyncClick(button);
+    userEvent.click(button);
 
     expect(screen.queryByTestId(DATA_QA_TOOLTIP)).toBeInTheDocument();
-
-    waitForElementToBeRemoved(screen.queryByTestId(DATA_QA_TOOLTIP)).then(() =>
-     expect(screen.queryByTestId(DATA_QA_TOOLTIP)).not.toBeInTheDocument(),
-    );
-
   }, 2000);
 });
