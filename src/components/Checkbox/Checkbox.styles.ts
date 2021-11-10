@@ -11,14 +11,6 @@ export const getStyles = (theme: GrafanaTheme) => {
         margin-bottom: ${spacing.formInputMargin};
       }
     `,
-    label: css`
-      font-size: ${theme.typography.size.md};
-      font-weight: ${theme.typography.weight.semibold};
-      line-height: 1.25;
-      padding: ${theme.spacing.formLabelPadding};
-      color: ${theme.colors.formLabel};
-      padding-left: ${spacing.formSpacingBase}px;
-    `,
     wrapper: css`
       display: flex;
       position: relative;
@@ -74,6 +66,9 @@ export const getStyles = (theme: GrafanaTheme) => {
     `,
     checkmarkLabel: css`
       margin-left: ${spacing.sm};
+    `,
+    label: css`
+    line-height: ${theme.typography.lineHeight.md};
     `,
     errorMessage: css`
       color: ${theme.palette.red};

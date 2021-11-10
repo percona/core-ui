@@ -13,6 +13,7 @@ export interface LabelTooltipProps {
 export interface LabeledFieldProps extends LabelTooltipProps {
   label?: ReactNode;
   labelWrapperClassName?: string;
+  labelClassName?: string;
   name: string;
   inputId?: string;
   required?: boolean;

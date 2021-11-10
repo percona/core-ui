@@ -9,6 +9,7 @@ export const Label: FC<LabeledFieldProps> = ({
   name,
   label,
   labelWrapperClassName,
+  labelClassName,
   inputId,
   tooltipText,
   required = false,
@@ -19,8 +20,11 @@ export const Label: FC<LabeledFieldProps> = ({
 
   return label ? (
     <div className={cx(styles.labelWrapper, labelWrapperClassName)}>
-      <label className={styles.label} htmlFor={inputId} data-testid={`${name}-field-label`}>
-        {label}{required ? ' *' : ''}
+      <label
+        className={cx(styles.label, labelClassName)}
+        htmlFor={inputId}
+        data-testid={`${name}-field-label`}>
+          {label}{required ? ' *' : ''}
       </label>
       {tooltipText && <LinkTooltip tooltipText={tooltipText} {...linkTooltipProps} />}
     </div>
