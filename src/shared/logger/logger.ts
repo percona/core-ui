@@ -1,9 +1,13 @@
 /* eslint-disable no-console */
-import { LOG_LEVELS, LOG_LEVEL } from './config';
+import { LOG_LEVELS } from './config';
 import { truncate } from '../utils/truncate';
 
-let CONFIG_LOG_LEVEL: LOG_LEVELS = LOG_LEVEL;
+let CONFIG_LOG_LEVEL: LOG_LEVELS = LOG_LEVELS.DEBUG;
 
+/**
+ * Setting log level to >= 5 will completely silence the logger,
+ * i.e. run `setLogLevel(5);`
+ */
 export const setLogLevel = (level: LOG_LEVELS) => {
   CONFIG_LOG_LEVEL = level;
 };

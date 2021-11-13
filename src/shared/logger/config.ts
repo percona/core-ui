@@ -1,11 +1,10 @@
-
 // eslint-disable-next-line no-shadow
 export enum LOG_LEVELS {
-  DEBUG,
-  LOG,
-  INFO,
-  WARN,
-  ERROR,
+  // this will log everything
+  DEBUG = 0,
+  LOG = 1,
+  INFO = 2,
+  WARN = 3,
+  // this will only log errors
+  ERROR = 4,
 };
-
-export const LOG_LEVEL = parseInt(process.env.REACT_APP_LOG_LEVEL!, 10) || LOG_LEVELS.DEBUG;
