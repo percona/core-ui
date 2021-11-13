@@ -16,8 +16,9 @@
 # TypeScript cache
 *.tsbuildinfo
 
-# optional eslint cache
+# cache
 .eslintcache
+.parcel-cache
 
 # optional REPL history
 .node_repl_history
