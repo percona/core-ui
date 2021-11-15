@@ -2,11 +2,11 @@ import { GrafanaTheme } from '@grafana/data';
 import { css } from 'emotion';
 
 export const getStyles = (theme: GrafanaTheme) => {
-  const { spacing, colors, border } = theme;
+  const { spacing, colors, border, zIndex } = theme;
 
   return {
     tooltip: css`
-      z-index: 1;
+      z-index: ${zIndex.tooltip};
     `,
     tooltipText: css`
       display: flex;

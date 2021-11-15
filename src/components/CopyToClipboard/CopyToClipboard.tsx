@@ -22,16 +22,13 @@ const popperConfig: Partial<PopperOptions> = {
   ],
 };
 
-export const CopyToClipboard: FC<ClipboardIconButtonProps> = (props) => {
+export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, ...rest}) => {
   const styles = useStyles(getStyles);
-
-  const { textContainer, ...rest } = props;
 
   const [tooltipText, setTooltipText] = useState('');
   const [visible, setVisible] = useState(false);
 
-  const copyToClipboard = useCallback(() => textContainer.current?.textContent ?
-    textContainer.current?.textContent : '', [textContainer]);
+  const copyToClipboard = useCallback(() => textContainer.current?.textContent || '', [textContainer]);
 
   const popperRef = useRef(null);
   const toggleRef = useRef(null);
