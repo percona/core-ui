@@ -6,7 +6,7 @@ import { Options as PopperOptions } from '@popperjs/core/lib/types';
 import { getStyles } from './CopyToClipboard.styles';
 
 export interface ClipboardIconButtonProps extends ButtonProps {
-  textContainer: React.MutableRefObject<any>;
+  textContainer: React.MutableRefObject<HTMLElement | null>;
 }
 
 const popperConfig: Partial<PopperOptions> = {
