@@ -7,7 +7,7 @@ import { TableProps, PaginatedTableInstance, PaginatedTableOptions, PaginatedTab
 import { Pagination } from './Pagination';
 import { PAGE_SIZES } from './Pagination/Pagination.constants';
 import { TableContent } from './TableContent';
-import { Overlay } from "../Overlay";
+import { Overlay } from '../Overlay';
 
 const defaultPropGetter = () => ({});
 
