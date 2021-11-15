@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { ClipboardButton, useStyles } from '@grafana/ui';
 import { ButtonProps } from '@grafana/ui/components/Button';
 import { usePopper } from 'react-popper';
