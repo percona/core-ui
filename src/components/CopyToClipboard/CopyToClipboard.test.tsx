@@ -19,7 +19,7 @@ describe('CopyToClipboard ::', () => {
       </>,
     );
 
-    expect(screen.getByTestId(DATA_QA_BUTTON)).toBeInTheDocument();
+    expect(screen.getByTestId(DATA_TESTID_BUTTON)).toBeInTheDocument();
   });
 
   test('clicking on the button should show the tooltip', async () => {
@@ -33,7 +33,7 @@ describe('CopyToClipboard ::', () => {
         </div>
       </>,
     );
-    const button = await screen.getByTestId(DATA_QA_BUTTON);
+    const button = await screen.getByTestId(DATA_TESTID_BUTTON);
 
     expect(screen.queryByTestId(DATA_TESTID)).not.toBeInTheDocument();
     userEvent.click(button);
@@ -55,7 +55,7 @@ describe('CopyToClipboard ::', () => {
     document.execCommand = jest.fn();
     const copyToClipboardSpy = jest.spyOn(document as any, 'execCommand');
 
-    const button = await screen.getByTestId(DATA_QA_BUTTON);
+    const button = await screen.getByTestId(DATA_TESTID_BUTTON);
 
     expect(screen.queryByTestId(DATA_TESTID)).not.toBeInTheDocument();
     userEvent.click(button);
@@ -76,7 +76,7 @@ describe('CopyToClipboard ::', () => {
         </div>
       </>,
     );
-    const button = await screen.getByTestId(DATA_QA_BUTTON);
+    const button = await screen.getByTestId(DATA_TESTID_BUTTON);
 
     expect(screen.queryByTestId(DATA_TESTID)).not.toBeInTheDocument();
     userEvent.click(button);
