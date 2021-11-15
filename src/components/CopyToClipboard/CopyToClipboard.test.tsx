@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CopyToClipboard } from './CopyToClipboard';
 
-const DATA_TESTID='tooltip';
-const DATA_QA_BUTTON='clipboard-button';
+const DATA_TESTID_TOOLTIP='tooltip';
+const DATA_TESTID_BUTTON='clipboard-button';
 
 describe('CopyToClipboard ::', () => {
   test('should render the component', () => {
@@ -35,10 +35,10 @@ describe('CopyToClipboard ::', () => {
     );
     const button = await screen.getByTestId(DATA_TESTID_BUTTON);
 
-    expect(screen.queryByTestId(DATA_TESTID)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(DATA_TESTID_TOOLTIP)).not.toBeInTheDocument();
     userEvent.click(button);
 
-    expect(screen.queryByTestId(DATA_TESTID)).toBeInTheDocument();
+    expect(screen.queryByTestId(DATA_TESTID_TOOLTIP)).toBeInTheDocument();
   });
 
   test('copyToClipboard should copy the text', async () => {
@@ -57,10 +57,10 @@ describe('CopyToClipboard ::', () => {
 
     const button = await screen.getByTestId(DATA_TESTID_BUTTON);
 
-    expect(screen.queryByTestId(DATA_TESTID)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(DATA_TESTID_TOOLTIP)).not.toBeInTheDocument();
     userEvent.click(button);
 
-    expect(screen.queryByTestId(DATA_TESTID)).toBeInTheDocument();
+    expect(screen.queryByTestId(DATA_TESTID_TOOLTIP)).toBeInTheDocument();
 
     expect(copyToClipboardSpy).toHaveBeenCalledWith('copy');
   });
@@ -78,9 +78,9 @@ describe('CopyToClipboard ::', () => {
     );
     const button = await screen.getByTestId(DATA_TESTID_BUTTON);
 
-    expect(screen.queryByTestId(DATA_TESTID)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(DATA_TESTID_TOOLTIP)).not.toBeInTheDocument();
     userEvent.click(button);
 
-    expect(screen.queryByTestId(DATA_TESTID)).toBeInTheDocument();
+    expect(screen.queryByTestId(DATA_TESTID_TOOLTIP)).toBeInTheDocument();
   }, 2000);
 });

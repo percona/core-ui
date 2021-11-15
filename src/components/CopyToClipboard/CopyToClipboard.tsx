@@ -22,7 +22,7 @@ const popperConfig: Partial<PopperOptions> = {
   ],
 };
 
-export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, ...rest}) => {
+export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, ...rest }) => {
   const styles = useStyles(getStyles);
 
   const [tooltipText, setTooltipText] = useState('');
