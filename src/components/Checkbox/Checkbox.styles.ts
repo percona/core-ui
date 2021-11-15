@@ -68,7 +68,7 @@ export const getStyles = (theme: GrafanaTheme) => {
       margin-left: ${spacing.sm};
     `,
     label: css`
-    line-height: ${theme.typography.lineHeight.md};
+      line-height: ${theme.typography.lineHeight.md};
     `,
     errorMessage: css`
       color: ${theme.palette.red};
