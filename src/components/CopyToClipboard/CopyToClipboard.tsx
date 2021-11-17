@@ -7,9 +7,10 @@ import { getStyles } from './CopyToClipboard.styles';
 
 export interface ClipboardIconButtonProps extends ButtonProps {
   textContainer: React.MutableRefObject<HTMLElement | null>;
+  popperConfig?: Partial<PopperOptions>;
 }
 
-const popperConfig: Partial<PopperOptions> = {
+const defaultPopperConfig: Partial<PopperOptions> = {
   placement: 'auto',
   modifiers: [
     {
@@ -22,7 +23,7 @@ const popperConfig: Partial<PopperOptions> = {
   ],
 };
 
-export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, ...rest }) => {
+export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, popperConfig, ...rest }) => {
   const styles = useStyles(getStyles);
 
   const [tooltipText, setTooltipText] = useState('');
@@ -36,7 +37,7 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, .
   const { styles: popperStyles, attributes: popperAttributes } = usePopper(
     toggleRef.current,
     popperRef.current,
-    popperConfig,
+    {...defaultPopperConfig, ...popperConfig},
   );
 
   const onClipboardCopy = () => {
@@ -59,7 +60,7 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, .
 
   return (
     <>
-      <div className={styles.clipboardButtonContainer} ref={toggleRef} >
+      <div className={styles.clipboardButtonContainer} ref={toggleRef} onClick={(e) => e.preventDefault()} >
         <ClipboardButton
           {...rest}
           className={styles.clipboardButton}
