@@ -1,9 +1,9 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { ClipboardButton, useStyles } from '@grafana/ui';
-import { ButtonProps } from '@grafana/ui/components/Button';
 import { usePopper } from 'react-popper';
 import { Options as PopperOptions } from '@popperjs/core/lib/types';
 import { getStyles } from './CopyToClipboard.styles';
+import { ButtonProps } from '../LoaderButton';
 
 export interface ClipboardIconButtonProps extends ButtonProps {
   textContainer: React.MutableRefObject<HTMLElement | null>;
