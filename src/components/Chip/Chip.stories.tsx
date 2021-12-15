@@ -6,7 +6,8 @@ export default {
   title: 'Chip',
   component: Chip,
   args: {
-    text: 'text',
+    text: 'Text',
+    isRemovable: false,
   },
 } as ComponentMeta<typeof Chip>;
 

@@ -10,4 +10,10 @@ export const getStyles = ({ height, spacing }: GrafanaTheme) => ({
     padding: 0 ${spacing.md};
     background-color: #eceff1;
   `,
+  removeIcon: css`
+    float: right;
+    cursor: pointer;
+    padding-left: ${spacing.sm};
+    line-height: ${height.sm}px;
+  `,
 });
