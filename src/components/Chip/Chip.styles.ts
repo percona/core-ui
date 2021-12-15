@@ -22,5 +22,9 @@ export const getStyles = ({ height, spacing, colors }: GrafanaTheme) => ({
     cursor: pointer;
     padding-left: ${spacing.sm};
     line-height: ${height.sm}px;
+
+    &:hover {
+      color: ${colors.textStrong};
+    }
   `,
 });
