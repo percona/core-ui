@@ -2,12 +2,12 @@ import React, { FC } from 'react';
 import { useTable, usePagination, useExpanded } from 'react-table';
 import { css } from 'emotion';
 import { useStyles } from '@grafana/ui';
-import { Overlay } from '..';
 import { getStyles } from './Table.styles';
 import { TableProps, PaginatedTableInstance, PaginatedTableOptions, PaginatedTableState } from './Table.types';
 import { Pagination } from './Pagination';
 import { PAGE_SIZES } from './Pagination/Pagination.constants';
 import { TableContent } from './TableContent';
+import { Overlay } from '../Overlay';
 
 const defaultPropGetter = () => ({});
 

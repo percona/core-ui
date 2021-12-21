@@ -12,7 +12,7 @@ type CommonProps = {
   fullWidth?: boolean;
 };
 
-type ButtonProps = CommonProps & ButtonHTMLAttributes<HTMLButtonElement>;
+export type ButtonProps = CommonProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export interface LoaderButtonProps extends ButtonProps {
   loading?: boolean;
