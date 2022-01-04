@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useRef } from 'react';
+import React, { FC, useMemo, useRef, useState, KeyboardEvent, ChangeEvent } from 'react';
 import { Field, FieldMetaState, FieldInputProps, UseFieldConfig } from 'react-final-form';
 import { cx } from 'emotion';
 import { useStyles } from '@grafana/ui';
@@ -51,10 +51,27 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
     ...fieldConfig
   }) => {
     const styles = useStyles(getStyles);
+    const [chips, setChips] = useState([...initialChips]);
+    const [inputValue, setInputValue] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
     const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
       validators,
     ]);
+
+    const handleClick = () => {
+      inputRef.current?.focus();
+    };
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter' && inputRef.current) {
+        setChips([...chips, inputRef.current.value]);
+        setInputValue('');
+      }
+    };
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setInputValue(e.target.value);
+    };
 
     return (
       <Field {...fieldConfig} type='text' name={name} validate={validate}>
@@ -75,13 +92,16 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
                 tooltipLinkTarget={tooltipLinkTarget}
                 tooltipIcon={tooltipIcon}
               />
-              <div className={styles.chips} onClick={() => inputRef.current?.focus()}>
-                {initialChips.map(chip => <Chip isRemovable text={chip} />)}
+              <div className={styles.chips} onClick={handleClick}>
+                {chips.map(chip => <Chip isRemovable text={chip} />)}
                 <input
                   ref={inputRef}
                   id={inputId}
                   {...input}
                   {...inputProps}
+                  value={inputValue}
+                  onKeyDown={handleKeyDown}
+                  onChange={handleChange}
                   disabled={disabled}
                   placeholder={placeholder}
                   data-testid={`${name}-text-input`}
