@@ -63,6 +63,10 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Backspace' && inputValue === '' && chips.length) {
+        setChips(chips.slice(0, chips.length - 1));
+      }
+
       if (e.key === 'Enter' && inputRef.current) {
         setChips([...chips, inputRef.current.value]);
         setInputValue('');
