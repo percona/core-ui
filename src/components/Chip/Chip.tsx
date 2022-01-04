@@ -5,7 +5,7 @@ import { getStyles } from './Chip.styles';
 
 export interface ChipProps {
   text: string;
-  isRemovable: boolean;
+  isRemovable?: boolean;
 }
 
 export const Chip: FC<ChipProps> = ({ text, isRemovable = false }) => {
