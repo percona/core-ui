@@ -9,4 +9,5 @@ export { minLength } from './minLength';
 export { maxLength } from './maxLength';
 export { required } from './required';
 export { requiredTrue } from './requiredTrue';
+export { minTags } from './minTags';
 export * from './validator.types';

@@ -2,6 +2,9 @@ import React from 'react';
 import { Form, FormRenderProps } from 'react-final-form';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { ChipAreaInputField } from './ChipAreaInputField';
+import * as validators from '../../shared/validators';
+
+const { minTags } = validators;
 
 export default {
   title: 'Form Fields/ChipAreaInputField',
@@ -28,4 +31,11 @@ export const Basic = Template.bind({});
 Basic.args = {
   name: 'chips',
   label: 'Chip area input',
+};
+
+export const WithValidators = Template.bind({});
+WithValidators.args = {
+  name: 'chips',
+  label: 'Chip area input',
+  validators: [minTags(1)],
 };
