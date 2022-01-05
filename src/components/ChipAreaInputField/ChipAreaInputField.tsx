@@ -62,15 +62,30 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
       inputRef.current?.focus();
     };
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Backspace' && inputValue === '' && chips.length) {
-        setChips(chips.slice(0, chips.length - 1));
-      }
+    const handleKeyDown = (
+      input: FieldInputProps<string, HTMLInputElement>,
+      e: KeyboardEvent<HTMLInputElement>,
+    ) => {
+      if (inputValue) {
+        if (e.key === 'Enter' && inputRef.current) {
+          const { value } = inputRef.current;
+          const sameValue = chips.find((c) => c === value);
 
-      if (e.key === 'Enter' && inputRef.current) {
-        setChips([...chips, inputRef.current.value]);
-        setInputValue('');
-      }
+          if (!sameValue) {
+            const newChips = [...chips, inputRef.current.value];
+
+            setChips(newChips);
+            input.onChange(newChips);
+          }
+
+          setInputValue('');
+        }
+      } else if (e.key === 'Backspace' && chips.length) {
+          const newChips = chips.slice(0, chips.length - 1);
+
+          setChips(chips.slice(0, chips.length - 1));
+          input.onChange(newChips);
+        }
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -104,7 +119,7 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
                   {...input}
                   {...inputProps}
                   value={inputValue}
-                  onKeyDown={handleKeyDown}
+                  onKeyDown={(e) => handleKeyDown(input, e)}
                   onChange={handleChange}
                   disabled={disabled}
                   placeholder={placeholder}

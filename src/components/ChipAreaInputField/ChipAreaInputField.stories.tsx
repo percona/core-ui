@@ -11,7 +11,7 @@ export default {
   },
   decorators: [
     (Story) => (
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={(values) => {console.log(values);}}>
       {({ handleSubmit }: FormRenderProps) => (
         <form style={{ width: '100%', maxWidth: 400 }} onSubmit={handleSubmit}>
           <Story />
@@ -26,6 +26,6 @@ const Template: ComponentStory<typeof ChipAreaInputField> = (args) => <ChipAreaI
 
 export const Basic = Template.bind({});
 Basic.args = {
-  name: 'text',
+  name: 'chips',
   label: 'Chip area input',
 };
