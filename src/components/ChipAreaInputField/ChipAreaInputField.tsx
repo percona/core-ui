@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useRef, useState, KeyboardEvent, ChangeEvent } from 'react';
+import React, { FC, useMemo, useRef, useState, ChangeEvent } from 'react';
 import { Field, FieldMetaState, FieldInputProps, UseFieldConfig } from 'react-final-form';
 import { cx } from 'emotion';
 import { useStyles } from '@grafana/ui';
@@ -64,7 +64,7 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
 
     const handleKeyDown = (
       input: FieldInputProps<string, HTMLInputElement>,
-      e: KeyboardEvent<HTMLInputElement>,
+      e: React.KeyboardEvent<HTMLInputElement>,
     ) => {
       if (inputValue) {
         if (e.key === 'Enter' && inputRef.current) {
@@ -83,13 +83,20 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
       } else if (e.key === 'Backspace' && chips.length) {
           const newChips = chips.slice(0, chips.length - 1);
 
-          setChips(chips.slice(0, chips.length - 1));
+          setChips(newChips);
           input.onChange(newChips);
         }
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);
+    };
+
+    const handleChipRemove = (input: FieldInputProps<string, HTMLInputElement>, text: string) => {
+      const newChips = chips.filter((c) => c !== text);
+
+      setChips(newChips);
+      input.onChange(newChips);
     };
 
     return (
@@ -112,7 +119,15 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
                 tooltipIcon={tooltipIcon}
               />
               <div className={styles.chips} onClick={handleClick}>
-                {chips.map(chip => <Chip isRemovable text={chip} />)}
+                {
+                  chips.map(chip =>
+                    <Chip
+                      key={chip}
+                      isRemovable
+                      text={chip}
+                      onRemove={(text) => handleChipRemove(input, text)} />,
+                  )
+                }
                 <input
                   ref={inputRef}
                   id={inputId}

@@ -6,13 +6,15 @@ import { getStyles } from './Chip.styles';
 export interface ChipProps {
   text: string;
   isRemovable?: boolean;
+  onRemove?: (text: string) => void;
 }
 
-export const Chip: FC<ChipProps> = ({ text, isRemovable = false }) => {
+export const Chip: FC<ChipProps> = ({ text, isRemovable = false, onRemove = () => null }) => {
   const styles = useStyles(getStyles);
   const [show, setShow] = useState(true);
 
   const handleCloseClick = () => {
+    onRemove(text);
     setShow(false);
   };
 
