@@ -14,7 +14,7 @@ export default {
   },
   decorators: [
     (Story) => (
-      <Form onSubmit={(values) => {console.log(values);}}>
+      <Form onSubmit={() => {}}>
       {({ handleSubmit }: FormRenderProps) => (
         <form style={{ width: '100%', maxWidth: 400 }} onSubmit={handleSubmit}>
           <Story />
