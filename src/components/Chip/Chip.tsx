@@ -7,9 +7,10 @@ export interface ChipProps {
   text: string;
   isRemovable?: boolean;
   onRemove?: (text: string) => void;
+  className?: string;
 }
 
-export const Chip: FC<ChipProps> = ({ text, isRemovable = false, onRemove = () => null }) => {
+export const Chip: FC<ChipProps> = ({ text, isRemovable = false, onRemove = () => null, className }) => {
   const styles = useStyles(getStyles);
   const [show, setShow] = useState(true);
 
@@ -18,5 +19,5 @@ export const Chip: FC<ChipProps> = ({ text, isRemovable = false, onRemove = () =
     setShow(false);
   };
 
-  return show ? <div className={styles.wrapper}>{text}{isRemovable && <i onClick={handleCloseClick} className={cx('fa fa-times', styles.removeIcon)}/>}</div> : null;
+  return show ? <div className={cx(styles.wrapper, className)}>{text}{isRemovable && <i onClick={handleCloseClick} className={cx('fa fa-times', styles.removeIcon)}/>}</div> : null;
 };

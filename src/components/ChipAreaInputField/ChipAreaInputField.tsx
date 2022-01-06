@@ -118,29 +118,32 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
                 tooltipLinkTarget={tooltipLinkTarget}
                 tooltipIcon={tooltipIcon}
               />
-              <div className={styles.chips} onClick={handleClick}>
-                {
-                  chips.map(chip =>
-                    <Chip
-                      key={chip}
-                      isRemovable
-                      text={chip}
-                      onRemove={(text) => handleChipRemove(input, text)} />,
-                  )
-                }
-                <input
-                  ref={inputRef}
-                  id={inputId}
-                  {...input}
-                  {...inputProps}
-                  value={inputValue}
-                  onKeyDown={(e) => handleKeyDown(input, e)}
-                  onChange={handleChange}
-                  disabled={disabled}
-                  placeholder={placeholder}
-                  data-testid={`${name}-text-input`}
-                  className={cx(styles.input, { invalid: !!validationError }, className)}
-                />
+              <div className={styles.chips}>
+                <div className={styles.chipsInnerWrapper} onClick={handleClick}>
+                  {
+                    chips.map(chip =>
+                      <Chip
+                        key={chip}
+                        isRemovable
+                        text={chip}
+                        className={styles.chip}
+                        onRemove={(text) => handleChipRemove(input, text)} />,
+                    )
+                  }
+                  <input
+                    ref={inputRef}
+                    id={inputId}
+                    {...input}
+                    {...inputProps}
+                    value={inputValue}
+                    onKeyDown={(e) => handleKeyDown(input, e)}
+                    onChange={handleChange}
+                    disabled={disabled}
+                    placeholder={placeholder}
+                    data-testid={`${name}-text-input`}
+                    className={cx(styles.input, { invalid: !!validationError }, className)}
+                  />
+                </div>
               </div>
               <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
                 {validationError}

@@ -3,7 +3,7 @@ import { GrafanaTheme } from '@grafana/data';
 
 export const getStyles = (theme: GrafanaTheme) => {
   const {
-    border, colors, palette, isDark, spacing, typography,
+    border, colors, palette, isDark, spacing, typography, height,
   } = theme;
 
   const focusBoxShadow = isDark
@@ -13,7 +13,6 @@ export const getStyles = (theme: GrafanaTheme) => {
   return {
     chips: css`
       background-color: ${colors.formInputBg};
-      padding: 7px 8px;
       border-width: ${border.width.sm};
       border-style: solid;
       border-color: ${colors.formInputBorder};
@@ -31,10 +30,24 @@ export const getStyles = (theme: GrafanaTheme) => {
         cursor: text;
       }
     `,
+    chipsInnerWrapper: css`
+      display: flex;
+      flex-wrap: wrap;
+      padding: 7px 8px;
+      min-height: calc(${height.sm}px + 14px + ${spacing.sm});
+      margin-top: -${spacing.sm};
+
+      & > * {
+        margin-top: ${spacing.sm};
+      }
+    `,
     field: css`
       &:not(:last-child) {
         margin-bottom: ${spacing.formInputMargin};
       }
+    `,
+    chip: css`
+      margin-right: ${spacing.sm};
     `,
     errorMessage: css`
       color: ${palette.redBase};
