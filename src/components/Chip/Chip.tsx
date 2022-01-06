@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { useStyles } from '@grafana/ui';
 import { cx } from 'emotion';
 import { getStyles } from './Chip.styles';
@@ -19,5 +19,20 @@ export const Chip: FC<ChipProps> = ({ text, isRemovable = false, onRemove = () =
     setShow(false);
   };
 
-  return show ? <div className={cx(styles.wrapper, className)}>{text}{isRemovable && <i onClick={handleCloseClick} className={cx('fa fa-times', styles.removeIcon)}/>}</div> : null;
+  return show ?
+    <div
+      data-testid="chip"
+      className={cx(styles.wrapper, className)}
+    >
+      {text}
+      {
+        isRemovable &&
+          <i
+            data-testid="chip-remove"
+            onClick={handleCloseClick}
+            className={cx('fa fa-times', styles.removeIcon)}
+          />
+      }
+    </div>
+  : null;
 };
