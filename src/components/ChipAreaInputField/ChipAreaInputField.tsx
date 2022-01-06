@@ -88,6 +88,12 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
         }
     };
 
+    const handleOuterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+      }
+    };
+
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);
     };
@@ -105,7 +111,11 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
           const validationError = ((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error;
 
           return (
-            <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
+            <div
+              className={cx(styles.field, fieldClassName)}
+              data-testid={`${name}-field-container`}
+              onKeyDown={handleOuterKeyDown}
+            >
               <Label
                 name={name}
                 label={label}
