@@ -20,7 +20,7 @@ export interface ChipAreaInputFieldProps extends UseFieldConfig<string>, Labeled
   placeholder?: string;
   showErrorOnBlur?: boolean;
   validators?: Validator[];
-  initialChips: string[];
+  initialChips?: string[];
 }
 
 interface ChipAreaInputFieldRenderProps {
@@ -129,7 +129,7 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
                 tooltipIcon={tooltipIcon}
               />
               <div className={styles.chips}>
-                <div className={styles.chipsInnerWrapper} onClick={handleClick}>
+                <div data-testid="chips-container" className={styles.chipsInnerWrapper} onClick={handleClick}>
                   {
                     chips.map(chip =>
                       <Chip
