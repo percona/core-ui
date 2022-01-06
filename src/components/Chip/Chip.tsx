@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useStyles } from '@grafana/ui';
 import { cx } from 'emotion';
 import { getStyles } from './Chip.styles';
