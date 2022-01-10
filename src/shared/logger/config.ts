@@ -7,4 +7,6 @@ export enum LOG_LEVELS {
   WARN = 3,
   // this will only log errors
   ERROR = 4,
-};
+  // this will silence the logger (mainly used in tests)
+  NONE = 5,
+}

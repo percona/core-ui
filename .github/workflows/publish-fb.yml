@@ -9,8 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
     env:
-      # github.head_ref is only available in pull requests, not workflows
-      BRANCH_NAME: ${{ github.head_ref || github.ref }}
+      BRANCH_NAME: ${{ github.ref }}
     steps:
       - uses: percona-platform/checkout@v2
         with:
