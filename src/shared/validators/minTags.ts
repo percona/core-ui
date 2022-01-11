@@ -5,5 +5,5 @@ export const minTags = (length: number): Validator => (value: string) => {
     return undefined;
   }
 
-  return `Must contain at least ${length} tags`;
+  return `Must contain at least ${length} tag${length > 1 ? 's' : ''}`;
 };
