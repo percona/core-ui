@@ -125,7 +125,7 @@ describe('ChipAreaInputField::', () => {
     );
 
     insertTags(['Tag1', 'Tag2', 'Tag3']);
-    fireEvent.click(screen.getAllByTestId('chip')[1].getElementsByTagName('i')[0]);
+    fireEvent.click(screen.getAllByTestId('chip')[1].getElementsByTagName('svg')[0]);
 
     expect(screen.queryAllByTestId('chip')).toHaveLength(2);
     expect(screen.queryAllByTestId('chip')[0]).toHaveTextContent('Tag1');

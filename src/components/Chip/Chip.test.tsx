@@ -16,7 +16,7 @@ describe('Chip::', () => {
   it('should remove chip from screen', () => {
     render(<div><Chip isRemovable text='chip1' /><Chip isRemovable text='chip2' /></div>);
 
-    const secondChipCrossIcon = screen.getAllByTestId('chip')[1].getElementsByTagName('i')[0];
+    const secondChipCrossIcon = screen.getAllByTestId('chip')[1].getElementsByTagName('svg')[0];
 
     fireEvent.click(secondChipCrossIcon);
     expect(screen.getAllByTestId('chip')).toHaveLength(1);
@@ -26,7 +26,7 @@ describe('Chip::', () => {
     const spy = jest.fn();
 
     render(<div><Chip isRemovable text='chip1' onRemove={spy} /></div>);
-    fireEvent.click(screen.getByTestId('chip').getElementsByTagName('i')[0]);
+    fireEvent.click(screen.getByTestId('chip').getElementsByTagName('svg')[0]);
     expect(spy).toHaveBeenCalled();
   });
 });

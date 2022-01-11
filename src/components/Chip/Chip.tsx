@@ -28,12 +28,7 @@ export const Chip: FC<ChipProps> = ({ text, isRemovable = false, onRemove = () =
       {text}
       {
         isRemovable &&
-          <Icon name='cross' width="8px" height="8px" onClick={handleCloseClick} className={styles.removeIcon} />
-          // <i
-          //   data-testid="chip-remove"
-          //   onClick={handleCloseClick}
-          //   className={cx('fa fa-times', styles.removeIcon)}
-          // />
+          <Icon name='cross' width="8px" height="8px" data-testid="chip-remove" onClick={handleCloseClick} className={styles.removeIcon} />
       }
     </div>
   : null;
