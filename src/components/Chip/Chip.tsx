@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import { useStyles } from '@grafana/ui';
 import { cx } from 'emotion';
 import { getStyles } from './Chip.styles';
+import { Icon } from '../Icon';
 
 export interface ChipProps {
   text: string;
@@ -27,11 +28,12 @@ export const Chip: FC<ChipProps> = ({ text, isRemovable = false, onRemove = () =
       {text}
       {
         isRemovable &&
-          <i
-            data-testid="chip-remove"
-            onClick={handleCloseClick}
-            className={cx('fa fa-times', styles.removeIcon)}
-          />
+          <Icon name='cross' width="8px" height="8px" onClick={handleCloseClick} className={styles.removeIcon} />
+          // <i
+          //   data-testid="chip-remove"
+          //   onClick={handleCloseClick}
+          //   className={cx('fa fa-times', styles.removeIcon)}
+          // />
       }
     </div>
   : null;

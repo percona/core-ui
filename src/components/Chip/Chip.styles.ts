@@ -20,8 +20,9 @@ export const getStyles = ({ height, spacing, colors }: GrafanaTheme) => ({
   removeIcon: css`
     float: right;
     cursor: pointer;
-    padding-left: ${spacing.sm};
-    line-height: ${height.sm}px;
+    margin-left: ${spacing.sm};
+    margin-top: ${spacing.sm};
+    fill: currentColor;
 
     &:hover {
       color: ${colors.textStrong};
