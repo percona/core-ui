@@ -21,7 +21,7 @@ export const getStyles = ({ height, spacing, colors }: GrafanaTheme) => ({
     float: right;
     cursor: pointer;
     margin-left: ${spacing.sm};
-    margin-top: ${spacing.sm};
+    margin-top: 9px;
     fill: currentColor;
 
     &:hover {
