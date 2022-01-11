@@ -7,8 +7,8 @@ export const getStyles = ({ height, spacing, colors }: GrafanaTheme) => ({
     color: ${colors.text};
     line-height: ${height.sm}px;
     display: inline-block;
-    border-radius: calc(${height.sm}px/2);
-    padding: 0 ${spacing.md};
+    border-radius: 10px;
+    padding: 0 ${spacing.sm};
     cursor: pointer;
     background-color: ${colors.bg2};
     transition: all .1s linear;
