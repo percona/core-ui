@@ -63,6 +63,7 @@ export const getStyles = (theme: GrafanaTheme) => {
       color: ${colors.formInputText};
       position: relative;
       display: inline-block;
+      outline: none;
       padding: 0;
       border: 0;
       width: 120px;
