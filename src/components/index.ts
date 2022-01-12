@@ -14,3 +14,5 @@ export * from './TableToolbar';
 export * from './NumberInput';
 export * from './Label';
 export * from './CopyToClipboard';
+export * from './Chip';
+export * from './ChipAreaInputField';
