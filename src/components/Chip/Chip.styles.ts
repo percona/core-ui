@@ -3,10 +3,11 @@ import { css } from 'emotion';
 
 export const getStyles = ({ height, spacing, colors }: GrafanaTheme) => ({
   wrapper: css`
-    height: ${height.sm}px;
+    min-height: ${height.sm}px;
     color: ${colors.text};
     line-height: ${height.sm}px;
-    display: inline-block;
+    display: flex;
+    align-items: center;
     border-radius: 10px;
     padding: 0 ${spacing.sm};
     cursor: pointer;
@@ -21,7 +22,6 @@ export const getStyles = ({ height, spacing, colors }: GrafanaTheme) => ({
     float: right;
     cursor: pointer;
     margin-left: ${spacing.sm};
-    margin-top: 9px;
     fill: currentColor;
 
     &:hover {
