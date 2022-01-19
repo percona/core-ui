@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { Field, FieldMetaState, FieldInputProps, UseFieldConfig } from 'react-final-form';
-import { cx } from 'emotion';
-import { useStyles } from '@grafana/ui';
+import { cx } from '@emotion/css';
+import { useStyles2 } from '@grafana/ui';
 import { Label } from '../Label';
 import { Validator, compose } from '../../shared/validators';
 import { getStyles } from './TextareaInput.styles';
@@ -51,7 +51,7 @@ export const TextareaInputField: FC<TextareaInputFieldProps> = React.memo(
     tooltipLinkTarget,
     ...fieldConfig
   }) => {
-    const styles = useStyles(getStyles);
+    const styles = useStyles2(getStyles);
     const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
       validators,
     ]);

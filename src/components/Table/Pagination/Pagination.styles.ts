@@ -1,7 +1,7 @@
-import { css } from 'emotion';
-import { GrafanaTheme } from '@grafana/data';
+import { css } from '@emotion/css';
+import { GrafanaTheme2 } from '@grafana/data';
 
-export const getStyles = ({ spacing }: GrafanaTheme) => ({
+export const getStyles = ({ v1: { spacing } }: GrafanaTheme2) => ({
   pagination: css`
     display: flex;
     justify-content: space-between;

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Icon, Tooltip, useStyles } from '@grafana/ui';
+import { Icon, Tooltip, useStyles2 } from '@grafana/ui';
 import { getStyles } from './LinkTooltip.styles';
 import { LabelTooltipProps } from '../../shared/types';
 
@@ -11,7 +11,7 @@ export const LinkTooltip: FC<LabelTooltipProps> = ({
   tooltipDataTestId,
   tooltipLinkTarget = '_blank',
 }) => {
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
 
   return (
     <Tooltip

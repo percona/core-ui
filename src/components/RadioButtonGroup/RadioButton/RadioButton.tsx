@@ -1,5 +1,5 @@
 import React, { FC, useMemo, useRef } from 'react';
-import { useStyles } from '@grafana/ui';
+import { useStyles2 } from '@grafana/ui';
 import { generateId } from '../../../shared';
 import { RadioButtonProps } from './RadioButton.types';
 import { getStylesFn } from './RadioButton.styles';
@@ -15,7 +15,7 @@ export const RadioButton: FC<RadioButtonProps> = ({
   size = 'md',
 }) => {
   const getStyles = useMemo(() => getStylesFn(size, fullWidth), [size, fullWidth]);
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
   const id = useMemo(generateId, [generateId]);
   const inputId = useRef(`radio-btn-${id}`);
 

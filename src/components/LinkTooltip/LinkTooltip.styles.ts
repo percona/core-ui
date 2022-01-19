@@ -1,8 +1,7 @@
-import { stylesFactory } from '@grafana/ui';
-import { GrafanaTheme } from '@grafana/data';
-import { css } from 'emotion';
+import { GrafanaTheme2 } from '@grafana/data';
+import { css } from '@emotion/css';
 
-export const getStyles = stylesFactory(({ spacing, palette }: GrafanaTheme) => ({
+export const getStyles = ({ v1: { spacing, palette } }: GrafanaTheme2) => ({
   contentWrapper: css`
     display: flex;
     flex-direction: column;
@@ -16,4 +15,4 @@ export const getStyles = stylesFactory(({ spacing, palette }: GrafanaTheme) => (
       text-decoration: underline;
     }
   `,
-}));
+});

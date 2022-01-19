@@ -1,8 +1,8 @@
-import { GrafanaTheme } from '@grafana/data';
-import { css } from 'emotion';
+import { GrafanaTheme2 } from '@grafana/data';
+import { css } from '@emotion/css';
 
-export const getStyles = (theme: GrafanaTheme) => {
-  const { colors, spacing, zIndex, breakpoints, typography } = theme;
+export const getStyles = ({ v1 }: GrafanaTheme2) => {
+  const { colors, spacing, zIndex, breakpoints, typography } = v1;
 
   return {
     background: css`

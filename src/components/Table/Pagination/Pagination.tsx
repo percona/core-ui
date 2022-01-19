@@ -1,5 +1,5 @@
 import React, { FC, useState, useMemo } from 'react';
-import { useStyles, IconName, Button, Select } from '@grafana/ui';
+import { useStyles2, IconName, Button, Select } from '@grafana/ui';
 import { PaginationProps } from './Pagination.types';
 import { getStyles } from './Pagination.styles';
 import { Messages } from './Pagination.messages';
@@ -22,7 +22,7 @@ export const Pagination: FC<PaginationProps> = ({
   const shownPages = getShownPages(pageArray, activePageIndex, pagesPerView);
   const leftItemNumber = getLeftItemNumber(pageCount, activePageIndex, pageSize);
   const rightItemNumber = getRightItemNumber(activePageIndex, pageSize, nrRowsOnCurrentPage);
-  const style = useStyles(getStyles);
+  const style = useStyles2(getStyles);
 
   const gotoPage = (pageIndex: number) => {
     const index = Math.max(0, Math.min(pageIndex, pageCount - 1));

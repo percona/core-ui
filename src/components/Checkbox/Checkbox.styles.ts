@@ -1,8 +1,9 @@
-import { GrafanaTheme } from '@grafana/data';
-import { css } from 'emotion';
+import { GrafanaTheme2 } from '@grafana/data';
+import { css } from '@emotion/css';
 
-export const getStyles = (theme: GrafanaTheme) => {
-  const { colors, spacing } = theme;
+export const getStyles = (theme: GrafanaTheme2) => {
+  const { colors: v2Colors } = theme;
+  const {  colors, spacing, border, typography, palette } = theme.v1;
   const checkboxSize = '16px';
 
   return {
@@ -30,10 +31,10 @@ export const getStyles = (theme: GrafanaTheme) => {
       }
       &:checked + span {
         background: blue;
-        background: ${colors.formCheckboxBgChecked};
+        background: ${v2Colors.primary.main};
         border: none;
         &:hover {
-          background: ${colors.formCheckboxBgCheckedHover};
+          background: ${v2Colors.primary.shade};
         }
         &:after {
           content: '';
@@ -42,7 +43,7 @@ export const getStyles = (theme: GrafanaTheme) => {
           top: 1px;
           width: 6px;
           height: 12px;
-          border: solid ${colors.formCheckboxCheckmark};
+          border: solid ${v2Colors.primary.contrastText};
           border-width: 0 3px 3px 0;
           transform: rotate(45deg);
         }
@@ -52,8 +53,8 @@ export const getStyles = (theme: GrafanaTheme) => {
       display: inline-block;
       width: ${checkboxSize};
       height: ${checkboxSize};
-      border-radius: ${theme.border.radius.sm};
-      margin-right: ${theme.spacing.formSpacingBase}px;
+      border-radius: ${border.radius.sm};
+      margin-right: ${spacing.formSpacingBase}px;
       background: ${colors.formInputBg};
       border: 1px solid ${colors.formInputBorder};
       position: absolute;
@@ -68,15 +69,15 @@ export const getStyles = (theme: GrafanaTheme) => {
       margin-left: ${spacing.sm};
     `,
     label: css`
-      line-height: ${theme.typography.lineHeight.md};
+      line-height: ${typography.lineHeight.md};
     `,
     errorMessage: css`
-      color: ${theme.palette.red};
-      font-size: ${theme.typography.size.sm};
-      height: ${theme.typography.size.sm};
-      line-height: ${theme.typography.lineHeight.sm};
-      margin-top: ${theme.spacing.sm};
-      margin-bottom: ${theme.spacing.xs};
+      color: ${palette.red};
+      font-size: ${typography.size.sm};
+      height: ${typography.size.sm};
+      line-height: ${typography.lineHeight.sm};
+      margin-top: ${spacing.sm};
+      margin-bottom: ${spacing.xs};
     `,
   };
 };

@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { Options as PopperOptions } from '@popperjs/core';
-import { cx } from 'emotion';
-import { useStyles } from '@grafana/ui';
+import { cx } from '@emotion/css';
+import { useStyles2 } from '@grafana/ui';
 import { getStyles } from './Dropdown.styles';
 
 const popperConfig: Partial<PopperOptions> = {
@@ -39,7 +39,7 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
   children,
   toggle: Toggle,
 }) => {
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
 
   const [visible, setVisible] = useState(false);
   const size = React.Children.count(children);

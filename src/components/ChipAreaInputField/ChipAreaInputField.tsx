@@ -1,7 +1,7 @@
 import React, { FC, useMemo, useRef, useState, ChangeEvent } from 'react';
 import { Field, FieldMetaState, FieldInputProps, UseFieldConfig } from 'react-final-form';
-import { cx } from 'emotion';
-import { useStyles } from '@grafana/ui';
+import { cx } from '@emotion/css';
+import { useStyles2 } from '@grafana/ui';
 import { Chip } from '../Chip';
 import { Label } from '../Label';
 import { Validator, compose } from '../../shared/validators';
@@ -50,7 +50,7 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
     initialChips = [],
     ...fieldConfig
   }) => {
-    const styles = useStyles(getStyles);
+    const styles = useStyles2(getStyles);
     const [chips, setChips] = useState([...initialChips]);
     const [inputValue, setInputValue] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);

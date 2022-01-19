@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import { useStyles } from '@grafana/ui';
+import { useStyles2 } from '@grafana/ui';
 import { TableToolbarButton } from './TableToolbarButton';
 import { getStyles } from './TableToolbar.styles';
 import { TableToolbarProps } from './types';
 
 export const TableToolbar: FC<TableToolbarProps> = ({ actions, selectedItems }) => {
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
 
   return (
     <div className={styles.wrapper}>

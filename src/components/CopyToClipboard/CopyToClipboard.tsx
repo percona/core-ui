@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { ClipboardButton, useStyles } from '@grafana/ui';
+import { ClipboardButton, useStyles2 } from '@grafana/ui';
 import { usePopper } from 'react-popper';
 import { Options as PopperOptions } from '@popperjs/core/lib/types';
 import { getStyles } from './CopyToClipboard.styles';
@@ -24,7 +24,7 @@ const defaultPopperConfig: Partial<PopperOptions> = {
 };
 
 export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, popperConfig, ...rest }) => {
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
 
   const [tooltipText, setTooltipText] = useState('');
   const [visible, setVisible] = useState(false);
