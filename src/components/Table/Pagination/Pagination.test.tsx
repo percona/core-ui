@@ -239,7 +239,7 @@ describe('Pagination', () => {
       />,
     );
 
-    userEvent.click(screen.getByTestId('previous-page-button'));
+    userEvent.click(screen.getByTestId('previous-page-button'), {}, { skipPointerEventsCheck: true });
     expect(cb).not.toHaveBeenCalled();
   });
 
@@ -259,7 +259,7 @@ describe('Pagination', () => {
     );
 
     for (let i = 0; i < 5; i += 1) {
-      userEvent.click(screen.getByTestId('next-page-button'));
+      userEvent.click(screen.getByTestId('next-page-button'), {}, { skipPointerEventsCheck: true });
     }
 
     expect(cb).toHaveBeenCalledTimes(4);
@@ -298,7 +298,7 @@ describe('Pagination', () => {
     );
 
     for (let i = 0; i < 5; i += 1) {
-      userEvent.click(screen.getByTestId('next-page-button'));
+      userEvent.click(screen.getByTestId('next-page-button'), {}, { skipPointerEventsCheck: true });
     }
 
     userEvent.click(screen.getByTestId('first-page-button'));
@@ -336,7 +336,7 @@ describe('Pagination', () => {
     );
 
     for (let i = 0; i < 5; i += 1) {
-      userEvent.click(screen.getByTestId('next-page-button'));
+      userEvent.click(screen.getByTestId('next-page-button'), {}, { skipPointerEventsCheck: true });
     }
 
     // TODO: replace with the following line when data-testid will be available in the Select component
