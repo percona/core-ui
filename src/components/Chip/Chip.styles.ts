@@ -6,7 +6,7 @@ export const getStyles = ({ v1: { height, spacing, colors } } : GrafanaTheme2) =
     min-height: ${height.sm}px;
     color: ${colors.text};
     line-height: ${height.sm}px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     border-radius: 10px;
     padding: 0 ${spacing.sm};
