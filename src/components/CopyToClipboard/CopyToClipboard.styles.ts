@@ -1,7 +1,7 @@
 import { GrafanaTheme2 } from '@grafana/data';
 import { css } from '@emotion/css';
 
-export const getStyles = ({ v1}: GrafanaTheme2) => {
+export const getStyles = ({ v1 }: GrafanaTheme2) => {
   const { spacing, colors, border, zIndex } = v1;
 
   return {
