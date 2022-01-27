@@ -8,4 +8,17 @@ export enum LOG_LEVELS {
   ERROR,
 };
 
-export const LOG_LEVEL = parseInt(process.env.REACT_APP_LOG_LEVEL!, 10) || LOG_LEVELS.DEBUG;
+const getLogLevel = () => {
+  let logLevel = LOG_LEVELS.DEBUG;
+
+  try {
+    logLevel = parseInt(process?.env?.REACT_APP_LOG_LEVEL || '', 10);
+  } catch (e) {
+    console.error(e);
+  };
+
+  return logLevel;
+};
+
+
+export const LOG_LEVEL = getLogLevel();
