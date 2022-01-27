@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
-import { useStyles } from '@grafana/ui';
-import { cx } from 'emotion';
+import { useStyles2 } from '@grafana/ui';
+import { cx } from '@emotion/css';
 import { getStyles } from './Chip.styles';
 import { Icon } from '../Icon';
 
@@ -12,7 +12,7 @@ export interface ChipProps {
 }
 
 export const Chip: FC<ChipProps> = ({ text, isRemovable = false, onRemove = () => null, className }) => {
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
   const [show, setShow] = useState(true);
 
   const handleCloseClick = () => {

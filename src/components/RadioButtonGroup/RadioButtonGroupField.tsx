@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
-import { cx } from 'emotion';
+import { cx } from '@emotion/css';
 import {
   Field, FieldMetaState, FieldInputProps, UseFieldConfig,
 } from 'react-final-form';
-import { Icon, IconName, useStyles } from '@grafana/ui';
+import { Icon, IconName, useStyles2 } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
 import { Label } from '../Label';
 import { Validator, compose } from '../../shared/validators';
@@ -60,7 +60,7 @@ export function RadioButtonGroupField({
       },
     [disabled],
   );
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
   const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
     validators,
   ]);

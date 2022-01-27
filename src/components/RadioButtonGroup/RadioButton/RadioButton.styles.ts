@@ -1,22 +1,22 @@
-import { css } from 'emotion';
-import { GrafanaTheme } from '@grafana/data';
+import { css } from '@emotion/css';
+import { GrafanaTheme2 } from '@grafana/data';
 import { RadioButtonSize } from './RadioButton.types';
 
 
 export interface StyleProps {
   size?: RadioButtonSize;
-  theme: GrafanaTheme;
+  theme: GrafanaTheme2;
 }
 
-export const focusCss = ({ colors }: GrafanaTheme) => `
+export const focusCss = ({ v1: { colors } }: GrafanaTheme2) => `
   outline: 2px dotted transparent;
   outline-offset: 2px;
   box-shadow: 0 0 0 2px ${colors.bodyBg}, 0 0 0px 4px ${colors.formFocusOutline};
   transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
 `;
 
-export const getStylesFn = (size: RadioButtonSize, fullWidth?: boolean) => (theme: GrafanaTheme) => {
-  const { border, colors, height, isLight, palette, spacing, typography } = theme;
+export const getStylesFn = (size: RadioButtonSize, fullWidth?: boolean) => (theme: GrafanaTheme2) => {
+  const { border, colors, height, isLight, palette, spacing, typography } = theme.v1;
   const textColor = colors.textSemiWeak;
   const textColorHover = colors.text;
   const textColorActive = colors.textBlue;

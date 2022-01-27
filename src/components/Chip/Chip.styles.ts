@@ -1,12 +1,12 @@
-import { GrafanaTheme } from '@grafana/data';
-import { css } from 'emotion';
+import { GrafanaTheme2 } from '@grafana/data';
+import { css } from '@emotion/css';
 
-export const getStyles = ({ height, spacing, colors }: GrafanaTheme) => ({
+export const getStyles = ({ v1: { height, spacing, colors } } : GrafanaTheme2) => ({
   wrapper: css`
     min-height: ${height.sm}px;
     color: ${colors.text};
     line-height: ${height.sm}px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     border-radius: 10px;
     padding: 0 ${spacing.sm};

@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { Field } from 'react-final-form';
-import { cx } from 'emotion';
-import { Switch, useStyles } from '@grafana/ui';
+import { cx } from '@emotion/css';
+import { Switch, useStyles2 } from '@grafana/ui';
 import { compose } from '../../shared/validators';
 import { SwitchFieldProps, SwitchFieldRenderProps } from './Switch.types';
 import { getStyles } from './Switch.styles';
@@ -23,7 +23,7 @@ export const SwitchField: FC<SwitchFieldProps> = ({
   tooltipLinkTarget,
   ...fieldConfig
 }) => {
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
   const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
     validators,
   ]);

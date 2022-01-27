@@ -1,8 +1,8 @@
 import React, {
   FC, useCallback, useRef, useMemo,
 } from 'react';
-import { cx } from 'emotion';
-import { useStyles } from '@grafana/ui';
+import { cx } from '@emotion/css';
+import { useStyles2 } from '@grafana/ui';
 import {
   Field, FieldMetaState, FieldInputProps, UseFieldConfig,
 } from 'react-final-form';
@@ -46,7 +46,7 @@ export const NumberInputField: FC<NumberInputFieldProps> = React.memo(({
   tooltipLinkTarget,
   ...fieldConfig
 }) => {
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
   const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
     validators,
   ]);

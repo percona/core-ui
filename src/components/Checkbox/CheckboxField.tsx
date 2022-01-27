@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { Field, UseFieldConfig, FieldMetaState, FieldInputProps } from 'react-final-form';
-import { useStyles } from '@grafana/ui';
-import { cx } from 'emotion';
+import { useStyles2 } from '@grafana/ui';
+import { cx } from '@emotion/css';
 import { Label } from '../Label';
 import { getStyles } from './Checkbox.styles';
 import { Validator, compose } from '../../shared/validators';
@@ -35,7 +35,7 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(({
   tooltipLinkTarget,
   ...fieldConfig
 }) => {
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
   const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
     validators,
   ]);

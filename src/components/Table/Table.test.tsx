@@ -113,8 +113,8 @@ describe('Table', () => {
       />,
     );
 
-    expect(await screen.findAllByTestId('table-tbody-tr')).toHaveLength(10);
-    expect(await screen.findAllByTestId('page-button')).toHaveLength(10);
+    expect(screen.getAllByTestId('table-tbody-tr')).toHaveLength(10);
+    expect(screen.getAllByTestId('page-button')).toHaveLength(10);
   });
 
   it('should display partial data with showPagination using uncontrolled pagination', async () => {

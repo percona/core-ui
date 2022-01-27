@@ -1,7 +1,7 @@
-import { css } from 'emotion';
-import { GrafanaTheme } from '@grafana/data';
+import { css } from '@emotion/css';
+import { GrafanaTheme2 } from '@grafana/data';
 
-export const getStyles = ({ spacing, palette, typography, colors }: GrafanaTheme) => ({
+export const getStyles = ({ v1: { spacing, palette, typography, colors } }: GrafanaTheme2) => ({
   field: css`
     &:not(:last-child) {
       margin-bottom: ${spacing.formInputMargin};

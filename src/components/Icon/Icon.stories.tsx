@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Icon } from './Icon';
 

@@ -1,6 +1,5 @@
 import React, { FC, useEffect, ReactNode } from 'react';
-
-import { IconButton, useStyles } from '@grafana/ui';
+import { IconButton, useStyles2 } from '@grafana/ui';
 import { getStyles } from './Modal.styles';
 
 export interface ModalWindow {
@@ -15,7 +14,7 @@ export const Modal: FC<ModalWindow> = (props) => {
   const {
     isVisible, children, title, onClose, closeOnClickaway = true, closeOnEscape = true,
   } = props;
-  const styles = useStyles(getStyles);
+  const styles = useStyles2(getStyles);
 
   useEffect(() => {
     if (closeOnEscape) {

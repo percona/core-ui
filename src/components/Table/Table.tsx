@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useTable, usePagination, useExpanded } from 'react-table';
-import { css } from 'emotion';
-import { useStyles } from '@grafana/ui';
+import { css } from '@emotion/css';
+import { useStyles2 } from '@grafana/ui';
 import { getStyles } from './Table.styles';
 import { TableProps, PaginatedTableInstance, PaginatedTableOptions, PaginatedTableState } from './Table.types';
 import { Pagination } from './Pagination';
@@ -32,7 +32,7 @@ export const Table: FC<TableProps> = ({
   getColumnProps = defaultPropGetter,
   getCellProps = defaultPropGetter,
 }) => {
-  const style = useStyles(getStyles);
+  const style = useStyles2(getStyles);
   const manualPagination = !!(totalPages && totalPages >= 0);
   const initialState: Partial<PaginatedTableState> = {
     pageIndex: propPageIndex,

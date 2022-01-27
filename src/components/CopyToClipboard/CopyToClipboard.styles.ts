@@ -1,8 +1,8 @@
-import { GrafanaTheme } from '@grafana/data';
-import { css } from 'emotion';
+import { GrafanaTheme2 } from '@grafana/data';
+import { css } from '@emotion/css';
 
-export const getStyles = (theme: GrafanaTheme) => {
-  const { spacing, colors, border, zIndex } = theme;
+export const getStyles = ({ v1 }: GrafanaTheme2) => {
+  const { spacing, colors, border, zIndex } = v1;
 
   return {
     tooltip: css`

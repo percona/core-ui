@@ -1,5 +1,5 @@
-import { css } from 'emotion';
-import { GrafanaTheme } from '@grafana/data';
+import { css } from '@emotion/css';
+import { GrafanaTheme2 } from '@grafana/data';
 
 const arrow = css`
   position: absolute;
@@ -9,10 +9,10 @@ const arrow = css`
   border-style: solid;
 `;
 
-export const getStyles = (theme: GrafanaTheme) => {
+export const getStyles = ({ v1 }: GrafanaTheme2) => {
   const {
     border, colors, palette, spacing, typography,
-  } = theme;
+  } = v1;
 
   const button = css`
     position: absolute;
