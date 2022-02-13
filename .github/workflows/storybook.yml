@@ -43,6 +43,7 @@ jobs:
         with:
           name: storybook-artifacts
           path: ./storybook-static/
+          retention-days: 1
           if-no-files-found: error
 
       - name: Checkout the storybook branch 🔧
