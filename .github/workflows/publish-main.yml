@@ -1,5 +1,5 @@
 ---
-name: Publish Latest Version to NPM
+name: Publish the tag to NPM
 
 on:
   workflow_dispatch:
@@ -26,9 +26,11 @@ jobs:
         env:
           ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
+          git config user.name "GitHub Action"
+          git config user.email "github-action@users.noreply.github.com"
+          git config user.password "${ROBOT_TOKEN}"
+          echo "GIT_USER=percona-platform-robot:${ROBOT_TOKEN}" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm install
