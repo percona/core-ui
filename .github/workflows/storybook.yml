@@ -1,4 +1,4 @@
-name: Publish the storybook to Github Pages
+name: Storybook
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-storybook:
     runs-on: ubuntu-latest
 
     steps:
@@ -43,10 +43,10 @@ jobs:
         uses: percona-platform/upload-artifact@v2
         with:
           name: storybook-artifacts
-          path: storybook-static
+          path: ./storybook-static/
           if-no-files-found: error
 
-      - name: Deploy to github pages 🔧
+      - name: Checkout the storybook branch 🔧
         run: |
           git add --all
           git stash
@@ -59,9 +59,9 @@ jobs:
           name: storybook-artifacts
 
       - name: Display structure of downloaded files
-        run: ls -R
+        run: ls -la
 
-      - name: Download artifacts Deploy 🚀
+      - name: Download artifacts & deploy 🚀
         run: |
           git add --all
           git commit -m "Deploy storybook to github pages"
