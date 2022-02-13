@@ -1,5 +1,5 @@
 ---
-name: Publish the tag to NPM
+name: Publish Latest Version to NPM
 
 on:
   workflow_dispatch:

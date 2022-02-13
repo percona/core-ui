@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout 🔔
         uses: percona-platform/checkout@v2
         with:
           fetch-depth: 0
