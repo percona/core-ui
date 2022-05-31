@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+ import React, { useCallback, useMemo } from 'react';
 import { cx } from '@emotion/css';
 import {
   Field, FieldMetaState, FieldInputProps, UseFieldConfig,
@@ -61,7 +61,7 @@ export function RadioButtonGroupField({
     [disabled],
   );
   const styles = useStyles2(getStyles);
-  const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
+  const validate = useMemo(() => (Array.isArray(validators) ? compose(validators) : undefined), [
     validators,
   ]);
 

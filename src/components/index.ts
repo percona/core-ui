@@ -16,3 +16,6 @@ export * from './Label';
 export * from './CopyToClipboard';
 export * from './Chip';
 export * from './ChipAreaInputField';
+export * from './Select';
+export * from './AsyncSelect';
+export * from './MultiSelect';
