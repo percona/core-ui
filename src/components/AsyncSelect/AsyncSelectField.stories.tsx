@@ -1,16 +1,15 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { SelectField } from './SelectField';
+import { AsyncSelectField } from './AsyncSelectField';
 import {Form, FormRenderProps} from 'react-final-form';
 import * as validators from '../../shared/validators';
-import {generateOptions} from '../../__mocks__/mockAsyncSelectOptions';
+import {loadAsyncOptions} from '../../shared/utils/loadAsyncOptions';
 
-const {minLength, maxLength, email } = validators;
-
+const { email, minLength, maxLength } = validators;
 
 export default {
-  title: 'Form Fields/SelectField',
-  component: SelectField,
+  title: 'Form Fields/AsyncSelectField',
+  component: AsyncSelectField,
   decorators: [
     (Story) => (
       <Form onSubmit={() => {}}>
@@ -22,29 +21,28 @@ export default {
       </Form>
     ),
   ],
-} as ComponentMeta<typeof SelectField>;
+} as ComponentMeta<typeof AsyncSelectField>;
 
-const Template: ComponentStory<typeof SelectField> = (args) => (
-  <SelectField {...args} />
+const Template: ComponentStory<typeof AsyncSelectField> = (args) => (
+  <AsyncSelectField loadOptions={loadAsyncOptions} {...args}/>
 );
 
 export const Basic = Template.bind({});
 Basic.args = {
   name: 'select',
-  options: generateOptions(),
+  defaultOptions: true,
 };
 
 export const WithLabel = Template.bind({});
 WithLabel.args = {
   name: 'select',
-  label: 'SelectField',
-  options: generateOptions(),
+  label: 'AsyncSelectField',
+  defaultOptions: true,
 };
 
 export const WithValidators = Template.bind({});
 WithValidators.args = {
   name: 'select',
   validators: [minLength(13), email, maxLength(15)],
-  options: generateOptions(),
+  defaultOptions: true,
 };
-
