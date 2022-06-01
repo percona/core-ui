@@ -60,6 +60,7 @@
     "@types/react": "^16.9.9",
     "@types/react-dom": "^16.9.9",
     "@types/react-table": "^7.7.6",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-no-inline-styles": "^1.0.5",
