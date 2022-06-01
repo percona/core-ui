@@ -15,7 +15,7 @@
       }
     }
   },
-  "plugins": ["react-hooks", "jest", "eslint-plugin-no-inline-styles"],
+  "plugins": ["react-hooks", "jest", "eslint-plugin-no-inline-styles", "prettier"],
   "rules": {
     "no-console": ["warn", {"allow": ["warn", "error"]}],
     "semi": [
@@ -55,7 +55,7 @@
         "ignoreUrls": true 
       }
     ],
-    "prettier/prettier": ["off"],
+    "prettier/prettier": ["error"],
     "quotes": ["error", "single"],
     "import/extensions": ["off"],
     "import/no-extraneous-dependencies": [
