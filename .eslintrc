@@ -53,7 +53,7 @@
         "ignoreUrls": true 
       }
     ],
-    "quotes": ["error", "single"],
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "import/extensions": ["off"],
     "import/no-extraneous-dependencies": [
       "error",
@@ -73,7 +73,6 @@
     "jsx-a11y/label-has-associated-control": ["error"],
     "no-dupe-args": ["error"],
     "no-new-object": ["error"],
-    "no-magic-numbers": ["error"],
     "padding-line-between-statements": [
       "error",
       { "blankLine": "always", "prev": "*", "next": "return" },
@@ -92,6 +91,14 @@
     "arrow-parens": ["error"],
     "eol-last": ["error"]
   },
+  "overrides": [
+    {
+      "files": ["*.stories.tsx"],
+      "rules": {
+        "no-inline-styles/no-inline-styles": "off"
+      }
+    }
+  ],
   "globals": {
     "React": true,
     "JSX": true
