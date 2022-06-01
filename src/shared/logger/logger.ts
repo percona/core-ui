@@ -10,16 +10,16 @@ export const setLogLevel = (level: LOG_LEVELS) => {
 
 const LOG_LEVEL_KEYS = Object.keys(LOG_LEVELS).slice(5);
 
-const createLogMethod = (
-  loggerFunc: (...attrs: Array<any>) => void,
-  level: LOG_LEVELS,
-) => (first: any, ...rest: Array<any>) => {
+const createLogMethod = (loggerFunc: (...attrs: Array<any>) => void, level: LOG_LEVELS) => (
+  first: any,
+  ...rest: Array<any>
+) => {
   if (level >= CONFIG_LOG_LEVEL) {
     const key = LOG_LEVEL_KEYS[level];
 
     console.group(`[${key}]`, truncate(50)(first));
     loggerFunc(first);
-    rest.forEach(paragraph => {
+    rest.forEach((paragraph) => {
       loggerFunc(paragraph);
     });
     console.groupEnd();

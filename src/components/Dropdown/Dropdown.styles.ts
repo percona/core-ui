@@ -24,7 +24,8 @@ export const getStyles = ({ v1 }: GrafanaTheme2) => {
         min-width: 120px;
 
         &:hover,
-        &:active, &.active {
+        &:active,
+        &.active {
           background-color: ${colors.dropdownOptionHoverBg};
         }
 

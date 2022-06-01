@@ -11,9 +11,7 @@ export interface ModalWindow {
 }
 
 export const Modal: FC<ModalWindow> = (props) => {
-  const {
-    isVisible, children, title, onClose, closeOnClickaway = true, closeOnEscape = true,
-  } = props;
+  const { isVisible, children, title, onClose, closeOnClickaway = true, closeOnEscape = true } = props;
   const styles = useStyles2(getStyles);
 
   useEffect(() => {

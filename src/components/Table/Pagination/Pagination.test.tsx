@@ -154,6 +154,7 @@ describe('Pagination', () => {
     );
 
     // There's 5 pages and 3 pages/view, meaning two clicks will bring the last page button into the view
+    // eslint-disable-next-line max-len
     // After that, any click should move the active page button towards the end, instead of keeping in the center
     // That means that with 4 clicks, we should have page 5 selected on the right
     for (let i = 0; i < 4; i += 1) {

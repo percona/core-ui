@@ -8,4 +8,4 @@ export const truncate = (length: number = 30) => (str: string = '') => {
   }
 
   return `${str.substr(0, length - 3)}...`;
- };
+};

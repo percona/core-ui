@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CopyToClipboard } from './CopyToClipboard';
 
-const DATA_TESTID_TOOLTIP='tooltip';
-const DATA_TESTID_BUTTON='clipboard-button';
+const DATA_TESTID_TOOLTIP = 'tooltip';
+const DATA_TESTID_BUTTON = 'clipboard-button';
 
 describe('CopyToClipboard ::', () => {
   test('should render the component', () => {
@@ -12,10 +12,8 @@ describe('CopyToClipboard ::', () => {
 
     render(
       <>
-        <CopyToClipboard textContainer={ref}/>
-        <div ref={ref}>
-          some text
-        </div>
+        <CopyToClipboard textContainer={ref} />
+        <div ref={ref}>some text</div>
       </>,
     );
 
@@ -27,10 +25,8 @@ describe('CopyToClipboard ::', () => {
 
     render(
       <>
-        <CopyToClipboard textContainer={ref}/>
-        <div ref={ref}>
-          some text
-        </div>
+        <CopyToClipboard textContainer={ref} />
+        <div ref={ref}>some text</div>
       </>,
     );
     const button = await screen.getByTestId(DATA_TESTID_BUTTON);
@@ -46,10 +42,8 @@ describe('CopyToClipboard ::', () => {
 
     render(
       <>
-        <CopyToClipboard textContainer={ref}/>
-        <div ref={ref}>
-          some text
-        </div>
+        <CopyToClipboard textContainer={ref} />
+        <div ref={ref}>some text</div>
       </>,
     );
     document.execCommand = jest.fn();
@@ -70,10 +64,8 @@ describe('CopyToClipboard ::', () => {
 
     render(
       <>
-        <CopyToClipboard textContainer={ref}/>
-        <div ref={ref}>
-          some text
-        </div>
+        <CopyToClipboard textContainer={ref} />
+        <div ref={ref}>some text</div>
       </>,
     );
     const button = await screen.getByTestId(DATA_TESTID_BUTTON);

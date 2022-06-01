@@ -81,11 +81,11 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
           setInputValue('');
         }
       } else if (e.key === 'Backspace' && chips.length) {
-          const newChips = chips.slice(0, chips.length - 1);
+        const newChips = chips.slice(0, chips.length - 1);
 
-          setChips(newChips);
-          input.onChange(newChips);
-        }
+        setChips(newChips);
+        input.onChange(newChips);
+      }
     };
 
     const handleOuterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -106,7 +106,7 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
     };
 
     return (
-      <Field {...fieldConfig} type='text' name={name} validate={validate}>
+      <Field {...fieldConfig} type="text" name={name} validate={validate}>
         {({ input, meta }: ChipAreaInputFieldRenderProps) => {
           const validationError = ((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error;
 
@@ -130,16 +130,15 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
               />
               <div className={styles.chips}>
                 <div data-testid="chips-container" className={styles.chipsInnerWrapper} onClick={handleClick}>
-                  {
-                    chips.map(chip =>
-                      <Chip
-                        key={chip}
-                        isRemovable
-                        text={chip}
-                        className={styles.chip}
-                        onRemove={(text) => handleChipRemove(input, text)} />,
-                    )
-                  }
+                  {chips.map((chip) => (
+                    <Chip
+                      key={chip}
+                      isRemovable
+                      text={chip}
+                      className={styles.chip}
+                      onRemove={(text) => handleChipRemove(input, text)}
+                    />
+                  ))}
                   <input
                     ref={inputRef}
                     id={inputId}

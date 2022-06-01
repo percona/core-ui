@@ -26,7 +26,7 @@ describe('ChipAreaInputField::', () => {
   it('should focus input when clicking container', () => {
     render(
       <FormWrapper>
-        <ChipAreaInputField name="chips" placeholder='tags' />
+        <ChipAreaInputField name="chips" placeholder="tags" />
       </FormWrapper>,
     );
 
@@ -37,7 +37,7 @@ describe('ChipAreaInputField::', () => {
   it('should add tag after clicking Enter', () => {
     render(
       <FormWrapper>
-        <ChipAreaInputField name="chips" placeholder='tags' />
+        <ChipAreaInputField name="chips" placeholder="tags" />
       </FormWrapper>,
     );
 
@@ -55,7 +55,7 @@ describe('ChipAreaInputField::', () => {
   it('should clear input after adding tag', () => {
     render(
       <FormWrapper>
-        <ChipAreaInputField name="chips" placeholder='tags' />
+        <ChipAreaInputField name="chips" placeholder="tags" />
       </FormWrapper>,
     );
 
@@ -67,7 +67,7 @@ describe('ChipAreaInputField::', () => {
   it('should not allow empty tags', () => {
     render(
       <FormWrapper>
-        <ChipAreaInputField name="chips" placeholder='tags' />
+        <ChipAreaInputField name="chips" placeholder="tags" />
       </FormWrapper>,
     );
 
@@ -79,7 +79,7 @@ describe('ChipAreaInputField::', () => {
   it('should not allow duplicate tags', () => {
     render(
       <FormWrapper>
-        <ChipAreaInputField name="chips" placeholder='tags' />
+        <ChipAreaInputField name="chips" placeholder="tags" />
       </FormWrapper>,
     );
 
@@ -91,7 +91,7 @@ describe('ChipAreaInputField::', () => {
   it('should remove a tag when backspace is pressed and there is no input', () => {
     render(
       <FormWrapper>
-        <ChipAreaInputField name="chips" placeholder='tags' />
+        <ChipAreaInputField name="chips" placeholder="tags" />
       </FormWrapper>,
     );
 
@@ -106,7 +106,7 @@ describe('ChipAreaInputField::', () => {
   it('should not remove any tag when backspace is pressed and there is input', () => {
     render(
       <FormWrapper>
-        <ChipAreaInputField name="chips" placeholder='tags' />
+        <ChipAreaInputField name="chips" placeholder="tags" />
       </FormWrapper>,
     );
 
@@ -120,7 +120,7 @@ describe('ChipAreaInputField::', () => {
   it('should remove tags', () => {
     render(
       <FormWrapper>
-        <ChipAreaInputField name="chips" placeholder='tags' />
+        <ChipAreaInputField name="chips" placeholder="tags" />
       </FormWrapper>,
     );
 
