@@ -22,7 +22,6 @@
     "README.md"
   ],
   "scripts": {
-    "precommit": "lint-staged",
     "clean": "rimraf dist",
     "start": "npm run clean && npm run dev",
     "lint": "eslint --ext js,ts,tsx src",
@@ -80,11 +79,6 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-final-form": "^6.5.3"
-  },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "eslint --ext .js,.jsx,.tsx,.ts"
-    ]
   },
   "browserslist": {
     "production": [
