@@ -19,6 +19,7 @@ export interface ChipAreaInputFieldProps extends UseFieldConfig<string>, Labeled
   inputProps?: FieldInputAttrs;
   placeholder?: string;
   showErrorOnBlur?: boolean;
+  showErrorOnRender?: boolean;
   validators?: Validator[];
   initialChips?: string[];
 }

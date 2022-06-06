@@ -18,6 +18,7 @@ export interface TextInputFieldProps extends UseFieldConfig<string>, LabeledFiel
   inputProps?: FieldInputAttrs;
   placeholder?: string;
   showErrorOnBlur?: boolean;
+  showErrorOnRender?: boolean;
   validators?: Validator[];
 }
 

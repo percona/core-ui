@@ -18,6 +18,7 @@ export interface NumberInputFieldProps extends UseFieldConfig<number>, LabeledFi
   inputProps?: FieldInputAttrs;
   placeholder?: string;
   showErrorOnBlur?: boolean;
+  showErrorOnRender?: boolean;
   validators?: Validator[];
 }
 

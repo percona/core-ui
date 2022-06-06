@@ -20,6 +20,7 @@ export interface TextareaInputFieldProps extends UseFieldConfig<string>, Labeled
   rows?: number;
   resize?: 'vertical' | 'horizontal' | 'both';
   showErrorOnBlur?: boolean;
+  showErrorOnRender?: boolean;
   validators?: Validator[];
 }
 

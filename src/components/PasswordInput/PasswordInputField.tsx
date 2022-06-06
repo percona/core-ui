@@ -18,6 +18,7 @@ export interface PasswordInputFieldProps extends UseFieldConfig<string>, Labeled
   inputProps?: FieldInputAttrs;
   placeholder?: string;
   showErrorOnBlur?: boolean;
+  showErrorOnRender?: boolean;
   validators?: Validator[];
 }
 
