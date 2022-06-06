@@ -38,6 +38,7 @@ export const TextInputField: FC<TextInputFieldProps> = React.memo(
     placeholder,
     required = false,
     showErrorOnBlur = false,
+    showErrorOnRender = false,
     validators,
     tooltipText = '',
     tooltipLink,
@@ -55,7 +56,9 @@ export const TextInputField: FC<TextInputFieldProps> = React.memo(
     return (
       <Field {...fieldConfig} type="text" name={name} validate={validate}>
         {({ input, meta }: TextFieldRenderProps) => {
-          const validationError = ((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error;
+          const validationError =
+            (((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error) ||
+            (showErrorOnRender && meta.error);
 
           return (
             <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
