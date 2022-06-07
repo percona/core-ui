@@ -5,11 +5,7 @@ import { Step, StepStatus } from './Step';
 describe('Step::', () => {
   it('renders the step header correctly with title and number', async () => {
     render(
-      <Step
-        title="Test title"
-        number={2}
-        onClick={() => {}}
-      >
+      <Step title="Test title" number={2} onClick={() => {}}>
         Test content
       </Step>,
     );
@@ -22,12 +18,7 @@ describe('Step::', () => {
   });
 
   it('renders the step header correctly without title and number', async () => {
-
-    render(
-      <Step onClick={() => {}}>
-        Test content
-      </Step>,
-    );
+    render(<Step onClick={() => {}}>Test content</Step>);
 
     const header = await screen.getByTestId('step-header');
     const inner = header.querySelectorAll('div');
@@ -37,12 +28,8 @@ describe('Step::', () => {
   });
 
   it('renders a checkmark when the step is done', async () => {
-
     render(
-      <Step
-        status={StepStatus.done}
-        onClick={jest.fn()}
-      >
+      <Step status={StepStatus.done} onClick={jest.fn()}>
         Test content
       </Step>,
     );
@@ -53,12 +40,7 @@ describe('Step::', () => {
   });
 
   it('renders step content correctly', async () => {
-
-    render(
-      <Step onClick={jest.fn()}>
-        Test content
-      </Step>,
-    );
+    render(<Step onClick={jest.fn()}>Test content</Step>);
 
     expect(await screen.getByText('Test content')).toBeInTheDocument();
   });
@@ -66,11 +48,7 @@ describe('Step::', () => {
   it('calls the step action', async () => {
     const action = jest.fn();
 
-    render(
-      <Step onClick={action}>
-        Test content
-      </Step>,
-    );
+    render(<Step onClick={action}>Test content</Step>);
 
     const header = await screen.getByTestId('step-header');
 

@@ -3,7 +3,12 @@ import { useTable, usePagination, useExpanded } from 'react-table';
 import { css } from '@emotion/css';
 import { useStyles2 } from '@grafana/ui';
 import { getStyles } from './Table.styles';
-import { TableProps, PaginatedTableInstance, PaginatedTableOptions, PaginatedTableState } from './Table.types';
+import {
+  TableProps,
+  PaginatedTableInstance,
+  PaginatedTableOptions,
+  PaginatedTableState,
+} from './Table.types';
 import { Pagination } from './Pagination';
 import { PAGE_SIZES } from './Pagination/Pagination.constants';
 import { TableContent } from './TableContent';
@@ -128,19 +133,19 @@ export const Table: FC<TableProps> = ({
                           <React.Fragment key={row.id}>
                             <tr data-testid="table-tbody-tr" {...row.getRowProps(getRowProps(row))}>
                               {row.cells.map((cell) => (
-                                  <td
-                                    {...cell.getCellProps([
-                                      {
-                                        className: cell.column.className,
-                                        style: cell.column.style,
-                                      },
-                                      getCellProps(cell),
-                                    ])}
-                                    key={cell.column.id}
-                                  >
-                                    {cell.render('Cell')}
-                                  </td>
-                                ))}
+                                <td
+                                  {...cell.getCellProps([
+                                    {
+                                      className: cell.column.className,
+                                      style: cell.column.style,
+                                    },
+                                    getCellProps(cell),
+                                  ])}
+                                  key={cell.column.id}
+                                >
+                                  {cell.render('Cell')}
+                                </td>
+                              ))}
                             </tr>
                             {row.isExpanded ? (
                               <tr>

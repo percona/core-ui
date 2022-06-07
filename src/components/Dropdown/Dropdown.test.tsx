@@ -6,7 +6,9 @@ import { Dropdown } from './Dropdown';
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Toggle = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
-  <button type="button" ref={ref} {...props}>Toggle</button>
+  <button type="button" ref={ref} {...props}>
+    Toggle
+  </button>
 ));
 
 const asyncClick = async (ref) => {
@@ -15,8 +17,8 @@ const asyncClick = async (ref) => {
   });
 };
 
-const DATA_QA_MENU='dropdown-menu-menu';
-const DATA_QA_TOGGLE='dropdown-menu-toggle';
+const DATA_QA_MENU = 'dropdown-menu-menu';
+const DATA_QA_TOGGLE = 'dropdown-menu-toggle';
 
 describe('Dropdown ::', () => {
   test('should render the toggle', () => {
@@ -75,7 +77,9 @@ describe('Dropdown ::', () => {
 
     render(
       <Dropdown toggle={Toggle}>
-        <a data-testid="menu-item" onClick={menuAction}>root</a>
+        <a data-testid="menu-item" onClick={menuAction}>
+          root
+        </a>
         <a href="/test">test</a>
       </Dropdown>,
     );
@@ -97,7 +101,9 @@ describe('Dropdown ::', () => {
 
     render(
       <Dropdown toggle={Toggle}>
-        <div data-testid="menu-item" onClick={menuAction}>root</div>
+        <div data-testid="menu-item" onClick={menuAction}>
+          root
+        </div>
         <a href="/test">test</a>
       </Dropdown>,
     );
@@ -115,10 +121,12 @@ describe('Dropdown ::', () => {
     expect(menuAction).toBeCalledTimes(1);
   });
 
-  test('doesn\'t keep menu item active on close', async () => {
+  test("doesn't keep menu item active on close", async () => {
     render(
       <Dropdown toggle={Toggle}>
-        <div data-testid="menu-item" onClick={jest.fn()}>root</div>
+        <div data-testid="menu-item" onClick={jest.fn()}>
+          root
+        </div>
         <a href="/test">test</a>
       </Dropdown>,
     );

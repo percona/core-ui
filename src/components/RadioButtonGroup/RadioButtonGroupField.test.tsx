@@ -14,7 +14,6 @@ const initialValues = { test: 'lowest' };
 
 describe('RadioButtonGroupField::', () => {
   it('should render as many RadioButtons as there are options', async () => {
-
     render(
       <FormWrapper>
         <RadioButtonGroupField name="test" options={options} />
@@ -75,7 +74,12 @@ describe('RadioButtonGroupField::', () => {
 
     render(
       <FormWrapper>
-        <RadioButtonGroupField showErrorOnBlur name="test" options={options} validators={[validatorOne, validatorTwo]} />
+        <RadioButtonGroupField
+          showErrorOnBlur
+          name="test"
+          options={options}
+          validators={[validatorOne, validatorTwo]}
+        />
       </FormWrapper>,
     );
 
@@ -94,7 +98,6 @@ describe('RadioButtonGroupField::', () => {
   });
 
   it('should show no labels if none are passed via props', async () => {
-
     render(
       <FormWrapper>
         <RadioButtonGroupField name="test" options={options} />
@@ -105,7 +108,6 @@ describe('RadioButtonGroupField::', () => {
   });
 
   it('should show a label if one is passed via props', async () => {
-
     render(
       <FormWrapper>
         <RadioButtonGroupField label="test label" name="test" options={options} />
@@ -117,7 +119,6 @@ describe('RadioButtonGroupField::', () => {
   });
 
   it('should show an asterisk on the label if the field is required', async () => {
-
     render(
       <FormWrapper>
         <RadioButtonGroupField label="test label" name="test" options={options} required />
@@ -129,7 +130,6 @@ describe('RadioButtonGroupField::', () => {
   });
 
   it('should change the state value when clicked on a different radio button', async () => {
-
     render(
       <FormWrapper initialValues={initialValues}>
         <RadioButtonGroupField name="test" options={options} />
@@ -148,7 +148,6 @@ describe('RadioButtonGroupField::', () => {
   });
 
   it('should disable all radio buttons when `disabled` is passed via props', async () => {
-
     render(
       <FormWrapper initialValues={initialValues}>
         <RadioButtonGroupField name="test" options={options} disabled />

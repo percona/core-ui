@@ -1,9 +1,4 @@
-import React, {
-  FC,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { cx } from '@emotion/css';
 import { useStyles, Icon } from '@grafana/ui';
 import { getStyles } from './Step.styles';
@@ -61,17 +56,16 @@ export const Step: FC<StepProps> = ({
         <div className={cx(styles.stepCircle, stepCircleStatusStyles)}>
           {status === StepStatus.done ? <Icon name="check" /> : number}
         </div>
-        <div className={styles.stepTitle}>
-          {title}
-        </div>
+        <div className={styles.stepTitle}>{title}</div>
       </div>
       <div
         className={cx(styles.stepContentWrapper, { [styles.stepVerticalLine]: !isLast })}
         data-testid="step-content"
       >
-        <div className={cx(styles.stepContentTransitionWrapper, {
-          [styles.stepContentTransitionCurrent(contentHeight)]: status === StepStatus.current,
-        })}
+        <div
+          className={cx(styles.stepContentTransitionWrapper, {
+            [styles.stepContentTransitionCurrent(contentHeight)]: status === StepStatus.current,
+          })}
         >
           <div ref={contentRef} className={cx(styles.stepContent)}>
             {children}

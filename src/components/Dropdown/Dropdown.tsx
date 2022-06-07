@@ -18,7 +18,7 @@ const popperConfig: Partial<PopperOptions> = {
     {
       name: 'preventOverflow',
       options: {
-				altAxis: true,
+        altAxis: true,
         padding: 12,
       },
     },
@@ -27,18 +27,12 @@ const popperConfig: Partial<PopperOptions> = {
 
 export interface DropdownProps {
   // TODO: improve this
-  toggle: React.ForwardRefExoticComponent<
-    React.RefAttributes<any> & React.HTMLAttributes<any>
-  >;
+  toggle: React.ForwardRefExoticComponent<React.RefAttributes<any> & React.HTMLAttributes<any>>;
   children: Array<React.ReactElement> | React.ReactElement;
   className?: string;
 }
 
-export const Dropdown: FC<DropdownProps> = React.memo(({
-  className,
-  children,
-  toggle: Toggle,
-}) => {
+export const Dropdown: FC<DropdownProps> = React.memo(({ className, children, toggle: Toggle }) => {
   const styles = useStyles2(getStyles);
 
   const [visible, setVisible] = useState(false);
@@ -50,9 +44,10 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   // TODO: find a way to improve this
-  const childrenArray = size > 1 ? children : React.Children.toArray(children) as any;
+  const childrenArray = size > 1 ? children : (React.Children.toArray(children) as any);
 
-  const menuItems = React.Children.map(childrenArray, (child, index) => React.cloneElement(child, {
+  const menuItems = React.Children.map(childrenArray, (child, index) =>
+    React.cloneElement(child, {
       ...child.props,
       onClick: () => {
         setActiveIndex(index);
@@ -70,10 +65,9 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
 
   const handleDocumentClick = (event: MouseEvent) => {
     if (
-      (toggleRef.current?.contains(event.target as Node) ||
-      popperRef.current?.contains(event.target as Node))
+      toggleRef.current?.contains(event.target as Node) ||
+      popperRef.current?.contains(event.target as Node)
     ) {
-
       return;
     }
 
@@ -99,12 +93,12 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
       const { code } = event;
 
       if (up.includes(code)) {
-        setActiveIndex((currentIndex) => currentIndex === 0 ? size - 1 : currentIndex - 1);
+        setActiveIndex((currentIndex) => (currentIndex === 0 ? size - 1 : currentIndex - 1));
         event.preventDefault();
       }
 
       if (down.includes(code)) {
-        setActiveIndex((currentIndex) => currentIndex === size - 1 ? 0 : currentIndex + 1);
+        setActiveIndex((currentIndex) => (currentIndex === size - 1 ? 0 : currentIndex + 1));
         event.preventDefault();
       }
 
@@ -113,9 +107,7 @@ export const Dropdown: FC<DropdownProps> = React.memo(({
       }
 
       if (code === 'Enter' && activeIndex !== -1) {
-        const menuItem: any = React.Children
-          .toArray(children)
-          .find((_, index) => index === activeIndex);
+        const menuItem: any = React.Children.toArray(children).find((_, index) => index === activeIndex);
 
         if (menuItem) {
           menuItem.props.onClick();

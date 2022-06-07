@@ -5,7 +5,7 @@ describe('validators :: email', () => {
   test('email validator should return undefined if the passed email is valid', () => {
     expect(email('test@example.org')).toBeUndefined();
     expect(email('someone@127.0.0.1')).toBeUndefined();
-    expect(email('!#$%&\'*+/=?^_`{|}~.-@com.com')).toBeUndefined();
+    expect(email("!#$%&'*+/=?^_`{|}~.-@com.com")).toBeUndefined();
     expect(email('te..st@example.com')).toBeUndefined();
   });
 

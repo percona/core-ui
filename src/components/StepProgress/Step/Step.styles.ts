@@ -2,9 +2,7 @@ import { css } from '@emotion/css';
 import { GrafanaTheme } from '@grafana/data';
 
 export const getStyles = (theme: GrafanaTheme) => {
-  const {
-    border, colors, palette, spacing, isLight,
-  } = theme;
+  const { border, colors, palette, spacing, isLight } = theme;
   const stepHeaderHoverBg = isLight ? palette.gray95 : colors.dropdownOptionHoverBg;
   const verticalLineColor = isLight ? palette.gray4 : palette.gray33;
 
@@ -71,7 +69,7 @@ export const getStyles = (theme: GrafanaTheme) => {
         border-left-color: ${verticalLineColor};
         border-left-width: ${border.width.sm};
         border-left-style: solid;
-        content: "";
+        content: '';
         height: 100%;
         left: ${spacing.xs};
         min-height: ${spacing.xl};

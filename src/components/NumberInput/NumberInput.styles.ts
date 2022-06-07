@@ -10,9 +10,7 @@ const arrow = css`
 `;
 
 export const getStyles = ({ v1 }: GrafanaTheme2) => {
-  const {
-    border, colors, palette, spacing, typography,
-  } = v1;
+  const { border, colors, palette, spacing, typography } = v1;
 
   const button = css`
     position: absolute;

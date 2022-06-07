@@ -2,9 +2,7 @@ import { css } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 
 export const getStyles = ({ v1 }: GrafanaTheme2) => {
-  const {
-    border, colors, palette, isDark, spacing, typography, height,
-  } = v1;
+  const { border, colors, palette, isDark, spacing, typography, height } = v1;
 
   const focusBoxShadow = isDark
     ? 'rgb(20, 22, 25) 0px 0px 0px 2px, rgb(31, 96, 196) 0px 0px 0px 4px'

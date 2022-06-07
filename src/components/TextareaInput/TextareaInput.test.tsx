@@ -5,7 +5,6 @@ import { TextareaInputField } from './TextareaInputField';
 
 describe('TextareaInputField::', () => {
   it('should render a textarea element', () => {
-
     render(
       <FormWrapper>
         <TextareaInputField name="test" />
@@ -78,7 +77,6 @@ describe('TextareaInputField::', () => {
   });
 
   it('should show no labels if none are passed to props', () => {
-
     render(
       <FormWrapper>
         <TextareaInputField name="test" />
@@ -89,7 +87,6 @@ describe('TextareaInputField::', () => {
   });
 
   it('should show a label if one is specified', () => {
-
     render(
       <FormWrapper>
         <TextareaInputField label="test label" name="test" />
@@ -100,7 +97,6 @@ describe('TextareaInputField::', () => {
   });
 
   it('should show an asterisk on the label if the field is required', () => {
-
     render(
       <FormWrapper>
         <TextareaInputField label="test label" name="test" required />
@@ -111,7 +107,6 @@ describe('TextareaInputField::', () => {
   });
 
   it('should not pass the required prop to the input if the field is required', () => {
-
     render(
       <FormWrapper>
         <TextareaInputField name="test" required />
@@ -122,7 +117,6 @@ describe('TextareaInputField::', () => {
   });
 
   it('should apply the passed class name to the inner textarea element', () => {
-
     render(
       <FormWrapper>
         <TextareaInputField name="test" className="testClass" />

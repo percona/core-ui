@@ -45,7 +45,7 @@ describe('SwitchField::', () => {
       </FormWrapper>,
     );
 
-    expect((screen.getByTestId('test-field-label').textContent)).toBe('test label');
+    expect(screen.getByTestId('test-field-label').textContent).toBe('test label');
   });
 
   it('should change the state value when clicked', async () => {

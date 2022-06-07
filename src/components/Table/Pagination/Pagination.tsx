@@ -17,7 +17,7 @@ export const Pagination: FC<PaginationProps> = ({
   onPageSizeChange = () => 0,
 }) => {
   const [activePageIndex, setActivePageIndex] = useState(initialPageIndex);
-  const pageArray = useMemo(() => Array.from({length: pageCount}, (_, i) => i), [pageCount]);
+  const pageArray = useMemo(() => Array.from({ length: pageCount }, (_, i) => i), [pageCount]);
   // We want to center our selected page, thus we need to know how many should be on the left
   const shownPages = getShownPages(pageArray, activePageIndex, pagesPerView);
   const leftItemNumber = getLeftItemNumber(pageCount, activePageIndex, pageSize);

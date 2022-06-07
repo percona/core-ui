@@ -5,7 +5,6 @@ import { TextInputField } from './TextInputField';
 
 describe('TextInputField::', () => {
   it('should render an input element of type text', async () => {
-
     render(
       <FormWrapper>
         <TextInputField name="test" />
@@ -88,7 +87,6 @@ describe('TextInputField::', () => {
   });
 
   it('should show a label if one is passed to props', () => {
-
     render(
       <FormWrapper>
         <TextInputField label="test label" name="test" />
@@ -99,7 +97,6 @@ describe('TextInputField::', () => {
   });
 
   it('should show an asterisk on the label if the field is required', () => {
-
     render(
       <FormWrapper>
         <TextInputField label="test label" name="test" required />
@@ -110,7 +107,6 @@ describe('TextInputField::', () => {
   });
 
   it('should not pass the required prop to the input if the field is required', () => {
-
     render(
       <FormWrapper>
         <TextInputField name="test" required />
@@ -121,9 +117,10 @@ describe('TextInputField::', () => {
   });
 
   it('should apply the passed class name to the inner input element', () => {
-
     render(
-      <FormWrapper><TextInputField name="test" className="testClass" /></FormWrapper>,
+      <FormWrapper>
+        <TextInputField name="test" className="testClass" />
+      </FormWrapper>,
     );
 
     expect(screen.getByRole('textbox').classList.contains('testClass'));

@@ -10,12 +10,8 @@ describe('StepProgress::', () => {
     {
       render: () => (
         <div>
-          <TextInputField
-            name="name"
-          />
-          <TextInputField
-            name="email"
-          />
+          <TextInputField name="name" />
+          <TextInputField name="email" />
         </div>
       ),
       fields: ['name', 'email'],
@@ -24,9 +20,7 @@ describe('StepProgress::', () => {
     {
       render: () => (
         <div>
-          <TextareaInputField
-            name="description"
-          />
+          <TextareaInputField name="description" />
           <LoaderButton type="submit" />
         </div>
       ),
@@ -45,13 +39,7 @@ describe('StepProgress::', () => {
   };
 
   it('renders steps correctly', async () => {
-
-    const { container } = render(
-      <StepProgress
-        steps={steps}
-        onSubmit={jest.fn()}
-      />,
-    );
+    const { container } = render(<StepProgress steps={steps} onSubmit={jest.fn()} />);
 
     // the component renders two inputs and one textarea, all of which have the role `textbox`
     expect(await screen.getAllByRole('textbox')).toHaveLength(3);
@@ -62,7 +50,6 @@ describe('StepProgress::', () => {
   });
 
   it('renders steps correctly with initial values', () => {
-
     render(
       <StepProgress
         steps={steps}
@@ -79,13 +66,7 @@ describe('StepProgress::', () => {
   });
 
   it('changes the current step on header click', async () => {
-
-    const { container } = render(
-      <StepProgress
-        steps={steps}
-        onSubmit={jest.fn()}
-      />,
-    );
+    const { container } = render(<StepProgress steps={steps} onSubmit={jest.fn()} />);
 
     expect(isCurrentStep(container, 'step-1')).toBeTruthy();
 

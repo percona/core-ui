@@ -21,14 +21,14 @@ const Template: ComponentStory<typeof CopyToClipboard> = (args) => {
           Test some text to Copy (p).
         </p>
         <p>
-          Test some text to Copy in p tag with using br tag<br/>Next string after br tag
+          Test some text to Copy in p tag with using br tag
+          <br />
+          Next string after br tag
         </p>
-          <p>
-            {'Test some text to Copy in p tag with using u000A unicode\u000ANext string after u000A'}
-          </p>
-          <div>Test some text to Copy (div)</div>
-        </div>
-       <CopyToClipboard {...args} textContainer={outputRef}/>
+        <p>{'Test some text to Copy in p tag with using u000A unicode\u000ANext string after u000A'}</p>
+        <div>Test some text to Copy (div)</div>
+      </div>
+      <CopyToClipboard {...args} textContainer={outputRef} />
     </div>
   );
 };

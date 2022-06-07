@@ -7,7 +7,8 @@ const DropdownToggle = forwardRef<HTMLButtonElement, React.HTMLAttributes<HTMLBu
     <button type="button" ref={ref} {...props}>
       Actions
     </button>
-));
+  ),
+);
 
 export default {
   title: 'Buttons/Dropdown',
@@ -16,12 +17,8 @@ export default {
 
 const Template: ComponentStory<typeof Dropdown> = (args) => (
   <Dropdown {...args}>
-    <span>
-      First
-    </span>
-    <span>
-      Second
-    </span>
+    <span>First</span>
+    <span>Second</span>
   </Dropdown>
 );
 
