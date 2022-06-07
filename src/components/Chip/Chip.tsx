@@ -20,16 +20,19 @@ export const Chip: FC<ChipProps> = ({ text, isRemovable = false, onRemove = () =
     setShow(false);
   };
 
-  return show ?
-    <div
-      data-testid="chip"
-      className={cx(styles.wrapper, className)}
-    >
+  return show ? (
+    <div data-testid="chip" className={cx(styles.wrapper, className)}>
       {text}
-      {
-        isRemovable &&
-          <Icon name='cross' width="8px" height="8px" data-testid="chip-remove" onClick={handleCloseClick} className={styles.removeIcon} />
-      }
+      {isRemovable && (
+        <Icon
+          name="cross"
+          width="8px"
+          height="8px"
+          data-testid="chip-remove"
+          onClick={handleCloseClick}
+          className={styles.removeIcon}
+        />
+      )}
     </div>
-  : null;
+  ) : null;
 };

@@ -1,8 +1,6 @@
  import React, { useCallback, useMemo } from 'react';
 import { cx } from '@emotion/css';
-import {
-  Field, FieldMetaState, FieldInputProps, UseFieldConfig,
-} from 'react-final-form';
+import { Field, FieldMetaState, FieldInputProps, UseFieldConfig } from 'react-final-form';
 import { Icon, IconName, useStyles2 } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
 import { Label } from '../Label';
@@ -52,12 +50,12 @@ export function RadioButtonGroupField({
 }: RadioButtonGroupFieldProps) {
   const handleOnChange = useCallback(
     (option: SelectableValue<string>, input) => () => {
-        if (option.disabled || disabled) {
-          return;
-        }
+      if (option.disabled || disabled) {
+        return;
+      }
 
-        input.onChange(option.value);
-      },
+      input.onChange(option.value);
+    },
     [disabled],
   );
   const styles = useStyles2(getStyles);
@@ -85,12 +83,7 @@ export function RadioButtonGroupField({
               tooltipIcon={tooltipIcon}
             />
             {/* this field is auxiliary, i.e. it helps address the validation, which is tricky otherwise */}
-            <input
-              id={inputId}
-              {...input}
-              data-testid={`${name}-radio-state`}
-              className={styles.input}
-            />
+            <input id={inputId} {...input} data-testid={`${name}-radio-state`} className={styles.input} />
             <div className={styles.buttonContainer}>
               {options.map((o) => (
                 <RadioButton
@@ -116,7 +109,6 @@ export function RadioButtonGroupField({
       }}
     </Field>
   );
-
 }
 
 RadioButtonGroupField.displayName = 'RadioButtonGroupField';

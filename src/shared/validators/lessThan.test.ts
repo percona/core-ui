@@ -11,7 +11,7 @@ describe('Validators:: lessThen', () => {
   });
 
   it('should return an error if the input is not a number or contains a value which is greater than 100', () => {
-    expect(lessThenValidator(5**2*4 as any)).toEqual(errorMessage);
+    expect(lessThenValidator((5 ** 2 * 4) as any)).toEqual(errorMessage);
     expect(lessThenValidator('1000')).toEqual(errorMessage);
     expect(lessThenValidator(true as any)).toEqual(errorMessage);
     expect(lessThenValidator(null as any)).toEqual(errorMessage);

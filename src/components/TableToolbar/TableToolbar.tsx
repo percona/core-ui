@@ -9,12 +9,7 @@ export const TableToolbar: FC<TableToolbarProps> = ({ actions, selectedItems }) 
 
   return (
     <div className={styles.wrapper}>
-      {actions.map(({
-        callback,
-        icon,
-        isBulkAction = false,
-        label,
-      }) => (
+      {actions.map(({ callback, icon, isBulkAction = false, label }) => (
         <TableToolbarButton
           key={`${icon}-${label}`}
           icon={icon}

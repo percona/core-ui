@@ -2,9 +2,7 @@ import { css } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 
 export const getStyles = ({ v1 }: GrafanaTheme2) => {
-  const {
-    colors, palette, spacing, typography,
-  } = v1;
+  const { colors, palette, spacing, typography } = v1;
 
   return {
     errorMessage: css`

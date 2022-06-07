@@ -2,7 +2,6 @@ import { css } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { RadioButtonSize } from './RadioButton.types';
 
-
 export interface StyleProps {
   size?: RadioButtonSize;
   theme: GrafanaTheme2;

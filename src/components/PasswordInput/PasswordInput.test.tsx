@@ -5,7 +5,6 @@ import { PasswordInputField } from './PasswordInputField';
 
 describe('PasswordInputField::', () => {
   it('should render an input element of type password', async () => {
-
     render(
       <FormWrapper>
         <PasswordInputField name="test" />
@@ -81,7 +80,6 @@ describe('PasswordInputField::', () => {
   });
 
   it('should show no labels if none are specified', async () => {
-
     render(
       <FormWrapper>
         <PasswordInputField name="test" />
@@ -92,7 +90,6 @@ describe('PasswordInputField::', () => {
   });
 
   it('should show a label if one is specified', async () => {
-
     render(
       <FormWrapper>
         <PasswordInputField label="test label" name="test" />
@@ -104,7 +101,6 @@ describe('PasswordInputField::', () => {
   });
 
   it('should show an asterisk on the label if the field is required', async () => {
-
     render(
       <FormWrapper>
         <PasswordInputField label="test label" name="test" required />
@@ -116,7 +112,6 @@ describe('PasswordInputField::', () => {
   });
 
   it('should not pass the required prop to the input if the field is required', async () => {
-
     render(
       <FormWrapper>
         <PasswordInputField name="test" required />
@@ -127,7 +122,6 @@ describe('PasswordInputField::', () => {
   });
 
   it('should apply the passed class name to the inner input element', () => {
-
     const { container } = render(
       <FormWrapper>
         <PasswordInputField name="test" className="testClass" />
@@ -159,7 +153,7 @@ describe('PasswordInputField::', () => {
 
     expect(input).toHaveAttribute('value', 'password');
 
-    fireEvent.change(input, { target : { value: '1' }});
+    fireEvent.change(input, { target: { value: '1' } });
     fireEvent.blur(input);
 
     expect(input).toHaveAttribute('autocomplete', 'off');

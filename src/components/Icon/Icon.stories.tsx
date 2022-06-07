@@ -8,11 +8,13 @@ export default {
   component: Icon,
   decorators: [
     (Story) => (
-      <span className={css`
-        svg {
-          stroke: currentColor;
-        }
-      `}>
+      <span
+        className={css`
+          svg {
+            stroke: currentColor;
+          }
+        `}
+      >
         <Story />
       </span>
     ),

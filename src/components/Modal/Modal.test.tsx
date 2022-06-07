@@ -15,7 +15,7 @@ describe('Modal window::', () => {
     expect(await screen.findByTestId('modal-content')).toBeInTheDocument();
   });
 
-  it('should call onClose callback on close button click', async() => {
+  it('should call onClose callback on close button click', async () => {
     const onClose = jest.fn();
 
     render(<Modal onClose={onClose} isVisible title="test" />);

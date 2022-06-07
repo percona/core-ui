@@ -14,7 +14,12 @@ const TestComponent: FC = () => {
   return (
     <>
       <span data-testid="test-span">{`${pageSize}`}</span>
-      <input data-testid="test-input" type="number" value={`${pageSize}`} onChange={(e) => setPageSize(parseInt(e.target.value, 10))} />
+      <input
+        data-testid="test-input"
+        type="number"
+        value={`${pageSize}`}
+        onChange={(e) => setPageSize(parseInt(e.target.value, 10))}
+      />
     </>
   );
 };

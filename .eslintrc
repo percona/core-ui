@@ -1,5 +1,5 @@
 {
-  "extends": ["react-app", "prettier"],
+  "extends": ["react-app", "airbnb", "prettier"],
   "env": {
     "jest/globals": true,
     "browser": true
@@ -15,13 +15,11 @@
       }
     }
   },
-  "plugins": ["react-hooks", "jest", "eslint-plugin-no-inline-styles"],
+  "plugins": ["react-hooks", "jest", "eslint-plugin-no-inline-styles", "prettier"],
   "rules": {
+    "prettier/prettier": "error", 
     "no-console": ["warn", {"allow": ["warn", "error"]}],
-    "semi": [
-      "error",
-      "always"
-    ],
+    "semi": ["error", "always"],
     "comma-dangle": [
       "error",
       {
@@ -55,8 +53,7 @@
         "ignoreUrls": true 
       }
     ],
-    "prettier/prettier": ["off"],
-    "quotes": ["error", "single"],
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "import/extensions": ["off"],
     "import/no-extraneous-dependencies": [
       "error",
@@ -76,7 +73,6 @@
     "jsx-a11y/label-has-associated-control": ["error"],
     "no-dupe-args": ["error"],
     "no-new-object": ["error"],
-    // "no-magic-numbers": ["error"],
     "padding-line-between-statements": [
       "error",
       { "blankLine": "always", "prev": "*", "next": "return" },
@@ -88,11 +84,21 @@
       { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
       { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] }
     ],
-    // "no-inline-styles/no-inline-styles": ["error"],
+    "no-inline-styles/no-inline-styles": ["warn"],
     "no-shadow": ["error"],
     "react/no-array-index-key": ["error"],
-    "no-unused-expressions": ["error"]
+    "no-unused-expressions": ["error"],
+    "arrow-parens": ["error"],
+    "eol-last": ["error"]
   },
+  "overrides": [
+    {
+      "files": ["*.stories.tsx"],
+      "rules": {
+        "no-inline-styles/no-inline-styles": "off"
+      }
+    }
+  ],
   "globals": {
     "React": true,
     "JSX": true

@@ -37,7 +37,7 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, p
   const { styles: popperStyles, attributes: popperAttributes } = usePopper(
     toggleRef.current,
     popperRef.current,
-    {...defaultPopperConfig, ...popperConfig},
+    { ...defaultPopperConfig, ...popperConfig },
   );
 
   const onClipboardCopy = () => {
@@ -46,11 +46,11 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, p
   };
 
   const onClipboardError = () => {
-    setTooltipText('Couldn\'t copy text to clipboard');
+    setTooltipText("Couldn't copy text to clipboard");
     setVisible(true);
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     const timer = setTimeout(() => visible && setVisible(false), 2000);
 
     return () => {
@@ -60,7 +60,7 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, p
 
   return (
     <>
-      <div className={styles.clipboardButtonContainer} ref={toggleRef} onClick={(e) => e.preventDefault()} >
+      <div className={styles.clipboardButtonContainer} ref={toggleRef} onClick={(e) => e.preventDefault()}>
         <ClipboardButton
           {...rest}
           className={styles.clipboardButton}
@@ -68,7 +68,8 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, p
           onClipboardError={onClipboardError}
           getText={copyToClipboard}
           data-testid="clipboard-button"
-          icon="copy"/>
+          icon="copy"
+        />
       </div>
       <div
         ref={popperRef}
@@ -78,11 +79,7 @@ export const CopyToClipboard: FC<ClipboardIconButtonProps> = ({ textContainer, p
         data-testid="tooltip-container"
       >
         {visible ? (
-          <div
-            className={styles.tooltipText}
-            style={popperStyles.offset}
-            data-testid="tooltip"
-          >
+          <div className={styles.tooltipText} style={popperStyles.offset} data-testid="tooltip">
             {tooltipText}
           </div>
         ) : null}

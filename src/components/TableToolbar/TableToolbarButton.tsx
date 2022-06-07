@@ -5,12 +5,7 @@ import { Icon } from '../Icon';
 import { getStyles } from './TableToolbarButton.styles';
 import { TableToolbarButtonProps } from './types';
 
-export const TableToolbarButton: FC<TableToolbarButtonProps> = ({
-  className,
-  icon,
-  label,
-  ...props
-}) => {
+export const TableToolbarButton: FC<TableToolbarButtonProps> = ({ className, icon, label, ...props }) => {
   const styles = useStyles2(getStyles);
 
   return (
