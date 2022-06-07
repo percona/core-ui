@@ -24,7 +24,7 @@ jobs:
         uses: percona-platform/checkout@v2
 
       - name: Install Node.js ${{ matrix.node-version }}
-        uses: percona-platform/setup-node@v2
+        uses: percona-platform/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
