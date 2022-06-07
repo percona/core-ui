@@ -1,4 +1,4 @@
-import {GetSelectValueFunction, Validator, VResult} from './validator.types';
+import { GetSelectValueFunction, Validator, VResult } from './validator.types';
 
 export const compose = (validators: Validator[], getValue?: GetSelectValueFunction<any>) => (
   value: any,
@@ -9,7 +9,7 @@ export const compose = (validators: Validator[], getValue?: GetSelectValueFuncti
 
   // eslint-disable-next-line no-restricted-syntax
   for (const validator of validators) {
-    if (getValue){
+    if (getValue) {
       result = validator(getValue(value), values, meta);
     } else {
       result = validator(value, values, meta);

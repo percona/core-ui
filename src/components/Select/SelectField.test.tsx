@@ -1,7 +1,7 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor} from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormWrapper, validators } from '../../shared';
-import {SelectField} from './SelectField';
+import { SelectField } from './SelectField';
 
 const { email, minLength } = validators;
 
@@ -24,7 +24,7 @@ describe('SelectField::', () => {
   it('should render a field container with input', async () => {
     const { container } = render(
       <FormWrapper>
-        <SelectField name="test"/>
+        <SelectField name="test" />
       </FormWrapper>,
     );
 
@@ -35,7 +35,7 @@ describe('SelectField::', () => {
   it('should render a label', () => {
     render(
       <FormWrapper>
-        <SelectField name="test" label="test label"/>
+        <SelectField name="test" label="test label" />
       </FormWrapper>,
     );
 
@@ -46,14 +46,22 @@ describe('SelectField::', () => {
   it('should react on multiple validators', async () => {
     render(
       <FormWrapper>
-        <SelectField name="test" label="test-label" validators={[email, minLength(13)]} options={optionsTemplate} isOpen/>
+        <SelectField
+          name="test"
+          label="test-label"
+          validators={[email, minLength(13)]}
+          options={optionsTemplate}
+          isOpen
+        />
       </FormWrapper>,
     );
 
-    const menuOptions = screen.getAllByLabelText( 'Select option');
+    const menuOptions = screen.getAllByLabelText('Select option');
 
     await waitFor(() => fireEvent.click(menuOptions[0]));
-    expect(screen.getByTestId('test-field-error-message')).toHaveTextContent('Must contain at least 13 characters');
+    expect(screen.getByTestId('test-field-error-message')).toHaveTextContent(
+      'Must contain at least 13 characters',
+    );
     await waitFor(() => fireEvent.click(menuOptions[1]));
     expect(screen.getByTestId('test-field-error-message')).toHaveTextContent('Invalid email address');
     await waitFor(() => fireEvent.click(menuOptions[2]));
@@ -63,13 +71,21 @@ describe('SelectField::', () => {
   it('should show an error below the input', async () => {
     render(
       <FormWrapper>
-        <SelectField name="test" label="test-label" validators={[minLength(13)]} options={optionsTemplate} isOpen/>
+        <SelectField
+          name="test"
+          label="test-label"
+          validators={[minLength(13)]}
+          options={optionsTemplate}
+          isOpen
+        />
       </FormWrapper>,
     );
 
-    const menuOptions = screen.getAllByLabelText( 'Select option');
+    const menuOptions = screen.getAllByLabelText('Select option');
 
     await waitFor(() => fireEvent.click(menuOptions[0]));
-    expect(screen.getByTestId('test-field-error-message')).toHaveTextContent('Must contain at least 13 characters');
+    expect(screen.getByTestId('test-field-error-message')).toHaveTextContent(
+      'Must contain at least 13 characters',
+    );
   });
 });

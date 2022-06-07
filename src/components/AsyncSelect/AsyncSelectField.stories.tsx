@@ -1,9 +1,9 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Form, FormRenderProps } from 'react-final-form';
 import { AsyncSelectField } from './AsyncSelectField';
-import {Form, FormRenderProps} from 'react-final-form';
 import * as validators from '../../shared/validators';
-import {loadAsyncOptions} from '../../shared/utils/loadAsyncOptions';
+import { loadAsyncOptions } from '../../shared/utils/loadAsyncOptions';
 
 const { email, minLength, maxLength } = validators;
 
@@ -24,7 +24,7 @@ export default {
 } as ComponentMeta<typeof AsyncSelectField>;
 
 const Template: ComponentStory<typeof AsyncSelectField> = (args) => (
-  <AsyncSelectField loadOptions={loadAsyncOptions} {...args}/>
+  <AsyncSelectField loadOptions={loadAsyncOptions} {...args} />
 );
 
 export const Basic = Template.bind({});

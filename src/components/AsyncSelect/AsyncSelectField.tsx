@@ -1,30 +1,31 @@
-import React, {FC, useMemo} from 'react';
-import {AsyncSelect, SelectAsyncProps, useStyles2, ActionMeta, SelectCommonProps} from '@grafana/ui';
-import {Label} from '../Label';
-import {LabeledFieldProps} from '../../shared/types';
-import {
-  Field, FieldInputProps, UseFieldConfig,
-} from 'react-final-form';
-import {compose, GetSelectValueFunction, Validator} from '../../shared/validators';
-import {cx} from '@emotion/css';
-import {getStyles} from './AsyncSelectField.styles';
-import {SelectableValue} from '@grafana/data';
+import React, { FC, useMemo } from 'react';
+import { AsyncSelect, SelectAsyncProps, useStyles2, ActionMeta, SelectCommonProps } from '@grafana/ui';
+import { Field, FieldInputProps, UseFieldConfig } from 'react-final-form';
+import { cx } from '@emotion/css';
+import { SelectableValue } from '@grafana/data';
+import { Label } from '../Label';
+import { LabeledFieldProps } from '../../shared/types';
+import { compose, GetSelectValueFunction, Validator } from '../../shared/validators';
+import { getStyles } from './AsyncSelectField.styles';
 
 interface AsyncSelectProps<T> extends Omit<SelectCommonProps<T>, 'options'>, SelectAsyncProps<T> {
   value?: SelectableValue<T> | null;
   invalid?: boolean;
 }
 
-export interface AsyncSelectFieldProps<T> extends Omit<UseFieldConfig<T>,'defaultValue'| 'value'>, LabeledFieldProps, Omit<AsyncSelectProps<T>,'onChange'>
-{
+export interface AsyncSelectFieldProps<T>
+  extends Omit<UseFieldConfig<T>, 'defaultValue' | 'value'>,
+    LabeledFieldProps,
+    Omit<AsyncSelectProps<T>, 'onChange'> {
   className?: string;
   validators?: Validator[];
   fieldClassName?: string;
   showErrorOnBlur?: boolean;
-  onChange?:(value: SelectableValue<T>, actionMeta: ActionMeta) => {} | void;
-  onChangeGenerator?: (input:  FieldInputProps<any, HTMLElement>) =>
-    ((value: SelectableValue<T>, actionMeta: ActionMeta) => {} | void);
-  getValueForValidators?: GetSelectValueFunction<SelectableValue<T> | null>
+  onChange?: (value: SelectableValue<T>, actionMeta: ActionMeta) => {} | void;
+  onChangeGenerator?: (
+    input: FieldInputProps<any, HTMLElement>,
+  ) => (value: SelectableValue<T>, actionMeta: ActionMeta) => {} | void;
+  getValueForValidators?: GetSelectValueFunction<SelectableValue<T> | null>;
 }
 
 export const AsyncSelectField: FC<AsyncSelectFieldProps<any>> = ({
@@ -49,10 +50,12 @@ export const AsyncSelectField: FC<AsyncSelectFieldProps<any>> = ({
 }) => {
   const styles = useStyles2(getStyles);
 
-  const getValue = useMemo(() => getValueForValidators? getValueForValidators:
-    (incomingValue: any) => incomingValue?.value, [getValueForValidators]);
+  const getValue = useMemo(() => getValueForValidators || ((incomingValue: any) => incomingValue?.value), [
+    getValueForValidators,
+  ]);
   const validate = useMemo(() => (Array.isArray(validators) ? compose(validators, getValue) : undefined), [
-    validators, getValue,
+    validators,
+    getValue,
   ]);
 
   return (
@@ -62,7 +65,7 @@ export const AsyncSelectField: FC<AsyncSelectFieldProps<any>> = ({
 
         return (
           <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
-            {label &&
+            {label && (
               <Label
                 name={name}
                 label={label}
@@ -75,15 +78,15 @@ export const AsyncSelectField: FC<AsyncSelectFieldProps<any>> = ({
                 tooltipLinkTarget={tooltipLinkTarget}
                 tooltipIcon={tooltipIcon}
               />
-            }
+            )}
             <AsyncSelect
               {...fieldConfig}
               className={cx({ invalid: !!validationError }, className)}
               {...input}
-              onChange={(value, actionMeta)=>{
+              onChange={(value, actionMeta) => {
                 if (onChangeGenerator) {
                   onChangeGenerator(input);
-                } else if (onChange){
+                } else if (onChange) {
                   onChange(value, actionMeta);
                 }
 

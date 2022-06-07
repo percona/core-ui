@@ -1,7 +1,7 @@
-import {SelectableValue} from '@grafana/data';
+import { SelectableValue } from '@grafana/data';
 
 export const generateOptions = () => {
-  const values =  {
+  const values = {
     'tes@mail.ru': 'tes@mail.ru (minLength error)',
     'test@gmailcom': 'test@gmailcom (wrong email)',
     'toolongtest@gmail.com': 'toolongtest@gmail.com (maxLength error)',

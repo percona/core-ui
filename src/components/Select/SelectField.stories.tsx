@@ -1,12 +1,11 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Form, FormRenderProps } from 'react-final-form';
 import { SelectField } from './SelectField';
-import {Form, FormRenderProps} from 'react-final-form';
 import * as validators from '../../shared/validators';
-import {generateOptions} from '../../__mocks__/mockAsyncSelectOptions';
+import { generateOptions } from '../../__mocks__/mockAsyncSelectOptions';
 
-const {minLength, maxLength, email } = validators;
-
+const { minLength, maxLength, email } = validators;
 
 export default {
   title: 'Form Fields/SelectField',
@@ -24,9 +23,7 @@ export default {
   ],
 } as ComponentMeta<typeof SelectField>;
 
-const Template: ComponentStory<typeof SelectField> = (args) => (
-  <SelectField {...args} />
-);
+const Template: ComponentStory<typeof SelectField> = (args) => <SelectField {...args} />;
 
 export const Basic = Template.bind({});
 Basic.args = {
@@ -47,4 +44,3 @@ WithValidators.args = {
   validators: [minLength(13), email, maxLength(15)],
   options: generateOptions(),
 };
-
