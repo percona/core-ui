@@ -4,4 +4,4 @@ export type AvailableIcons = 'plusSquare' | 'minusSquare' | 'selectedSquare' | '
 
 export type Icons = {
   [I in AvailableIcons]: FC<React.SVGProps<SVGSVGElement>>;
-}
+};

@@ -1,16 +1,9 @@
 import React, { FC } from 'react';
 import { AvailableIcons, Icons } from './types';
-
-import {
-  MinusSquare,
-  PlusSquare,
-  EnabledSquare,
-  DisabledSquare,
-  Cross,
-} from '../../shared/icons';
+import { MinusSquare, PlusSquare, EnabledSquare, DisabledSquare, Cross } from '../../shared/icons';
 
 // TODO: improve this mapping
-const icons: Icons  = {
+const icons: Icons = {
   plusSquare: PlusSquare,
   minusSquare: MinusSquare,
   selectedSquare: EnabledSquare,
@@ -18,7 +11,7 @@ const icons: Icons  = {
   cross: Cross,
 };
 
-export interface IconProps extends React.SVGProps<SVGSVGElement>{
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: AvailableIcons;
 }
 

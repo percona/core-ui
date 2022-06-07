@@ -4,7 +4,6 @@ import { TableToolbar } from './TableToolbar';
 
 describe('TableToolbar::', () => {
   it('should render an input element of type number and two buttons - v1', async () => {
-
     render(
       <TableToolbar
         actions={[
@@ -23,7 +22,6 @@ describe('TableToolbar::', () => {
   });
 
   it('should render an input element of type number and two buttons - v2', async () => {
-
     render(
       <TableToolbar
         actions={[
@@ -42,12 +40,14 @@ describe('TableToolbar::', () => {
   });
 
   it('should render an input element of type number and two buttons - v3', async () => {
-
     render(
-      <TableToolbar actions={[
-        { callback: jest.fn(), label: 'test1', icon: 'plusSquare' },
-        { callback: jest.fn(), label: 'test2', icon: 'plusSquare', isBulkAction: true },
-      ]} selectedItems={['a', 'b']} />,
+      <TableToolbar
+        actions={[
+          { callback: jest.fn(), label: 'test1', icon: 'plusSquare' },
+          { callback: jest.fn(), label: 'test2', icon: 'plusSquare', isBulkAction: true },
+        ]}
+        selectedItems={['a', 'b']}
+      />,
     );
 
     const buttons = await screen.getAllByRole('button');

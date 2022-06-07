@@ -22,8 +22,10 @@ export const Label: FC<LabeledFieldProps> = ({
       <label
         className={cx(styles.label, labelClassName)}
         htmlFor={inputId}
-        data-testid={`${name}-field-label`}>
-          {label}{required ? ' *' : ''}
+        data-testid={`${name}-field-label`}
+      >
+        {label}
+        {required ? ' *' : ''}
       </label>
       {tooltipText && <LinkTooltip tooltipText={tooltipText} {...linkTooltipProps} />}
     </div>

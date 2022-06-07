@@ -14,37 +14,37 @@ export default {
 const Template: ComponentStory<typeof StepProgress> = (args) => <StepProgress {...args} />;
 
 const steps = [
-    {
-      title: 'First step',
-      render: () => (
-        <div>
-          <TextInputField label="Name (required)" name="name" validators={[required]} />
-          <TextInputField label="Email (required)" name="email" validators={[email, required]} />
-        </div>
-      ),
-      fields: ['name', 'email'],
-      dataQa: 'step-1',
-    },
-    {
-      render: () => (
-        <div>
-          <TextInputField label="Details (not required)" name="details" />
-        </div>
-      ),
-      fields: ['details'],
-      dataQa: 'step-2',
-    },
-    {
-      title: 'Final Step',
-      render: () => (
-        <div>
-          <TextInputField label="Description (required)" name="description" validators={[required]} />
-          <LoaderButton type="submit">Submit</LoaderButton>
-        </div>
-      ),
-      fields: ['description'],
-      dataQa: 'step-2',
-    },
+  {
+    title: 'First step',
+    render: () => (
+      <div>
+        <TextInputField label="Name (required)" name="name" validators={[required]} />
+        <TextInputField label="Email (required)" name="email" validators={[email, required]} />
+      </div>
+    ),
+    fields: ['name', 'email'],
+    dataQa: 'step-1',
+  },
+  {
+    render: () => (
+      <div>
+        <TextInputField label="Details (not required)" name="details" />
+      </div>
+    ),
+    fields: ['details'],
+    dataQa: 'step-2',
+  },
+  {
+    title: 'Final Step',
+    render: () => (
+      <div>
+        <TextInputField label="Description (required)" name="description" validators={[required]} />
+        <LoaderButton type="submit">Submit</LoaderButton>
+      </div>
+    ),
+    fields: ['description'],
+    dataQa: 'step-2',
+  },
 ];
 
 export const Basic = Template.bind({});

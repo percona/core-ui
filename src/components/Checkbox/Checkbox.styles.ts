@@ -3,7 +3,7 @@ import { css } from '@emotion/css';
 
 export const getStyles = (theme: GrafanaTheme2) => {
   const { colors: v2Colors } = theme;
-  const {  colors, spacing, border, typography, palette } = theme.v1;
+  const { colors, spacing, border, typography, palette } = theme.v1;
   const checkboxSize = '16px';
 
   return {

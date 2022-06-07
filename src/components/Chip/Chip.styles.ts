@@ -1,7 +1,7 @@
 import { GrafanaTheme2 } from '@grafana/data';
 import { css } from '@emotion/css';
 
-export const getStyles = ({ v1: { height, spacing, colors } } : GrafanaTheme2) => ({
+export const getStyles = ({ v1: { height, spacing, colors } }: GrafanaTheme2) => ({
   wrapper: css`
     min-height: ${height.sm}px;
     color: ${colors.text};
@@ -12,7 +12,7 @@ export const getStyles = ({ v1: { height, spacing, colors } } : GrafanaTheme2) =
     padding: 0 ${spacing.sm};
     cursor: pointer;
     background-color: ${colors.bg2};
-    transition: all .1s linear;
+    transition: all 0.1s linear;
 
     &:hover {
       background-color: ${colors.bg3};

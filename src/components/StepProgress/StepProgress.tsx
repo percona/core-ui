@@ -26,31 +26,24 @@ const getStepStatus = (
   return StepStatus.todo;
 };
 
-export const StepProgress: FC<StepProgressProps> = ({
-  steps,
-  initialValues,
-  onSubmit,
-}) => {
+export const StepProgress: FC<StepProgressProps> = ({ steps, initialValues, onSubmit }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [stepsVisited, setStepsVisited] = useState([currentStep]);
-  const onClick = useCallback((index: number) => () => {
-    setCurrentStep(index);
-    setStepsVisited([...stepsVisited, index]);
-  }, [stepsVisited]);
+  const onClick = useCallback(
+    (index: number) => () => {
+      setCurrentStep(index);
+      setStepsVisited([...stepsVisited, index]);
+    },
+    [stepsVisited],
+  );
 
   return (
     <Form
       initialValues={initialValues}
       onSubmit={onSubmit}
       render={({ form, handleSubmit, ...props }: FormRenderProps) => (
-        <form
-          onSubmit={handleSubmit}
-          className={styles.stepProgressWrapper}
-          data-testid="step-progress"
-        >
-          {steps.map(({
-            render, title, fields, dataQa,
-          }, index) => (
+        <form onSubmit={handleSubmit} className={styles.stepProgressWrapper} data-testid="step-progress">
+          {steps.map(({ render, title, fields, dataQa }, index) => (
             <Step
               // TODO: fix this line
               // eslint-disable-next-line react/no-array-index-key

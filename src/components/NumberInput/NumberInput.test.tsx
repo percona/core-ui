@@ -182,10 +182,12 @@ describe('NumberInputField::', () => {
 
     expect(input).toHaveAttribute('value', '100');
 
-    fireEvent.change(input, { target : { value: '1' }});
+    fireEvent.change(input, { target: { value: '1' } });
     fireEvent.blur(input);
 
-    expect(await screen.getByTestId('test-field-error-message')).toHaveTextContent('Must be a number greater than 100');
+    expect(await screen.getByTestId('test-field-error-message')).toHaveTextContent(
+      'Must be a number greater than 100',
+    );
     expect(input).toHaveAttribute('autocomplete', 'off');
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(input).toHaveAttribute('title', title);

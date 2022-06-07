@@ -15,11 +15,11 @@ export default {
   decorators: [
     (Story) => (
       <Form onSubmit={() => {}}>
-      {({ handleSubmit }: FormRenderProps) => (
-        <form style={{ width: '100%', maxWidth: 400 }} onSubmit={handleSubmit}>
-          <Story />
-        </form>
-      )}
+        {({ handleSubmit }: FormRenderProps) => (
+          <form style={{ width: '100%', maxWidth: 400 }} onSubmit={handleSubmit}>
+            <Story />
+          </form>
+        )}
       </Form>
     ),
   ],
