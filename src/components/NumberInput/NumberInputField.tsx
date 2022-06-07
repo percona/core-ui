@@ -23,26 +23,27 @@ interface NumberFieldRenderProps {
   meta: FieldMetaState<number>;
 }
 
-export const NumberInputField: FC<NumberInputFieldProps> = React.memo(({
-  className,
-  disabled = false,
-  fieldClassName,
-  inputProps,
-  label,
-  name,
-  placeholder,
-  required = false,
-  showErrorOnBlur = false,
-  showErrorOnRender = false,
-  validators,
-  inputId = `input-${name}-id`,
-  tooltipText = '',
-  tooltipLink,
-  tooltipLinkText,
-  tooltipIcon,
-  tooltipDataTestId,
-  tooltipLinkTarget,
-  ...fieldConfig
+export const NumberInputField: FC<NumberInputFieldProps> = React.memo(
+  ({
+    className,
+    disabled = false,
+    fieldClassName,
+    inputProps,
+    label,
+    name,
+    placeholder,
+    required = false,
+    showErrorOnBlur = false,
+    showErrorOnRender = false,
+    validators,
+    inputId = `input-${name}-id`,
+    tooltipText = '',
+    tooltipLink,
+    tooltipLinkText,
+    tooltipIcon,
+    tooltipDataTestId,
+    tooltipLinkTarget,
+    ...fieldConfig
   }) => {
     const styles = useStyles2(getStyles);
     const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
