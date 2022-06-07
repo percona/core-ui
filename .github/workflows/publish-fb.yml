@@ -12,7 +12,7 @@ jobs:
       # github.head_ref is only available in pull requests, not workflows
       BRANCH_NAME: ${{ github.head_ref || github.ref }}
     steps:
-      - uses: percona-platform/checkout@v2
+      - uses: percona-platform/checkout@v3
         with:
           ref: "$BRANCH_NAME"
 

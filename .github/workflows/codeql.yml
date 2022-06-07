@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: percona-platform/checkout@v2
+        uses: percona-platform/checkout@v3
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1

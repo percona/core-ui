@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: percona-platform/checkout@v2
+      - uses: percona-platform/checkout@v3
 
       - uses: percona-platform/setup-node@v2
         with:
