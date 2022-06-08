@@ -131,4 +131,20 @@ describe('ChipAreaInputField::', () => {
     expect(screen.queryAllByTestId('chip')[0]).toHaveTextContent('Tag1');
     expect(screen.queryAllByTestId('chip')[1]).toHaveTextContent('Tag3');
   });
+
+  it('should show validation errors on render if specified', async () => {
+    const validatorOne = jest.fn();
+    const validatorTwo = jest.fn().mockReturnValue('some error');
+
+    render(
+      <FormWrapper>
+        <ChipAreaInputField showErrorOnRender name="test" validators={[validatorOne, validatorTwo]} />
+      </FormWrapper>,
+    );
+
+    expect(validatorOne).toBeCalledTimes(1);
+    expect(validatorTwo).toBeCalledTimes(1);
+
+    expect(await screen.queryByText('some error')).toBeInTheDocument();
+  });
 });
