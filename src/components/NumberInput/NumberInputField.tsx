@@ -14,6 +14,7 @@ export interface NumberInputFieldProps extends UseFieldConfig<number>, LabeledFi
   inputProps?: FieldInputAttrs;
   placeholder?: string;
   showErrorOnBlur?: boolean;
+  showErrorOnRender?: boolean;
   validators?: Validator[];
 }
 
@@ -33,6 +34,7 @@ export const NumberInputField: FC<NumberInputFieldProps> = React.memo(
     placeholder,
     required = false,
     showErrorOnBlur = false,
+    showErrorOnRender = false,
     validators,
     inputId = `input-${name}-id`,
     tooltipText = '',
@@ -77,7 +79,9 @@ export const NumberInputField: FC<NumberInputFieldProps> = React.memo(
     return (
       <Field {...fieldConfig} type="number" name={name} validate={validate}>
         {({ input, meta }: NumberFieldRenderProps) => {
-          const validationError = ((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error;
+          const validationError =
+            (((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error) ||
+            (showErrorOnRender && meta.error);
 
           return (
             <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
