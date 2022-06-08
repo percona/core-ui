@@ -61,7 +61,7 @@ export const SelectField: FC<SelectFieldProps<any>> = ({
 
         return (
           <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
-            {label && (
+            {!!label && (
               <Label
                 name={name}
                 label={label}

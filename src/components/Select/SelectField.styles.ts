@@ -1,9 +1,7 @@
 import { css } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 
-export const getStyles = ({ v1 }: GrafanaTheme2) => {
-  const { spacing, palette, typography, colors } = v1;
-
+export const getStyles = ({ v1: { spacing, palette, typography, colors } }: GrafanaTheme2) => {
   return {
     field: css`
       &:not(:last-child) {

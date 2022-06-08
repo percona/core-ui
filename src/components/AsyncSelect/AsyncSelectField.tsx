@@ -65,7 +65,7 @@ export const AsyncSelectField: FC<AsyncSelectFieldProps<any>> = ({
 
         return (
           <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
-            {label && (
+            {!!label && (
               <Label
                 name={name}
                 label={label}
@@ -102,5 +102,3 @@ export const AsyncSelectField: FC<AsyncSelectFieldProps<any>> = ({
     </Field>
   );
 };
-
-// className={cx({ invalid: !!validationError }, className)}

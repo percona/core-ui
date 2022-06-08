@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { FormWrapper, validators } from '../../shared';
 import { SelectField } from './SelectField';
 
@@ -58,13 +58,13 @@ describe('SelectField::', () => {
 
     const menuOptions = screen.getAllByLabelText('Select option');
 
-    await waitFor(() => fireEvent.click(menuOptions[0]));
+    fireEvent.click(menuOptions[0]);
     expect(screen.getByTestId('test-field-error-message')).toHaveTextContent(
       'Must contain at least 13 characters',
     );
-    await waitFor(() => fireEvent.click(menuOptions[1]));
+    fireEvent.click(menuOptions[1]);
     expect(screen.getByTestId('test-field-error-message')).toHaveTextContent('Invalid email address');
-    await waitFor(() => fireEvent.click(menuOptions[2]));
+    fireEvent.click(menuOptions[2]);
     expect(screen.getByTestId('test-field-error-message')).toHaveTextContent('');
   });
 
@@ -83,7 +83,7 @@ describe('SelectField::', () => {
 
     const menuOptions = screen.getAllByLabelText('Select option');
 
-    await waitFor(() => fireEvent.click(menuOptions[0]));
+    fireEvent.click(menuOptions[0]);
     expect(screen.getByTestId('test-field-error-message')).toHaveTextContent(
       'Must contain at least 13 characters',
     );

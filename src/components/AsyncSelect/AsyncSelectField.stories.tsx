@@ -2,10 +2,8 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Form, FormRenderProps } from 'react-final-form';
 import { AsyncSelectField } from './AsyncSelectField';
-import * as validators from '../../shared/validators';
+import { email, minLength, maxLength } from '../../shared/validators';
 import { loadAsyncOptions } from '../../shared/utils/loadAsyncOptions';
-
-const { email, minLength, maxLength } = validators;
 
 export default {
   title: 'Form Fields/AsyncSelectField',
