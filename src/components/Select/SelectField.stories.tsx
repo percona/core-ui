@@ -2,10 +2,8 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Form, FormRenderProps } from 'react-final-form';
 import { SelectField } from './SelectField';
-import * as validators from '../../shared/validators';
+import { minLength, maxLength, email } from '../../shared/validators';
 import { generateOptions } from '../../__mocks__/mockAsyncSelectOptions';
-
-const { minLength, maxLength, email } = validators;
 
 export default {
   title: 'Form Fields/SelectField',
