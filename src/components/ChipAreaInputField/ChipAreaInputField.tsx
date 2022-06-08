@@ -56,7 +56,7 @@ export const ChipAreaInputField: FC<ChipAreaInputFieldProps> = React.memo(
     const [chips, setChips] = useState([...initialChips]);
     const [inputValue, setInputValue] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
-    const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
+    const validate = useMemo(() => (Array.isArray(validators) ? compose(validators) : undefined), [
       validators,
     ]);
 

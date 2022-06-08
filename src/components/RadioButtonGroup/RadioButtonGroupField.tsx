@@ -59,9 +59,7 @@ export function RadioButtonGroupField({
     [disabled],
   );
   const styles = useStyles2(getStyles);
-  const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
-    validators,
-  ]);
+  const validate = useMemo(() => (Array.isArray(validators) ? compose(validators) : undefined), [validators]);
 
   return (
     <Field {...fieldConfig} type="text" name={name} validate={validate}>

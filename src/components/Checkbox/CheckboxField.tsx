@@ -37,7 +37,7 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(
     ...fieldConfig
   }) => {
     const styles = useStyles2(getStyles);
-    const validate = useMemo(() => (Array.isArray(validators) ? compose(...validators) : undefined), [
+    const validate = useMemo(() => (Array.isArray(validators) ? compose(validators) : undefined), [
       validators,
     ]);
 
