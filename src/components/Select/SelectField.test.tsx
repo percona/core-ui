@@ -1,11 +1,12 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { SelectableValue } from '@grafana/data';
 import { FormWrapper, validators } from '../../shared';
 import { SelectField } from './SelectField';
 
 const { email, minLength } = validators;
 
-const optionsTemplate = [
+const optionsTemplate: Array<SelectableValue<string>> = [
   {
     value: 'tes@mail.ru',
     label: 'tes@mail.ru (minLength error)',
