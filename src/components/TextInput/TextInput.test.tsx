@@ -77,6 +77,22 @@ describe('TextInputField::', () => {
     expect(screen.getByTestId('test-field-error-message')).toHaveTextContent('some error');
   });
 
+  it('should show validation errors on render if specified', async () => {
+    const validatorOne = jest.fn();
+    const validatorTwo = jest.fn().mockReturnValue('some error');
+
+    render(
+      <FormWrapper>
+        <TextInputField showErrorOnRender name="test" validators={[validatorOne, validatorTwo]} />
+      </FormWrapper>,
+    );
+
+    expect(validatorOne).toBeCalledTimes(1);
+    expect(validatorTwo).toBeCalledTimes(1);
+
+    expect(await screen.queryByText('some error')).toBeInTheDocument();
+  });
+
   it('should show no labels if none are passed to props', () => {
     render(
       <FormWrapper>

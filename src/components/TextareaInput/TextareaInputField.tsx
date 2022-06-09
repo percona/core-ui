@@ -20,6 +20,7 @@ export interface TextareaInputFieldProps extends UseFieldConfig<string>, Labeled
   rows?: number;
   resize?: 'vertical' | 'horizontal' | 'both';
   showErrorOnBlur?: boolean;
+  showErrorOnRender?: boolean;
   validators?: Validator[];
 }
 
@@ -42,6 +43,7 @@ export const TextareaInputField: FC<TextareaInputFieldProps> = React.memo(
     resize = 'vertical',
     rows = 5,
     showErrorOnBlur = false,
+    showErrorOnRender = false,
     validators,
     tooltipText = '',
     tooltipLink,
@@ -59,7 +61,9 @@ export const TextareaInputField: FC<TextareaInputFieldProps> = React.memo(
     return (
       <Field {...fieldConfig} name={name} validate={validate}>
         {({ input, meta }: TextareaFieldRenderProps) => {
-          const validationError = ((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error;
+          const validationError =
+            (((!showErrorOnBlur && meta.modified) || meta.touched) && meta.error) ||
+            (showErrorOnRender && meta.error);
 
           return (
             <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>

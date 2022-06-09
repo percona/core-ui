@@ -87,6 +87,23 @@ describe('NumberInputField::', () => {
     expect(await screen.findByText('some error')).toBeInTheDocument();
   });
 
+  it('should show validation errors on render if specified', async () => {
+    const validatorOne = jest.fn();
+    const validatorTwo = jest.fn().mockReturnValue('some error');
+
+    render(
+      <FormWrapper>
+        <NumberInputField showErrorOnRender name="test" validators={[validatorOne, validatorTwo]} />
+      </FormWrapper>,
+    );
+
+    expect(validatorOne).toBeCalledTimes(1);
+    expect(validatorTwo).toBeCalledTimes(1);
+
+    expect(await screen.queryByText('some error')).toBeInTheDocument();
+  });
+
+
   it('should show no labels if none is specified', () => {
     render(
       <FormWrapper>
