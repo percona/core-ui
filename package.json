@@ -18,7 +18,6 @@
   },
   "files": [
     "dist",
-    "package.json",
     "README.md"
   ],
   "scripts": {
@@ -30,7 +29,7 @@
     "test": "react-scripts test --verbose",
     "test:ci": "CI=true react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "build": "NODE_ENV=production npm run lint && npm run clean && tsc -p tsconfig.json",
+    "build": "NODE_ENV=production npm run lint && npm run clean && tsc -p tsconfig.json && rimraf dist/__mocks__",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
