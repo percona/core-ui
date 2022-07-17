@@ -10,6 +10,7 @@ declare module 'react-table' {
   interface HeaderGroup {
     className?: string;
     style?: CSSProperties;
+    getSortByToggleProps?: any;
   }
 
   interface ColumnInstance {

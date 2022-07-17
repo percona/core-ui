@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useTable, usePagination, useExpanded } from 'react-table';
+import { useTable, usePagination, useExpanded, useSortBy } from 'react-table';
 import { css } from '@emotion/css';
 import { useStyles2 } from '@grafana/ui';
 import { getStyles } from './Table.styles';
@@ -21,6 +21,7 @@ export const Table: FC<TableProps> = ({
   data,
   columns,
   showPagination,
+  sortingOnColumns,
   totalPages,
   onPaginationChanged = () => null,
   emptyMessage = '',
@@ -64,7 +65,7 @@ export const Table: FC<TableProps> = ({
     }
   }
 
-  const tableInstance = useTable(tableOptions, ...plugins) as PaginatedTableInstance;
+  const tableInstance = useTable(tableOptions, useSortBy, ...plugins) as PaginatedTableInstance;
   const {
     getTableProps,
     getTableBodyProps,
@@ -102,24 +103,32 @@ export const Table: FC<TableProps> = ({
                   {headerGroups.map((headerGroup) => (
                     /* eslint-disable-next-line react/jsx-key */
                     <tr data-testid="table-thead-tr" {...headerGroup.getHeaderGroupProps()}>
-                      {headerGroup.headers.map((column) => (
+                      {headerGroup.headers.map((column) => {
                         /* eslint-disable-next-line react/jsx-key */
-                        <th
-                          className={css`
-                            width: ${column.width};
-                          `}
-                          {...column.getHeaderProps([
-                            {
-                              className: column.className,
-                              style: column.style,
-                            },
-                            getColumnProps(column),
-                            getHeaderProps(column),
-                          ])}
-                        >
-                          {column.render('Header')}
-                        </th>
-                      ))}
+                        const arrHeaderProps = [
+                          getColumnProps(column),
+                          getHeaderProps(column),
+                          {
+                            className: column.className,
+                            style: column.style,
+                          },
+                        ];
+
+                        if (sortingOnColumns) {
+                          arrHeaderProps.push(column.getSortByToggleProps());
+                        }
+
+                        return(
+                          <th
+                            className={css`
+                              width: ${column.width};
+                            `}
+                            {...column.getHeaderProps(arrHeaderProps)}
+                          >
+                            {column.render('Header')}
+                          </th>
+                        );
+                    })}
                     </tr>
                   ))}
                 </thead>

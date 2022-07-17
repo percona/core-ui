@@ -18,6 +18,7 @@ export interface TableProps {
   pendingRequest?: boolean;
   emptyMessage?: string;
   showPagination?: boolean;
+  sortingOnColumns?: boolean;
   totalItems: number;
   totalPages?: number;
   tableHash?: string;
