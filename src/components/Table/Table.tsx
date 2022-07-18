@@ -3,7 +3,7 @@ import { useTable, usePagination, useExpanded, useSortBy } from 'react-table';
 import { css } from 'emotion';
 import { useStyles } from '@grafana/ui';
 import { getStyles } from './Table.styles';
-import { TableProps, PaginatedTableInstance, PaginatedTableOptions, PaginatedTableState } from './Table.types';
+import { TableProps, PaginatedTableOptions, PaginatedTableState } from './Table.types';
 import { Pagination } from './Pagination';
 import { PAGE_SIZES } from './Pagination/Pagination.constants';
 import { TableContent } from './TableContent';
@@ -60,7 +60,8 @@ export const Table: FC<TableProps> = ({
     }
   }
 
-  const tableInstance = useTable(tableOptions, useSortBy, ...plugins) as PaginatedTableInstance;
+  const tableInstance = useTable(tableOptions, useSortBy, ...plugins);
+
   const {
     getTableProps,
     getTableBodyProps,
