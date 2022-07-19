@@ -18,6 +18,7 @@ export interface TableProps {
   pendingRequest?: boolean;
   emptyMessage?: string;
   showPagination?: boolean;
+  sortingOnColumns?: boolean;
   totalItems: number;
   totalPages?: number;
   tableHash?: string;
@@ -38,18 +39,6 @@ export interface TableProps {
 export interface PaginatedTableState extends TableState {
   pageIndex: number;
   pageSize: number;
-}
-
-export interface PaginatedTableInstance extends TableInstance {
-  page: Row[];
-  canPreviousPage: boolean;
-  canNextPage: boolean;
-  gotoPage: (page: number) => void;
-  previousPage: () => void;
-  nextPage: () => void;
-  pageCount: number;
-  setPageSize: (size: number) => void;
-  state: PaginatedTableState;
 }
 
 export interface PaginatedTableOptions extends TableOptions<object> {
