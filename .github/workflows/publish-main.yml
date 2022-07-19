@@ -2,12 +2,10 @@
 name: Publish Latest Version to NPM
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Parameter to pass to `npm version` (e.g: 'patch', 'minor', 'major', default: 'patch')"
-        default: "patch"
-        required: true
+  push:
+    tags:
+      - v1.*
+      - v0.*
 
 jobs:
   publish:
@@ -43,11 +41,6 @@ jobs:
 
       - name: Build the assets
         run: npm run build
-
-      - name: Bump version
-        env:
-          VERSION: ${{ github.event.inputs.version }}
-        run: npm version $VERSION
 
       - name: Publish latest version
         env:
