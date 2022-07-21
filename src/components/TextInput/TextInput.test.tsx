@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { FormWrapper } from '../../shared';
 import { TextInputField } from './TextInputField';
 import { email } from '../../shared/validators';
@@ -102,7 +102,7 @@ describe('TextInputField::', () => {
 
     const field = screen.getByTestId('test-text-input');
 
-    await waitFor(() => fireEvent.change(field, { target: { value: '' } }));
+    fireEvent.change(field, { target: { value: '' } });
 
     expect(screen.getByTestId('test-field-error-message')).toHaveTextContent('');
   });
