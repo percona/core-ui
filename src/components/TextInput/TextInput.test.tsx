@@ -1,7 +1,8 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { FormWrapper } from '../../shared';
 import { TextInputField } from './TextInputField';
+import { email } from '../../shared/validators';
 
 describe('TextInputField::', () => {
   it('should render an input element of type text', async () => {
@@ -90,6 +91,20 @@ describe('TextInputField::', () => {
     expect(validatorTwo).toBeCalledTimes(1);
 
     expect(await screen.queryByText('some error')).toBeInTheDocument();
+  });
+
+  it("shouldn't show validation error of email if field is not required", async () => {
+    render(
+      <FormWrapper>
+        <TextInputField showErrorOnRender name="test" validators={[email, jest.fn()]} />
+      </FormWrapper>,
+    );
+
+    const field = screen.getByTestId('test-text-input');
+
+    await waitFor(() => fireEvent.change(field, { target: { value: '' } }));
+
+    expect(screen.getByTestId('test-field-error-message')).toHaveTextContent('');
   });
 
   it('should show no labels if none are passed to props', () => {
