@@ -5,7 +5,7 @@ export const maxLength = (length: number): Validator => (value: string) => {
   if (value == null) {
     return undefined;
   }
-  
+
   if (value.length <= length) {
     return undefined;
   }
