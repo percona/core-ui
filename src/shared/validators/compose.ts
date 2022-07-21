@@ -7,12 +7,16 @@ export const compose = (validators: Validator[], getValue?: GetSelectValueFuncti
 ): VResult => {
   let result: string | undefined;
 
+  const hasRequired = validators.find((item) => item.name === 'required');
+
   // eslint-disable-next-line no-restricted-syntax
   for (const validator of validators) {
-    if (getValue) {
-      result = validator(getValue(value), values, meta);
-    } else {
-      result = validator(value, values, meta);
+    if (hasRequired || (!hasRequired && value)) {
+      if (getValue) {
+        result = validator(getValue(value), values, meta);
+      } else {
+        result = validator(value, values, meta);
+      }
     }
 
     if (result !== undefined) {
