@@ -10,7 +10,6 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
       - uses: percona-platform/checkout@v2
 
@@ -43,6 +42,13 @@ jobs:
         run: npm run build
 
       - name: Publish latest version
+        if: github.ref == 'refs/heads/main'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --tag latest --access public
+
+      - name: Publish next version
+        if: github.ref != 'refs/heads/main'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --tag next --access public
