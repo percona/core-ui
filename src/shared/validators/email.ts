@@ -2,7 +2,7 @@ const emailRe =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
 export const email = (value: string) => {
-  // No value would satisfy this validator by definition
+  // Checking for no value is the responsibility of the `required` validator
   if (value == null) {
     return undefined;
   }
