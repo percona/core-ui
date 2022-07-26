@@ -96,7 +96,7 @@ describe('TextInputField::', () => {
   it("shouldn't show validation error of email if field is not required", async () => {
     render(
       <FormWrapper>
-        <TextInputField showErrorOnRender name="test" validators={[email, jest.fn()]} />
+        <TextInputField showErrorOnRender name="test" validators={[email]} />
       </FormWrapper>,
     );
 
