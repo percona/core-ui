@@ -24,6 +24,6 @@ describe('validators :: email', () => {
   });
 
   test('the validator should not check for empty/undefined values', () => {
-    expect(email(undefined)).toBeUndefined();
+    expect(email(undefined as any)).toBeUndefined();
   });
 });
