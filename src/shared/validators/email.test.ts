@@ -22,4 +22,8 @@ describe('validators :: email', () => {
     //       email addresses with no TLD
     expect(email('test@example')).toEqual('Invalid email address');
   });
+
+  test('the validator should not check for empty/undefined values', () => {
+    expect(email(undefined as any)).toBeUndefined();
+  });
 });

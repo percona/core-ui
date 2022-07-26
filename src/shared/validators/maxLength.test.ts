@@ -15,4 +15,10 @@ describe('Validator maxLength::', () => {
 
     expect(validator('123456789')).toEqual(errorMessage);
   });
+
+  it('should return undefined if the passed value undefined', () => {
+    const validator = maxLength(8);
+
+    expect(validator(undefined)).toBeUndefined();
+  });
 });
