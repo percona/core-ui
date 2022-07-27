@@ -1,4 +1,5 @@
 ---
+# This action will publish the latest version to `npmjs.org` when a new tag is pushed
 name: Publish Latest Version to NPM
 
 on:
@@ -19,16 +20,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: "npm"
 
-      - name: Configure git
-        env:
-          ROBOT_TOKEN: ${{ secrets.ROBOT_TOKEN }}
-        run: |
-          git config --global url."https://percona-platform-robot:${ROBOT_TOKEN}@github.com".insteadOf "https://github.com"
-          git config user.name "GitHub Action"
-          git config user.email "github-action@users.noreply.github.com"
-          git config user.password "${ROBOT_TOKEN}"
-          echo "GIT_USER=percona-platform-robot:${ROBOT_TOKEN}" >> $GITHUB_ENV
-
       - name: Install dependencies
         run: npm install
 
@@ -42,13 +33,8 @@ jobs:
         run: npm run build
 
       - name: Publish latest version
-        if: github.ref == 'refs/heads/main'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --tag latest --access public
-
-      - name: Publish next version
-        if: github.ref != 'refs/heads/main'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --tag next --access public
+        run: |
+          echo "Deploying latest for ref: $GITHUB_REF"
+          npm publish --tag latest --access public
