@@ -9,7 +9,9 @@ In order to setup the local development environment please run the following com
     npm start
 ```
 
-## Publishing
+## Publishing to `npmjs.org`
+
+### To publish from a local environment
 
 - Log in to the registry: `npm login`
 - You need to have valid npm credetials set up (`npm whoami` should return your npm username)
@@ -22,11 +24,11 @@ In order to setup the local development environment please run the following com
 - To publish a dist-tag: `npm publish --tag next --access public`
 - To remove a dist-tag: `npm dist-tag rm @percona/platform-core next`
 
-Alternatively, you can publish a new version to `npmjs.org` in a few simple steps:
+### Publish using github actions
 
 - Checkout the branch: `git checkout main`
-- Bump up the version: `npm version patch` or `npm version minor`
-- Push the changes to the repo, inlcuding the new tag: `git push origin main && git push --tags origin main`
+- Bump up the version: `npm version patch|minor|major`
+- Push changes to the repo, including the new tag: `git push origin main && git push --tags origin main`
 
 The published package name is `@percona/platform-core`, so you may want to check what dist tags are published to the registry: `npm info @percona/platform-core`
 
