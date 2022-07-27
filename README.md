@@ -28,7 +28,7 @@ In order to setup the local development environment please run the following com
 
 - Checkout the branch: `git checkout main`
 - Bump up the version: `npm version patch|minor|major`
-- Push changes to the repo, including the new tag: `git push origin main && git push --tags origin main`
+- Push changes to the repo, including the new tag: `git push --follow-tags origin main`
 
 The published package name is `@percona/platform-core`, so you may want to check what dist tags are published to the registry: `npm info @percona/platform-core`
 
