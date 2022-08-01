@@ -49,6 +49,7 @@ export const Pagination: FC<PaginationProps> = ({
             value={pageSize}
             options={pageSizeOptions}
             onChange={(e) => pageSizeChanged(e.value || 0)}
+            menuPlacement="top"
           />
         </span>
       </span>
