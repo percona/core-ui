@@ -2,6 +2,10 @@ import { SelectableValue } from '@grafana/data';
 
 export const PAGE_SIZES: Array<SelectableValue<number>> = [
   {
+    label: '10',
+    value: 10,
+  },
+  {
     label: '25',
     value: 25,
   },

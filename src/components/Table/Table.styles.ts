@@ -2,11 +2,12 @@ import { css } from 'emotion';
 import { GrafanaTheme } from '@grafana/data';
 
 export const getStyles = (theme: GrafanaTheme) => {
-  const { colors, spacing } = theme;
+  const { colors, spacing, palette } = theme;
 
   const borderColor = colors.border2;
   const backgroundColorBody = colors.bg1;
   const backgroundColorHeader = colors.bg2;
+  const chevronColor = palette.gray3;
 
   return {
     /* This will make the table scrollable when it gets too small */
@@ -69,6 +70,10 @@ export const getStyles = (theme: GrafanaTheme) => {
       .pagination {
         padding: 0.5rem;
       }
+    `,
+    chevronSort: css`
+      color: ${chevronColor};
+      margin-left: ${spacing.formInputAffixPaddingHorizontal};
     `,
   };
 };

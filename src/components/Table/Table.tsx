@@ -109,6 +109,9 @@ export const Table: FC<TableProps> = ({
                             style: column.style,
                           },
                         ];
+                        const sortedDescCol = column.isSortedDesc ? 
+                          <i className={`fa fa-chevron-down ${style.chevronSort}`} aria-hidden="true" /> : 
+                          <i className={`fa fa-chevron-up ${style.chevronSort}`} aria-hidden="true" />;
 
                         if (sortingOnColumns) {
                           arrHeaderProps.push(column.getSortByToggleProps());
@@ -122,6 +125,11 @@ export const Table: FC<TableProps> = ({
                             {...column.getHeaderProps(arrHeaderProps)}
                           >
                             {column.render('Header')}
+                            <span>
+                              {column.isSorted
+                                ? sortedDescCol
+                                : ''}
+                            </span>
                           </th>
                         );
                     })}
