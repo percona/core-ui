@@ -1,11 +1,8 @@
 import React, { FC, useMemo } from 'react';
 import { Field, UseFieldConfig, FieldMetaState, FieldInputProps } from 'react-final-form';
-import { useStyles2 } from '@grafana/ui';
-import { cx } from '@emotion/css';
-import { Label } from '../Label';
-import { getStyles } from './Checkbox.styles';
 import { Validator, compose } from '../../shared/validators';
 import { FieldInputAttrs, LabeledFieldProps } from '../../shared/types';
+import { BaseCheckbox } from './Checkbox';
 
 export interface CheckboxProps extends UseFieldConfig<boolean>, LabeledFieldProps {
   disabled?: boolean;
@@ -26,7 +23,7 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(
     inputProps,
     label,
     name,
-    inputId = `input-${name}-id`,
+    inputId,
     validators,
     tooltipText = '',
     tooltipLink,
@@ -36,7 +33,6 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(
     tooltipLinkTarget,
     ...fieldConfig
   }) => {
-    const styles = useStyles2(getStyles);
     const validate = useMemo(() => (Array.isArray(validators) ? compose(validators) : undefined), [
       validators,
     ]);
@@ -44,35 +40,23 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(
     return (
       <Field<boolean> {...fieldConfig} type="checkbox" name={name} validate={validate}>
         {({ input, meta }: CheckboxFieldRenderProps) => (
-          <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
-            <label className={styles.wrapper} htmlFor={inputId}>
-              <input
-                id={inputId}
-                {...input}
-                {...inputProps}
-                disabled={disabled}
-                data-testid={`${name}-checkbox-input`}
-                className={styles.input}
-              />
-              <span className={styles.checkmark} />
-              <Label
-                name={name}
-                label={label}
-                labelWrapperClassName={styles.checkmarkLabel}
-                labelClassName={styles.label}
-                inputId={inputId}
-                tooltipLink={tooltipLink}
-                tooltipLinkText={tooltipLinkText}
-                tooltipText={tooltipText}
-                tooltipDataTestId={tooltipDataTestId}
-                tooltipLinkTarget={tooltipLinkTarget}
-                tooltipIcon={tooltipIcon}
-              />
-            </label>
-            <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
-              {meta.touched && meta.error}
-            </div>
-          </div>
+          <BaseCheckbox
+            className={fieldClassName}
+            disabled={disabled}
+            inputId={inputId}
+            {...input}
+            {...inputProps}
+            name={name}
+            label={label}
+            tooltipLink={tooltipLink}
+            tooltipLinkText={tooltipLinkText}
+            tooltipText={tooltipText}
+            tooltipDataTestId={tooltipDataTestId}
+            tooltipLinkTarget={tooltipLinkTarget}
+            tooltipIcon={tooltipIcon}
+            touched={meta.touched}
+            error={meta.error}
+          />
         )}
       </Field>
     );

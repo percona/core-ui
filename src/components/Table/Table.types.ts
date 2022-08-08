@@ -10,6 +10,7 @@ import {
   Cell,
   ColumnInstance,
   HeaderGroup,
+  UseRowSelectInstanceProps,
 } from 'react-table';
 
 export interface TableProps {
@@ -26,6 +27,8 @@ export interface TableProps {
   pagesPerView?: number;
   autoResetPage?: boolean;
   autoResetExpanded?: boolean;
+  rowSelection?: boolean;
+  onRowSelection?: (rows: Row[]) => void;
   onPaginationChanged?: (pageSize: number, pageIndex: number) => void;
   children?: (rows: Row[], table: TableInstance) => React.ReactNode;
   renderExpandedRow?: (row: Row<any>) => JSX.Element;
@@ -40,7 +43,7 @@ export interface PaginatedTableState extends TableState {
   pageSize: number;
 }
 
-export interface PaginatedTableInstance extends TableInstance {
+export interface PaginatedTableInstance extends TableInstance, UseRowSelectInstanceProps<any> {
   page: Row[];
   canPreviousPage: boolean;
   canNextPage: boolean;

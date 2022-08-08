@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Table } from './Table';
+import { Row } from 'react-table';
 
 const columns = [
   {
@@ -139,5 +140,78 @@ describe('Table', () => {
 
     expect(await screen.findAllByTestId('table-tbody-tr')).toHaveLength(5);
     expect(await screen.findAllByTestId('page-button')).toHaveLength(20);
+  });
+
+  it('should display selection column', async () => {
+    render(
+      <Table
+        totalItems={data.length}
+        data={data}
+        columns={columns}
+        rowSelection
+        onPaginationChanged={onPaginationChanged}
+        emptyMessage="empty"
+        pageSize={10}
+      />,
+    );
+
+    expect(await screen.findAllByTestId('select-all')).toHaveLength(1);
+    expect(await screen.findAllByTestId('select-row')).toHaveLength(2);
+  });
+
+  it('should allow selection of specific rows', async () => {
+    let selectedValues: any[] = [];
+
+    const onSelectionChanged = (rows: Row<any>[]) => {
+      selectedValues = rows.map((r) => r.values);
+    };
+
+    render(
+      <Table
+        totalItems={data.length}
+        data={data}
+        columns={columns}
+        rowSelection
+        onRowSelection={onSelectionChanged}
+        onPaginationChanged={onPaginationChanged}
+        emptyMessage="empty"
+        pageSize={10}
+      />,
+    );
+
+    const checkbox = await screen.findByTestId('table-select-1-checkbox-input');
+
+    fireEvent.click(checkbox);
+
+    expect(selectedValues.length).toBe(1);
+    expect(selectedValues[0]).toStrictEqual(data[1]);
+  });
+
+  it('should allow selection of all rows', async () => {
+    let selectedValues: any[] = [];
+
+    const onSelectionChanged = (rows: Row<any>[]) => {
+      selectedValues = rows.map((r) => r.values);
+    };
+
+    render(
+      <Table
+        totalItems={data.length}
+        data={data}
+        columns={columns}
+        rowSelection
+        onRowSelection={onSelectionChanged}
+        onPaginationChanged={onPaginationChanged}
+        emptyMessage="empty"
+        pageSize={10}
+      />,
+    );
+
+    const selectAllCheckbox = await screen.findByTestId('table-select-all-checkbox-input');
+
+    fireEvent.click(selectAllCheckbox);
+
+    expect(selectedValues.length).toBe(2);
+    expect(selectedValues).toStrictEqual(data);
   });
 });
