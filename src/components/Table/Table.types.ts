@@ -18,6 +18,8 @@ export interface TableProps {
   columns: Column[];
   pendingRequest?: boolean;
   emptyMessage?: string;
+  emptyMessageClassName?: string;
+  overlayClassName?: string;
   showPagination?: boolean;
   totalItems: number;
   totalPages?: number;

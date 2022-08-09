@@ -36,6 +36,8 @@ export const Table: FC<TableProps> = ({
   totalPages,
   onPaginationChanged = () => null,
   emptyMessage = '',
+  emptyMessageClassName,
+  overlayClassName,
   totalItems,
   pageSize: propPageSize,
   pageIndex: propPageIndex = 0,
@@ -136,10 +138,15 @@ export const Table: FC<TableProps> = ({
 
   return (
     <>
-      <Overlay dataTestId="table-loading" isPending={pendingRequest}>
+      <Overlay dataTestId="table-loading" isPending={pendingRequest} overlayClassName={overlayClassName}>
         <div className={style.tableWrap} data-testid="table-outer-wrapper">
           <div className={style.table} data-testid="table-inner-wrapper">
-            <TableContent loading={pendingRequest} hasData={hasData} emptyMessage={emptyMessage}>
+            <TableContent
+              loading={pendingRequest}
+              hasData={hasData}
+              emptyMessage={emptyMessage}
+              emptyMessageClassName={emptyMessageClassName}
+            >
               <table {...getTableProps()} data-testid="table">
                 <thead data-testid="table-thead">
                   {headerGroups.map((headerGroup) => (
