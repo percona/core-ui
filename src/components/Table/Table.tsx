@@ -1,5 +1,15 @@
-import React, { FC } from 'react';
-import { useTable, usePagination, useExpanded } from 'react-table';
+import React, { FC, useEffect } from 'react';
+import {
+  useTable,
+  usePagination,
+  useExpanded,
+  useRowSelect,
+  PluginHook,
+  ColumnInstance,
+  UseRowSelectRowProps,
+  UseRowSelectInstanceProps,
+  Row,
+} from 'react-table';
 import { css } from '@emotion/css';
 import { useStyles2 } from '@grafana/ui';
 import { getStyles } from './Table.styles';
@@ -11,6 +21,7 @@ import {
 } from './Table.types';
 import { Pagination } from './Pagination';
 import { PAGE_SIZES } from './Pagination/Pagination.constants';
+import { TableCheckbox } from './Selection';
 import { TableContent } from './TableContent';
 import { Overlay } from '../Overlay';
 
@@ -21,9 +32,12 @@ export const Table: FC<TableProps> = ({
   data,
   columns,
   showPagination,
+  rowSelection,
   totalPages,
   onPaginationChanged = () => null,
   emptyMessage = '',
+  emptyMessageClassName,
+  overlayClassName,
   totalItems,
   pageSize: propPageSize,
   pageIndex: propPageIndex = 0,
@@ -32,6 +46,7 @@ export const Table: FC<TableProps> = ({
   autoResetExpanded = true,
   autoResetPage = true,
   renderExpandedRow = () => <></>,
+  onRowSelection,
   getHeaderProps = defaultPropGetter,
   getRowProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
@@ -50,7 +65,7 @@ export const Table: FC<TableProps> = ({
     autoResetExpanded,
     autoResetPage,
   };
-  const plugins: any[] = [useExpanded];
+  const plugins: PluginHook<any>[] = [useExpanded];
 
   if (showPagination) {
     plugins.push(usePagination);
@@ -62,6 +77,29 @@ export const Table: FC<TableProps> = ({
     if (propPageSize) {
       initialState.pageSize = propPageSize;
     }
+  }
+
+  if (rowSelection) {
+    plugins.push(useRowSelect);
+    plugins.push((hooks) => {
+      hooks.visibleColumns.push((cols: ColumnInstance<any>[]) => [
+        {
+          id: 'selection',
+          width: '50px',
+          Header: ({ getToggleAllRowsSelectedProps }: UseRowSelectInstanceProps<any>) => (
+            <div data-testid="select-all">
+              <TableCheckbox id="all" {...getToggleAllRowsSelectedProps()} />
+            </div>
+          ),
+          Cell: ({ row }: { row: UseRowSelectRowProps<any> & Row<any> }) => (
+            <div data-testid="select-row">
+              <TableCheckbox id={row.id} {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...cols,
+      ]);
+    });
   }
 
   const tableInstance = useTable(tableOptions, ...plugins) as PaginatedTableInstance;
@@ -76,6 +114,7 @@ export const Table: FC<TableProps> = ({
     pageCount,
     setPageSize,
     gotoPage,
+    selectedFlatRows,
     state: { pageSize, pageIndex },
   } = tableInstance;
   const hasData = data.length > 0;
@@ -91,12 +130,23 @@ export const Table: FC<TableProps> = ({
     onPaginationChanged(newPageSize, 0);
   };
 
+  useEffect(() => {
+    if (onRowSelection) {
+      onRowSelection(selectedFlatRows);
+    }
+  }, [onRowSelection, selectedFlatRows]);
+
   return (
     <>
-      <Overlay dataTestId="table-loading" isPending={pendingRequest}>
+      <Overlay dataTestId="table-loading" isPending={pendingRequest} overlayClassName={overlayClassName}>
         <div className={style.tableWrap} data-testid="table-outer-wrapper">
           <div className={style.table} data-testid="table-inner-wrapper">
-            <TableContent loading={pendingRequest} hasData={hasData} emptyMessage={emptyMessage}>
+            <TableContent
+              loading={pendingRequest}
+              hasData={hasData}
+              emptyMessage={emptyMessage}
+              emptyMessageClassName={emptyMessageClassName}
+            >
               <table {...getTableProps()} data-testid="table">
                 <thead data-testid="table-thead">
                   {headerGroups.map((headerGroup) => (

@@ -7,6 +7,7 @@ import { styles } from './Overlay.styles';
 export const Overlay: FC<OverlayProps> = ({
   children,
   className,
+  overlayClassName,
   dataTestId = 'overlay-children',
   isPending,
   size = 20,
@@ -14,7 +15,7 @@ export const Overlay: FC<OverlayProps> = ({
   <div className={cx(styles.getOverlayWrapper(size), className)} data-testid="overlay-wrapper">
     {isPending ? (
       <>
-        <div className={styles.overlay} data-testid="overlay-spinner">
+        <div className={cx(styles.overlay, overlayClassName)} data-testid="overlay-spinner">
           <Spinner size={size} className={styles.spinner} />
         </div>
         <div className={styles.childrenWrapper} data-testid={dataTestId}>
