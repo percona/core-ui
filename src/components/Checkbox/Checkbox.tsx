@@ -9,12 +9,13 @@ export interface BaseCheckboxProps extends FieldInputAttrs, LabeledFieldProps {
   inputId?: string;
   touched?: boolean;
   error?: string;
+  fieldClassName?: string;
 }
 
 export const BaseCheckbox: FC<BaseCheckboxProps> = ({
   name,
   inputId = `input-${name}-id`,
-  className,
+  fieldClassName,
   label,
   touched,
   error,
@@ -29,7 +30,7 @@ export const BaseCheckbox: FC<BaseCheckboxProps> = ({
   const styles = useStyles2(getStyles);
 
   return (
-    <div className={cx(styles.field, className)} data-testid={`${name}-field-container`}>
+    <div className={cx(styles.field, fieldClassName)} data-testid={`${name}-field-container`}>
       <label className={styles.wrapper} htmlFor={inputId}>
         <input
           id={inputId}
@@ -39,20 +40,20 @@ export const BaseCheckbox: FC<BaseCheckboxProps> = ({
           className={styles.input}
         />
         <span className={styles.checkmark} />
+        <Label
+          name={name}
+          label={label}
+          labelWrapperClassName={styles.checkmarkLabel}
+          labelClassName={styles.label}
+          inputId={inputId}
+          tooltipLink={tooltipLink}
+          tooltipLinkText={tooltipLinkText}
+          tooltipText={tooltipText}
+          tooltipDataTestId={tooltipDataTestId}
+          tooltipLinkTarget={tooltipLinkTarget}
+          tooltipIcon={tooltipIcon}
+        />
       </label>
-      <Label
-        name={name}
-        label={label}
-        labelWrapperClassName={styles.checkmarkLabel}
-        labelClassName={styles.label}
-        inputId={inputId}
-        tooltipLink={tooltipLink}
-        tooltipLinkText={tooltipLinkText}
-        tooltipText={tooltipText}
-        tooltipDataTestId={tooltipDataTestId}
-        tooltipLinkTarget={tooltipLinkTarget}
-        tooltipIcon={tooltipIcon}
-      />
       <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
         {touched && error}
       </div>
