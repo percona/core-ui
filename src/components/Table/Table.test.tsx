@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { Table } from './Table';
 import { Row } from 'react-table';
+import { Table } from './Table';
 
 const columns = [
   {
