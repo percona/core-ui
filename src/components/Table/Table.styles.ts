@@ -8,6 +8,7 @@ export const getStyles = (theme: GrafanaTheme) => {
   const backgroundColorBody = colors.bg1;
   const backgroundColorHeader = colors.bg2;
   const chevronColor = palette.gray3;
+  const chevronActiveSortColor = palette.blue95;
 
   return {
     /* This will make the table scrollable when it gets too small */
@@ -73,6 +74,10 @@ export const getStyles = (theme: GrafanaTheme) => {
     `,
     chevronSort: css`
       color: ${chevronColor};
+      margin-left: ${spacing.formInputAffixPaddingHorizontal};
+    `,
+    chevronActiveSort: css`
+      color: ${chevronActiveSortColor};
       margin-left: ${spacing.formInputAffixPaddingHorizontal};
     `,
   };

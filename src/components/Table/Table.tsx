@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useTable, usePagination, useExpanded, useSortBy } from 'react-table';
 import { css } from 'emotion';
 import { useStyles } from '@grafana/ui';
@@ -47,6 +47,8 @@ export const Table: FC<TableProps> = ({
     autoResetPage,
   };
   const plugins: any[] = [useExpanded];
+  const [activeSort, setActiveSort] = useState<boolean>(true);
+  const [indexSort, setIndexSort] = useState<number>(0);
 
   if (showPagination) {
     plugins.push(usePagination);
@@ -74,6 +76,7 @@ export const Table: FC<TableProps> = ({
     setPageSize,
     gotoPage,
     state: { pageSize, pageIndex },
+    setSortBy,
   } = tableInstance;
   const hasData = data.length > 0;
 
@@ -88,6 +91,10 @@ export const Table: FC<TableProps> = ({
     onPaginationChanged(newPageSize, 0);
   };
 
+  const onSetActiveIndexSort = (index: number) => {
+    setIndexSort(index);
+  };
+
   return (
     <>
       <Overlay dataTestId="table-loading" isPending={pendingRequest}>
@@ -99,7 +106,7 @@ export const Table: FC<TableProps> = ({
                   {headerGroups.map((headerGroup) => (
                     /* eslint-disable-next-line react/jsx-key */
                     <tr data-testid="table-thead-tr" {...headerGroup.getHeaderGroupProps()}>
-                      {headerGroup.headers.map((column) => {
+                      {headerGroup.headers.map((column, index) => {
                         /* eslint-disable-next-line react/jsx-key */
                         const arrHeaderProps = [
                           getColumnProps(column),
@@ -109,9 +116,8 @@ export const Table: FC<TableProps> = ({
                             style: column.style,
                           },
                         ];
-                        const sortedDescCol = column.isSortedDesc ? 
-                          <i className={`fa fa-chevron-down ${style.chevronSort}`} aria-hidden="true" /> : 
-                          <i className={`fa fa-chevron-up ${style.chevronSort}`} aria-hidden="true" />;
+                        const descChevron = <i className={`fa fa-chevron-down ${index === indexSort ? style.chevronActiveSort : style.chevronSort}`} aria-hidden="true" />;
+                        const ascChevron = <i className={`fa fa-chevron-up ${index === indexSort ? style.chevronActiveSort : style.chevronSort}`} aria-hidden="true" />;
 
                         if (sortingOnColumns) {
                           arrHeaderProps.push(column.getSortByToggleProps());
@@ -123,12 +129,15 @@ export const Table: FC<TableProps> = ({
                               width: ${column.width};
                             `}
                             {...column.getHeaderProps(arrHeaderProps)}
+                            onClick={() => {
+                              setSortBy([{ id: column.id, desc: activeSort }]);
+                              onSetActiveIndexSort(index);
+                              setActiveSort(!activeSort);
+                            }}
                           >
                             {column.render('Header')}
                             <span>
-                              {column.isSorted
-                                ? sortedDescCol
-                                : ''}
+                              {activeSort ? ascChevron : descChevron}
                             </span>
                           </th>
                         );
