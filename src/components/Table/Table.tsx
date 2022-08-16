@@ -35,6 +35,16 @@ export const Table: FC<TableProps> = ({
 }) => {
   const style = useStyles(getStyles);
   const manualPagination = !!(totalPages && totalPages >= 0);
+  const sortees = React.useMemo(
+    () => [
+      {
+        id: columns[0].accessor,
+        desc: false,
+      },
+    ],
+    [columns],
+  );
+
   const initialState: Partial<PaginatedTableState> = {
     pageIndex: propPageIndex,
   };
@@ -49,6 +59,10 @@ export const Table: FC<TableProps> = ({
   const plugins: any[] = [useExpanded];
   const [activeSort, setActiveSort] = useState<boolean>(true);
   const [indexSort, setIndexSort] = useState<number>(0);
+
+  if (sortingOnColumns) {
+    initialState.sortBy = sortees;
+  }
 
   if (showPagination) {
     plugins.push(usePagination);
