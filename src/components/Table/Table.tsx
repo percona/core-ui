@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { useTable, usePagination, useExpanded, useSortBy } from 'react-table';
+import { useTable, usePagination, useExpanded, useSortBy, SortingRule } from 'react-table';
 import { css } from 'emotion';
 import { useStyles } from '@grafana/ui';
 import { getStyles } from './Table.styles';
@@ -61,7 +61,7 @@ export const Table: FC<TableProps> = ({
   const [indexSort, setIndexSort] = useState<number>(0);
 
   if (sortingOnColumns) {
-    initialState.sortBy = sortees;
+    initialState.sortBy = sortees as SortingRule<{}>[];
   }
 
   if (showPagination) {
