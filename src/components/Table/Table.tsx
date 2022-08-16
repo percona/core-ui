@@ -38,7 +38,7 @@ export const Table: FC<TableProps> = ({
   const sortees = React.useMemo(
     () => [
       {
-        id: columns[0].accessor,
+        id: columns[0]?.accessor,
         desc: false,
       },
     ],
@@ -130,8 +130,6 @@ export const Table: FC<TableProps> = ({
                             style: column.style,
                           },
                         ];
-                        const descChevron = <i className={`fa fa-chevron-down ${index === indexSort ? style.chevronActiveSort : style.chevronSort}`} aria-hidden="true" />;
-                        const ascChevron = <i className={`fa fa-chevron-up ${index === indexSort ? style.chevronActiveSort : style.chevronSort}`} aria-hidden="true" />;
 
                         if (sortingOnColumns) {
                           arrHeaderProps.push(column.getSortByToggleProps());
@@ -151,7 +149,7 @@ export const Table: FC<TableProps> = ({
                           >
                             {column.render('Header')}
                             <span>
-                              {activeSort ? ascChevron : descChevron}
+                              <i className={`fa fa-chevron-${activeSort ? 'up' : 'down'} ${index === indexSort ? style.chevronActiveSort : style.chevronSort}`} aria-hidden="true" />
                             </span>
                           </th>
                         );
