@@ -10,6 +10,7 @@ import {
   Cell,
   ColumnInstance,
   HeaderGroup,
+  SortingRule,
 } from 'react-table';
 
 export interface TableProps {
@@ -39,6 +40,7 @@ export interface TableProps {
 export interface PaginatedTableState extends TableState {
   pageIndex: number;
   pageSize: number;
+  sortBy: SortingRule<{}>[];
 }
 
 export interface PaginatedTableOptions extends TableOptions<object> {
