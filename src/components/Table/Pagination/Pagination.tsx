@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useStyles, IconName, Button, Select } from '@grafana/ui';
 import { PaginationProps } from './Pagination.types';
 import { getStyles } from './Pagination.styles';
@@ -15,19 +15,19 @@ export const Pagination: FC<PaginationProps> = ({
   pageSizeOptions,
   onPageChange = () => 0,
   onPageSizeChange = () => 0,
+  setActivePageIndex,
 }) => {
-  const [activePageIndex, setActivePageIndex] = useState(initialPageIndex);
   const pageArray = useMemo(() => Array.from({length: pageCount}, (_, i) => i), [pageCount]);
   // We want to center our selected page, thus we need to know how many should be on the left
-  const shownPages = getShownPages(pageArray, activePageIndex, pagesPerView);
-  const leftItemNumber = getLeftItemNumber(pageCount, activePageIndex, pageSize);
-  const rightItemNumber = getRightItemNumber(activePageIndex, pageSize, nrRowsOnCurrentPage);
+  const shownPages = getShownPages(pageArray, initialPageIndex, pagesPerView);
+  const leftItemNumber = getLeftItemNumber(pageCount, initialPageIndex, pageSize);
+  const rightItemNumber = getRightItemNumber(initialPageIndex, pageSize, nrRowsOnCurrentPage);
   const style = useStyles(getStyles);
 
   const gotoPage = (pageIndex: number) => {
     const index = Math.max(0, Math.min(pageIndex, pageCount - 1));
 
-    if (index !== activePageIndex) {
+    if (index !== initialPageIndex) {
       setActivePageIndex(index);
       onPageChange(index);
     }
@@ -62,20 +62,20 @@ export const Pagination: FC<PaginationProps> = ({
             data-testid="first-page-button"
             icon={'angle-double-left' as IconName}
             variant="secondary"
-            disabled={activePageIndex === 0}
+            disabled={initialPageIndex === 0}
             onClick={() => gotoPage(0)}
           />
           <Button
             data-testid="previous-page-button"
             icon="angle-left"
             variant="secondary"
-            disabled={activePageIndex === 0}
-            onClick={() => gotoPage(activePageIndex - 1)}
+            disabled={initialPageIndex === 0}
+            onClick={() => gotoPage(initialPageIndex - 1)}
           />
           {shownPages.map((page) => (
             <Button
               data-testid="page-button"
-              variant={activePageIndex === page ? 'primary' : 'secondary'}
+              variant={initialPageIndex === page ? 'primary' : 'secondary'}
               onClick={() => gotoPage(page)}
               key={page}
             >
@@ -86,15 +86,15 @@ export const Pagination: FC<PaginationProps> = ({
             data-testid="next-page-button"
             icon="angle-right"
             variant="secondary"
-            disabled={activePageIndex === pageCount - 1}
-            onClick={() => gotoPage(activePageIndex + 1)}
+            disabled={initialPageIndex === pageCount - 1}
+            onClick={() => gotoPage(initialPageIndex + 1)}
             className="next-page"
           />
           <Button
             data-testid="last-page-button"
             icon={'angle-double-right' as IconName}
             variant="secondary"
-            disabled={activePageIndex === pageCount - 1}
+            disabled={initialPageIndex === pageCount - 1}
             onClick={() => gotoPage(pageCount - 1)}
           />
         </span>

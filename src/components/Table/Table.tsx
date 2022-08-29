@@ -94,6 +94,8 @@ export const Table: FC<TableProps> = ({
   } = tableInstance;
   const hasData = data.length > 0;
 
+  const [activePageIndex, setActivePageIndex] = useState<number>(pageIndex);
+
   const onPageChanged = (newPageIndex: number) => {
     gotoPage(newPageIndex);
     onPaginationChanged(pageSize, newPageIndex);
@@ -145,6 +147,7 @@ export const Table: FC<TableProps> = ({
                               setSortBy([{ id: column.id, desc: activeSort }]);
                               onSetActiveIndexSort(index);
                               setActiveSort(!activeSort);
+                              setActivePageIndex(0);
                             }}
                           >
                             {column.render('Header')}
@@ -199,13 +202,14 @@ export const Table: FC<TableProps> = ({
         <Pagination
           pagesPerView={pagesPerView}
           pageCount={pageCount}
-          initialPageIndex={pageIndex}
+          initialPageIndex={activePageIndex}
           totalItems={totalItems}
           pageSizeOptions={PAGE_SIZES}
           pageSize={pageSize}
           nrRowsOnCurrentPage={page.length}
           onPageChange={(pIndex) => onPageChanged(pIndex)}
           onPageSizeChange={(pSize) => onPageSizeChanged(pSize)}
+          setActivePageIndex={setActivePageIndex}
         />
       )}
     </>
