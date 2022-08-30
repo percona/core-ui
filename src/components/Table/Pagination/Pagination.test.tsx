@@ -343,7 +343,7 @@ describe('Pagination', () => {
     // const select = screen.getByTestId('pagination-size-select');
     const select = document.querySelector('input');
 
-    userEvent.type(select, '{arrowdown}');
+    userEvent.type(select as HTMLInputElement, '{arrowdown}');
 
     const lastOption = screen.getAllByLabelText('Select option').slice(-1)[0];
 
