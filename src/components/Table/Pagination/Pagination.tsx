@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from 'react';
+import React, { FC, useState, useMemo, useEffect } from 'react';
 import { useStyles, IconName, Button, Select } from '@grafana/ui';
 import { PaginationProps } from './Pagination.types';
 import { getStyles } from './Pagination.styles';
@@ -15,6 +15,7 @@ export const Pagination: FC<PaginationProps> = ({
   pageSizeOptions,
   onPageChange = () => 0,
   onPageSizeChange = () => 0,
+  activeSort,
 }) => {
   const [activePageIndex, setActivePageIndex] = useState(initialPageIndex);
   const pageArray = useMemo(() => Array.from({length: pageCount}, (_, i) => i), [pageCount]);
@@ -37,6 +38,10 @@ export const Pagination: FC<PaginationProps> = ({
     onPageSizeChange(pages);
     setActivePageIndex(0);
   };
+
+  useEffect(() => {
+    setActivePageIndex(0);
+  }, [activeSort]);
 
   return (
     <div className={style.pagination} data-testid="pagination">

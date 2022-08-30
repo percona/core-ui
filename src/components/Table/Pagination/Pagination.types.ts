@@ -10,4 +10,5 @@ export interface PaginationProps {
   nrRowsOnCurrentPage: number;
   onPageChange?: (pageIndex: number) => void;
   onPageSizeChange?: (size: number) => void;
+  activeSort?: boolean;
 }

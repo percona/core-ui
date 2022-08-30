@@ -206,6 +206,7 @@ export const Table: FC<TableProps> = ({
           nrRowsOnCurrentPage={page.length}
           onPageChange={(pIndex) => onPageChanged(pIndex)}
           onPageSizeChange={(pSize) => onPageSizeChanged(pSize)}
+          activeSort={activeSort}
         />
       )}
     </>
