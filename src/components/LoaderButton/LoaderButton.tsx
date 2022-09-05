@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes, FC } from 'react';
 import { Button, ButtonVariant, IconName, Spinner } from '@grafana/ui';
+import { cx } from 'emotion';
 
 type ComponentSize = 'xs' | 'sm' | 'md' | 'lg';
 
@@ -10,6 +11,7 @@ type CommonProps = {
   className?: string;
   children?: React.ReactNode;
   fullWidth?: boolean;
+  buttonClassName?: string;
 };
 
 export type ButtonProps = CommonProps & ButtonHTMLAttributes<HTMLButtonElement>;
@@ -24,9 +26,10 @@ export const LoaderButton: FC<LoaderButtonProps> = ({
   disabled,
   loading = false,
   size = 'md',
+  buttonClassName,
   ...props
 }) => (
-  <Button className={className} size={size} disabled={loading || disabled} {...props}>
+  <Button className={cx(className, buttonClassName)} size={size} disabled={loading || disabled} {...props}>
     {loading ? <Spinner /> : children}
   </Button>
 );

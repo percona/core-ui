@@ -1,6 +1,7 @@
 import React, { FC, useEffect, ReactNode } from 'react';
 
 import { IconButton, useStyles } from '@grafana/ui';
+import { cx } from 'emotion';
 import { getStyles } from './Modal.styles';
 
 export interface ModalWindow {
@@ -9,11 +10,12 @@ export interface ModalWindow {
   closeOnEscape?: boolean;
   isVisible: boolean;
   title: ReactNode | string;
+  fieldClassName?: string;
 }
 
 export const Modal: FC<ModalWindow> = (props) => {
   const {
-    isVisible, children, title, onClose, closeOnClickaway = true, closeOnEscape = true,
+    isVisible, children, title, onClose, closeOnClickaway = true, closeOnEscape = true, fieldClassName,
   } = props;
   const styles = useStyles(getStyles);
 
@@ -41,7 +43,7 @@ export const Modal: FC<ModalWindow> = (props) => {
         data-testid="modal-background"
       />
       <div className={styles.body} data-testid="modal-body">
-        <div className={styles.modalHeader} data-testid="modal-header">
+        <div className={cx(styles.modalHeader, fieldClassName)} data-testid="modal-header">
           {title}
           <div className={styles.modalHeaderClose}>
             <IconButton
