@@ -11,7 +11,7 @@ type CommonProps = {
   className?: string;
   children?: React.ReactNode;
   fullWidth?: boolean;
-  fieldClassName?: string;
+  buttonClassName?: string;
 };
 
 export type ButtonProps = CommonProps & ButtonHTMLAttributes<HTMLButtonElement>;
@@ -26,10 +26,10 @@ export const LoaderButton: FC<LoaderButtonProps> = ({
   disabled,
   loading = false,
   size = 'md',
-  fieldClassName,
+  buttonClassName,
   ...props
 }) => (
-  <Button className={cx(className, fieldClassName)} size={size} disabled={loading || disabled} {...props}>
+  <Button className={cx(className, buttonClassName)} size={size} disabled={loading || disabled} {...props}>
     {loading ? <Spinner /> : children}
   </Button>
 );
