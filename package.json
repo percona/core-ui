@@ -1,6 +1,6 @@
 {
   "name": "@percona/platform-core",
-  "version": "0.12.7",
+  "version": "0.12.8",
   "description": "Platform UI core components",
   "private": false,
   "keywords": [
