@@ -11,7 +11,7 @@ export interface ModalWindow {
   isVisible: boolean;
   title: ReactNode | string;
   fieldClassName?: string;
-  extraPaddingClassName?: string;
+  contentClassName?: string;
 }
 
 export const Modal: FC<ModalWindow> = (props) => {
@@ -23,7 +23,7 @@ export const Modal: FC<ModalWindow> = (props) => {
     closeOnClickaway = true,
     closeOnEscape = true,
     fieldClassName,
-    extraPaddingClassName,
+    contentClassName,
   } = props;
   const styles = useStyles(getStyles);
 
@@ -63,7 +63,7 @@ export const Modal: FC<ModalWindow> = (props) => {
             />
           </div>
         </div>
-        <div className={cx(styles.content, extraPaddingClassName)} data-testid="modal-content">
+        <div className={cx(styles.content, contentClassName)} data-testid="modal-content">
           {children}
         </div>
       </div>
