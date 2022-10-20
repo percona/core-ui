@@ -13,6 +13,9 @@ export const getStyles = ({ v1: { typography, spacing, colors } }: GrafanaTheme2
     }
   `,
   label: css`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     display: block;
     text-align: left;
     font-size: ${typography.size.md};
