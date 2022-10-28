@@ -34,6 +34,7 @@ export const BaseCheckbox: FC<BaseCheckboxProps> = ({
       <label className={styles.wrapper} htmlFor={inputId}>
         <input
           id={inputId}
+          name={name}
           type="checkbox"
           {...props}
           data-testid={`${name}-checkbox-input`}
