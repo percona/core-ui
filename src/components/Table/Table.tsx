@@ -47,6 +47,7 @@ export const Table: FC<TableProps> = ({
   autoResetPage = true,
   renderExpandedRow = () => <></>,
   onRowSelection,
+  allRowsSelectionMode = 'all',
   getHeaderProps = defaultPropGetter,
   getRowProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
@@ -86,9 +87,17 @@ export const Table: FC<TableProps> = ({
         {
           id: 'selection',
           width: '50px',
-          Header: ({ getToggleAllRowsSelectedProps }: UseRowSelectInstanceProps<any>) => (
+          Header: ({
+            getToggleAllRowsSelectedProps,
+            getToggleAllPageRowsSelectedProps,
+          }: UseRowSelectInstanceProps<any>) => (
             <div data-testid="select-all">
-              <TableCheckbox id="all" {...getToggleAllRowsSelectedProps()} />
+              <TableCheckbox
+                id="all"
+                {...(allRowsSelectionMode === 'all' || !showPagination
+                  ? getToggleAllRowsSelectedProps()
+                  : getToggleAllPageRowsSelectedProps())}
+              />
             </div>
           ),
           Cell: ({ row }: { row: UseRowSelectRowProps<any> & Row<any> }) => (

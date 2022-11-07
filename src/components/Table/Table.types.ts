@@ -30,6 +30,7 @@ export interface TableProps {
   autoResetPage?: boolean;
   autoResetExpanded?: boolean;
   rowSelection?: boolean;
+  allRowsSelectionMode?: 'all' | 'page';
   onRowSelection?: (rows: Row[]) => void;
   onPaginationChanged?: (pageSize: number, pageIndex: number) => void;
   children?: (rows: Row[], table: TableInstance) => React.ReactNode;
