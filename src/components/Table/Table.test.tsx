@@ -19,6 +19,11 @@ const data = [
   },
 ];
 
+const createData = (length: number) =>
+  new Array(length).fill(null).map((_, idx) => ({
+    value: `test value ${idx + 1}`,
+  }));
+
 const onPaginationChanged = jest.fn();
 
 describe('Table', () => {
@@ -188,6 +193,7 @@ describe('Table', () => {
   });
 
   it('should allow selection of all rows', async () => {
+    const tableData = createData(20);
     let selectedValues: any[] = [];
 
     const onSelectionChanged = (rows: Row<any>[]) => {
@@ -196,10 +202,11 @@ describe('Table', () => {
 
     render(
       <Table
-        totalItems={data.length}
-        data={data}
+        totalItems={tableData.length}
+        data={tableData}
         columns={columns}
         rowSelection
+        showPagination
         onRowSelection={onSelectionChanged}
         onPaginationChanged={onPaginationChanged}
         emptyMessage="empty"
@@ -211,7 +218,38 @@ describe('Table', () => {
 
     fireEvent.click(selectAllCheckbox);
 
-    expect(selectedValues.length).toBe(2);
-    expect(selectedValues).toStrictEqual(data);
+    expect(selectedValues.length).toBe(20);
+    expect(selectedValues).toStrictEqual(tableData);
+  });
+
+  it('should select items only in current page when mode set to "page"', async () => {
+    const tableData = createData(20);
+    let selectedValues: any[] = [];
+
+    const onSelectionChanged = (rows: Row<any>[]) => {
+      selectedValues = rows.map((r) => r.values);
+    };
+
+    render(
+      <Table
+        totalItems={tableData.length}
+        data={tableData}
+        columns={columns}
+        rowSelection
+        showPagination
+        onRowSelection={onSelectionChanged}
+        onPaginationChanged={onPaginationChanged}
+        emptyMessage="empty"
+        allRowsSelectionMode="page"
+        pageSize={10}
+      />,
+    );
+
+    const selectAllCheckbox = await screen.findByTestId('table-select-all-checkbox-input');
+
+    fireEvent.click(selectAllCheckbox);
+
+    expect(selectedValues.length).toBe(10);
+    expect(selectedValues).toStrictEqual(tableData.slice(0, 10));
   });
 });
