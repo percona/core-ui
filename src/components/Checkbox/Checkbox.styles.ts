@@ -70,6 +70,7 @@ export const getStyles = (theme: GrafanaTheme2) => {
     `,
     label: css`
       line-height: ${typography.lineHeight.md};
+      margin-bottom: 0;
     `,
     errorMessage: css`
       color: ${palette.red};

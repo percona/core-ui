@@ -9,6 +9,7 @@ export interface CheckboxProps extends UseFieldConfig<boolean>, LabeledFieldProp
   fieldClassName?: string;
   inputProps?: FieldInputAttrs;
   validators?: Validator[];
+  noError?: boolean;
 }
 
 interface CheckboxFieldRenderProps {
@@ -31,6 +32,7 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(
     tooltipIcon,
     tooltipDataTestId,
     tooltipLinkTarget,
+    noError,
     ...fieldConfig
   }) => {
     const validate = useMemo(() => (Array.isArray(validators) ? compose(validators) : undefined), [
@@ -56,6 +58,7 @@ export const CheckboxField: FC<CheckboxProps> = React.memo(
             tooltipIcon={tooltipIcon}
             touched={meta.touched}
             error={meta.error}
+            noError={noError}
           />
         )}
       </Field>

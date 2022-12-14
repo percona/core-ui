@@ -22,7 +22,12 @@ export default {
   ],
 } as ComponentMeta<typeof CheckboxField>;
 
-const Template: ComponentStory<typeof CheckboxField> = (args) => <CheckboxField {...args} />;
+const Template: ComponentStory<typeof CheckboxField> = (args) => (
+  <div>
+    <CheckboxField {...args} />
+    <span>some content after checkbox for demonstration of margins</span>
+  </div>
+);
 
 export const Basic = Template.bind({});
 Basic.args = {
@@ -34,5 +39,13 @@ export const Required = Template.bind({});
 Required.args = {
   name: 'checkbox',
   label: 'Checkbox (required)',
+  validators: [requiredTrue],
+};
+
+export const WithoutError = Template.bind({});
+WithoutError.args = {
+  name: 'checkbox',
+  label: 'Checkbox (required)',
+  noError: true,
   validators: [requiredTrue],
 };
