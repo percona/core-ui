@@ -10,6 +10,7 @@ export interface BaseCheckboxProps extends FieldInputAttrs, LabeledFieldProps {
   touched?: boolean;
   error?: string;
   fieldClassName?: string;
+  noError?: boolean;
 }
 
 export const BaseCheckbox: FC<BaseCheckboxProps> = ({
@@ -25,6 +26,7 @@ export const BaseCheckbox: FC<BaseCheckboxProps> = ({
   tooltipIcon,
   tooltipLinkTarget,
   tooltipDataTestId,
+  noError,
   ...props
 }) => {
   const styles = useStyles2(getStyles);
@@ -55,9 +57,11 @@ export const BaseCheckbox: FC<BaseCheckboxProps> = ({
           tooltipIcon={tooltipIcon}
         />
       </label>
-      <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
-        {touched && error}
-      </div>
+      {!noError && (
+        <div data-testid={`${name}-field-error-message`} className={styles.errorMessage}>
+          {touched && error}
+        </div>
+      )}
     </div>
   );
 };
