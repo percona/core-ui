@@ -39,7 +39,7 @@ jobs:
           npm run build-storybook
 
       - name: Upload storybook artifacts 🔧
-        uses: percona-platform/upload-artifact@v2
+        uses: percona-platform/upload-artifact@v3
         with:
           name: storybook-artifacts
           path: ./storybook-static/
