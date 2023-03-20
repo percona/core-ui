@@ -29,6 +29,7 @@ export interface TableProps {
   pagesPerView?: number;
   autoResetPage?: boolean;
   autoResetExpanded?: boolean;
+  autoResetSelectedRows?: boolean;
   rowSelection?: boolean;
   allRowsSelectionMode?: 'all' | 'page';
   onRowSelection?: (rows: Row[]) => void;
@@ -63,4 +64,5 @@ export interface PaginatedTableOptions extends TableOptions<object> {
   pageCount?: number;
   autoResetPage?: boolean;
   autoResetExpanded?: boolean;
+  autoResetSelectedRows?: boolean;
 }

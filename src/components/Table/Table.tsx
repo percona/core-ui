@@ -45,6 +45,7 @@ export const Table: FC<TableProps> = ({
   children,
   autoResetExpanded = true,
   autoResetPage = true,
+  autoResetSelectedRows = true,
   renderExpandedRow = () => <></>,
   onRowSelection,
   allRowsSelectionMode = 'all',
@@ -65,6 +66,7 @@ export const Table: FC<TableProps> = ({
     manualPagination,
     autoResetExpanded,
     autoResetPage,
+    autoResetSelectedRows,
   };
   const plugins: PluginHook<any>[] = [useExpanded];
 
