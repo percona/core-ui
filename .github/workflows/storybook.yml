@@ -54,7 +54,7 @@ jobs:
           git checkout --track origin/storybook
 
       - name: Download artifacts 🔧
-        uses: percona-platform/download-artifact@v2
+        uses: percona-platform/download-artifact@v3
         with:
           name: storybook-artifacts
 
