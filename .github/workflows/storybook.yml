@@ -13,12 +13,12 @@ jobs:
 
     steps:
       - name: Checkout 🔔
-        uses: percona-platform/checkout@v2
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
       - name: Install Node.js 16.x
-        uses: percona-platform/setup-node@v2
+        uses: actions/setup-node@v2
         with:
           node-version: "16"
           cache: "npm"
@@ -39,7 +39,7 @@ jobs:
           npm run build-storybook
 
       - name: Upload storybook artifacts 🔧
-        uses: percona-platform/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: storybook-artifacts
           path: ./storybook-static/
@@ -54,7 +54,7 @@ jobs:
           git checkout --track origin/storybook
 
       - name: Download artifacts 🔧
-        uses: percona-platform/download-artifact@v3
+        uses: actions/download-artifact@v3
         with:
           name: storybook-artifacts
 
