@@ -35,7 +35,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@popperjs/core": "^2.9.2",
+    "@popperjs/core": "^2.11.8",
     "react-popper": "^2.2.5",
     "react-scripts": "^4.0.3",
     "react-table": "^7.6.2",
